@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" fill="#06080E" rx="12"/>
+  <circle cx="32" cy="28" r="10" fill="none" stroke="#3DFF7A" stroke-width="3"/>
+  <circle cx="32" cy="28" r="4" fill="#3DFF7A"/>
+  <text x="32" y="54" font-family="monospace" font-size="9" font-weight="700" fill="#5B6FA3" text-anchor="middle" letter-spacing="1.5">VITEO</text>
+</svg>

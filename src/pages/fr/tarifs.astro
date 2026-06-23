@@ -1,0 +1,103 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Pricing from '../../components/sections/Pricing.astro';
+import CTA from '../../components/sections/CTA.astro';
+import { useTranslations } from '../../i18n/utils';
+
+const lang = 'fr';
+const t = useTranslations(lang);
+---
+
+<BaseLayout
+  title={t('page.pricing.title')}
+  description={t('page.pricing.desc')}
+>
+  <section class="page-hero section-sm">
+    <div class="container">
+      <div class="eyebrow reveal">
+        <span class="eyebrow-dot" aria-hidden="true"></span>
+        {t('pricing.eyebrow')}
+      </div>
+      <h1 class="page-h1 reveal">{t('page.pricing.h1')}</h1>
+      <p class="page-sub reveal">{t('page.pricing.sub')}</p>
+    </div>
+  </section>
+
+  <Pricing lang={lang} compact />
+
+  <!-- FAQ -->
+  <section class="section faq-section">
+    <div class="container">
+      <h2 class="faq-h2 reveal">{t('page.pricing.faq.h2')}</h2>
+      <div class="faq-list">
+        {(['1', '2', '3'] as const).map((n, i) => (
+          <details class={`faq-item reveal reveal-delay-${i + 1}`}>
+            <summary class="faq-q">
+              {t(`page.pricing.faq.${n}.q` as Parameters<typeof t>[0])}
+              <span class="faq-icon" aria-hidden="true">+</span>
+            </summary>
+            <p class="faq-a">{t(`page.pricing.faq.${n}.a` as Parameters<typeof t>[0])}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CTA lang={lang} />
+</BaseLayout>
+
+<style>
+  .page-hero {
+    background: var(--c-surface);
+    border-bottom: 1px solid var(--c-border);
+    padding-top: calc(60px + var(--space-xl));
+  }
+  .page-h1 {
+    font-size: clamp(2rem, 5vw, 3.8rem);
+    max-width: 24ch;
+    margin-bottom: 1rem;
+    margin-top: 0.5rem;
+  }
+  .page-sub {
+    font-size: 1.05rem;
+    color: var(--c-text-muted);
+    max-width: 55ch;
+    line-height: 1.75;
+  }
+  .faq-section { background: var(--c-surface); border-top: 1px solid var(--c-border); }
+  .faq-h2 { max-width: 28ch; margin-bottom: 2rem; }
+  .faq-list { display: flex; flex-direction: column; max-width: 720px; }
+  .faq-item {
+    border-bottom: 1px solid var(--c-border);
+    padding-block: 1.25rem;
+  }
+  .faq-item:last-child { border-bottom: none; }
+  .faq-q {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--c-text);
+    cursor: pointer;
+    list-style: none;
+  }
+  .faq-q::-webkit-details-marker { display: none; }
+  .faq-icon {
+    font-size: 1.2rem;
+    color: var(--c-accent);
+    transition: transform var(--duration-base);
+    flex-shrink: 0;
+  }
+  .faq-item[open] .faq-icon { transform: rotate(45deg); }
+  .faq-a {
+    font-size: 0.9rem;
+    color: var(--c-text-muted);
+    line-height: 1.75;
+    max-width: 100%;
+    padding-top: 0.75rem;
+  }
+</style>

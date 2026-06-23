@@ -1,0 +1,110 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Services from '../../components/sections/Services.astro';
+import CTA from '../../components/sections/CTA.astro';
+import { useTranslations } from '../../i18n/utils';
+
+const lang = 'en';
+const t = useTranslations(lang);
+---
+
+<BaseLayout
+  title={t('page.services.title')}
+  description={t('page.services.desc')}
+>
+  <section class="page-hero section-sm">
+    <div class="container">
+      <div class="eyebrow reveal">
+        <span class="eyebrow-dot" aria-hidden="true"></span>
+        {t('services.eyebrow')}
+      </div>
+      <h1 class="page-h1 reveal">{t('page.services.h1')}</h1>
+      <p class="page-sub reveal">{t('page.services.sub')}</p>
+    </div>
+  </section>
+
+  <Services lang={lang} />
+
+  <section class="section stack-section">
+    <div class="container">
+      <div class="eyebrow reveal">
+        <span class="eyebrow-dot" aria-hidden="true"></span>
+        Tech stack
+      </div>
+      <h2 class="stack-h2 reveal">Astro 5 + Tailwind 4 + Vercel.</h2>
+      <div class="stack-grid">
+        <div class="stack-item reveal">
+          <div class="stack-icon" aria-hidden="true">◆</div>
+          <div class="stack-name">Astro 5</div>
+          <div class="stack-desc">Static generation framework with islands architecture. Zero JavaScript by default. Lighthouse 95-100 score guaranteed.</div>
+        </div>
+        <div class="stack-item reveal reveal-delay-1">
+          <div class="stack-icon" aria-hidden="true">◆</div>
+          <div class="stack-name">Tailwind CSS 4</div>
+          <div class="stack-desc">Next-generation utility CSS. CSS-first, no unnecessary build steps, maximum bundle performance.</div>
+        </div>
+        <div class="stack-item reveal reveal-delay-2">
+          <div class="stack-icon" aria-hidden="true">◆</div>
+          <div class="stack-name">Vercel Edge</div>
+          <div class="stack-desc">Global CDN deployment across 100+ regions. Sub-100ms response times from anywhere in the world.</div>
+        </div>
+        <div class="stack-item reveal reveal-delay-3">
+          <div class="stack-icon" aria-hidden="true">◆</div>
+          <div class="stack-name">Storyblok CMS</div>
+          <div class="stack-desc">Visual headless CMS. Your clients edit their content with full autonomy, without touching code.</div>
+        </div>
+        <div class="stack-item reveal reveal-delay-4">
+          <div class="stack-icon" aria-hidden="true">◆</div>
+          <div class="stack-name">Plausible Analytics</div>
+          <div class="stack-desc">100% GDPR-compliant analytics, no third-party cookies. Lightweight (&lt;1KB), won't slow your site.</div>
+        </div>
+        <div class="stack-item reveal reveal-delay-5">
+          <div class="stack-icon" aria-hidden="true">◆</div>
+          <div class="stack-name">Space Grotesk + Inter</div>
+          <div class="stack-desc">Self-hosted variable fonts. No external requests, GDPR-compliant, instant loading.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CTA lang={lang} />
+</BaseLayout>
+
+<style>
+  .page-hero {
+    background: var(--c-surface);
+    border-bottom: 1px solid var(--c-border);
+    padding-top: calc(60px + var(--space-xl));
+  }
+  .page-h1 {
+    font-size: clamp(2rem, 5vw, 3.8rem);
+    max-width: 22ch;
+    margin-bottom: 1.25rem;
+    margin-top: 0.5rem;
+  }
+  .page-sub {
+    font-size: 1.05rem;
+    color: var(--c-text-muted);
+    max-width: 58ch;
+    line-height: 1.75;
+  }
+  .stack-section { background: var(--c-bg); }
+  .stack-h2 { max-width: 28ch; margin-bottom: 2.5rem; }
+  .stack-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--c-border);
+  }
+  .stack-item {
+    background: var(--c-surface);
+    padding: 1.75rem;
+    transition: background var(--duration-base);
+  }
+  .stack-item:hover { background: var(--c-surface-2); }
+  .stack-icon { font-size: 1rem; color: var(--c-accent); margin-bottom: 0.75rem; display: block; }
+  .stack-name { font-family: var(--font-display); font-size: 1rem; font-weight: 700; letter-spacing: -0.02em; color: var(--c-text); margin-bottom: 0.5rem; }
+  .stack-desc { font-size: 0.82rem; color: var(--c-text-muted); line-height: 1.65; }
+  @media (max-width: 860px) { .stack-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .stack-grid { grid-template-columns: 1fr; } }
+</style>

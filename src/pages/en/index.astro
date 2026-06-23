@@ -1,0 +1,27 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/sections/Hero.astro';
+import Stats from '../../components/sections/Stats.astro';
+import Services from '../../components/sections/Services.astro';
+import Process from '../../components/sections/Process.astro';
+import Pricing from '../../components/sections/Pricing.astro';
+import Testimonials from '../../components/sections/Testimonials.astro';
+import CTA from '../../components/sections/CTA.astro';
+import { useTranslations } from '../../i18n/utils';
+
+const lang = 'en';
+const t = useTranslations(lang);
+---
+
+<BaseLayout
+  title={t('seo.home.title')}
+  description={t('seo.home.desc')}
+>
+  <Hero lang={lang} />
+  <Stats lang={lang} />
+  <Services lang={lang} />
+  <Process lang={lang} />
+  <Pricing lang={lang} />
+  <Testimonials lang={lang} />
+  <CTA lang={lang} />
+</BaseLayout>

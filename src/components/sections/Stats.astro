@@ -1,0 +1,92 @@
+---
+import { useTranslations } from '../../i18n/utils';
+import type { Lang } from '../../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const stats = ['1', '2', '3', '4'] as const;
+---
+
+<div class="stats-strip" aria-label={lang === 'fr' ? 'Chiffres clés' : 'Key figures'}>
+  <div class="stats-inner">
+    {stats.map((n, i) => (
+      <div class={`stat-block reveal reveal-delay-${i + 1}`}>
+        <div class="stat-num" aria-label={t(`stats.${n}.num` as Parameters<typeof t>[0])}>
+          {t(`stats.${n}.num` as Parameters<typeof t>[0])}
+        </div>
+        <p class="stat-txt">{t(`stats.${n}.txt` as Parameters<typeof t>[0])}</p>
+      </div>
+    ))}
+  </div>
+</div>
+
+<style>
+  .stats-strip {
+    background: var(--c-surface);
+    border-top: 1px solid var(--c-border);
+    border-bottom: 1px solid var(--c-border);
+  }
+
+  .stats-inner {
+    max-width: 1280px;
+    margin-inline: auto;
+    padding-inline: clamp(1.25rem, 4vw, 2.5rem);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+  }
+
+  .stat-block {
+    padding: 2.5rem 2rem;
+    border-right: 1px solid var(--c-border);
+  }
+
+  .stat-block:last-child {
+    border-right: none;
+  }
+
+  .stat-num {
+    font-family: var(--font-mono);
+    font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    color: var(--c-accent);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .stat-txt {
+    font-size: 0.8rem;
+    color: var(--c-text-muted);
+    line-height: 1.55;
+    max-width: 24ch;
+  }
+
+  @media (max-width: 860px) {
+    .stats-inner {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .stat-block:nth-child(2) { border-right: none; }
+    .stat-block:nth-child(1),
+    .stat-block:nth-child(2) {
+      border-bottom: 1px solid var(--c-border);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .stats-inner {
+      grid-template-columns: 1fr;
+    }
+    .stat-block {
+      border-right: none;
+      border-bottom: 1px solid var(--c-border);
+    }
+    .stat-block:last-child { border-bottom: none; }
+    .stat-block:nth-child(2) { border-bottom: 1px solid var(--c-border); }
+  }
+</style>

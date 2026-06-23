@@ -1,0 +1,121 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { useTranslations } from '../../i18n/utils';
+
+const lang = 'en';
+const t = useTranslations(lang);
+---
+
+<BaseLayout
+  title={t('page.contact.title')}
+  description={t('page.contact.desc')}
+>
+  <section class="contact-page section">
+    <div class="container contact-inner">
+      <div class="contact-info">
+        <div class="eyebrow reveal"><span class="eyebrow-dot" aria-hidden="true"></span>{t('contact.eyebrow')}</div>
+        <h1 class="contact-h1 reveal">{t('contact.h1')}</h1>
+        <p class="contact-sub reveal">{t('contact.sub')}</p>
+        <div class="contact-details">
+          <a href={`mailto:${t('contact.info.email')}`} class="contact-detail reveal">
+            <span class="detail-icon" aria-hidden="true">@</span>
+            <div><div class="detail-label">Email</div><div class="detail-val">{t('contact.info.email')}</div></div>
+          </a>
+          <div class="contact-detail reveal reveal-delay-1">
+            <span class="detail-icon" aria-hidden="true">↩</span>
+            <div><div class="detail-label">Response time</div><div class="detail-val">{t('contact.info.resp')}</div></div>
+          </div>
+          <div class="contact-detail reveal reveal-delay-2">
+            <span class="detail-icon" aria-hidden="true">☎</span>
+            <div><div class="detail-label">First call</div><div class="detail-val">{t('contact.info.call')}</div></div>
+          </div>
+        </div>
+        <div class="contact-process reveal reveal-delay-3">
+          <div class="cp-title">What happens after your message</div>
+          <ol class="cp-steps">
+            <li>Reply within 24h with next steps</li>
+            <li>45-min call to scope your project</li>
+            <li>Precise quote sent within 48h</li>
+            <li>Project starts within 7 days of approval</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="contact-form-wrap reveal reveal-delay-1">
+        <form class="contact-form" method="POST" action="/api/contact" novalidate id="contact-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name" class="form-label">{t('contact.form.name')} *</label>
+              <input type="text" id="name" name="name" class="form-input" required autocomplete="name" placeholder="Sarah Smith" />
+            </div>
+            <div class="form-group">
+              <label for="email" class="form-label">{t('contact.form.email')} *</label>
+              <input type="email" id="email" name="email" class="form-input" required autocomplete="email" placeholder="sarah@mybusiness.com" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="business" class="form-label">{t('contact.form.biz')}</label>
+            <input type="text" id="business" name="business" class="form-input" placeholder="Osteopath, Lawyer, Architect..." />
+          </div>
+          <div class="form-group">
+            <label for="message" class="form-label">{t('contact.form.msg')} *</label>
+            <textarea id="message" name="message" class="form-input form-textarea" required rows="5" placeholder="My WordPress site takes 8 seconds to load, I'm looking to replace it..."></textarea>
+          </div>
+          <p class="form-rgpd">By submitting this form, you agree that your data will be used solely to respond to your enquiry. No marketing, no sharing. <a href="/en/privacy" class="form-rgpd-link">Privacy policy</a>.</p>
+          <button type="submit" class="btn btn-primary btn-lg form-submit" id="submit-btn">{t('contact.form.send')}</button>
+          <div id="form-success" class="form-success" aria-live="polite" hidden>
+            <span aria-hidden="true">✓</span> Message sent! We'll reply within 24 hours.
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .contact-page { padding-top: calc(60px + var(--space-xl)); min-height: 100svh; }
+  .contact-inner { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 6rem; align-items: start; }
+  .contact-h1 { font-size: clamp(2rem, 4vw, 3.2rem); max-width: 22ch; margin-bottom: 1rem; margin-top: 0.5rem; }
+  .contact-sub { font-size: 1rem; color: var(--c-text-muted); max-width: 44ch; line-height: 1.75; margin-bottom: 2.5rem; }
+  .contact-details { display: flex; flex-direction: column; gap: 1.25rem; margin-bottom: 2.5rem; }
+  .contact-detail { display: flex; gap: 1rem; align-items: flex-start; text-decoration: none; }
+  .detail-icon { font-size: 1rem; color: var(--c-accent); width: 2.25rem; height: 2.25rem; border: 1px solid var(--c-border); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-family: var(--font-mono); }
+  .detail-label { font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--c-text-dim); margin-bottom: 0.15rem; }
+  .detail-val { font-size: 0.9rem; color: var(--c-text); font-weight: 500; }
+  a.contact-detail .detail-val { color: var(--c-accent); font-family: var(--font-mono); font-size: 0.85rem; }
+  .contact-process { background: var(--c-surface); border: 1px solid var(--c-border); padding: 1.5rem; }
+  .cp-title { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--c-text-dim); margin-bottom: 1rem; }
+  .cp-steps { display: flex; flex-direction: column; gap: 0.6rem; padding-left: 1.25rem; }
+  .cp-steps li { font-size: 0.82rem; color: var(--c-text-muted); line-height: 1.5; }
+  .cp-steps li::marker { color: var(--c-accent); font-family: var(--font-mono); font-weight: 700; }
+  .contact-form-wrap { background: var(--c-surface); border: 1px solid var(--c-border); padding: 2.5rem; }
+  .contact-form { display: flex; flex-direction: column; gap: 1.25rem; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+  .form-label { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--c-text-muted); }
+  .form-input { background: var(--c-bg); border: 1px solid var(--c-border); color: var(--c-text); font-family: var(--font-body); font-size: 0.9rem; padding: 0.75rem 1rem; width: 100%; transition: border-color var(--duration-fast); outline: none; resize: none; }
+  .form-input::placeholder { color: var(--c-text-dim); }
+  .form-input:focus { border-color: var(--c-accent); }
+  .form-textarea { min-height: 130px; }
+  .form-rgpd { font-family: var(--font-mono); font-size: 0.65rem; color: var(--c-text-dim); line-height: 1.6; max-width: 100%; }
+  .form-rgpd-link { color: var(--c-text-muted); text-decoration: underline; text-underline-offset: 2px; }
+  .form-submit { align-self: flex-start; }
+  .form-success { display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-mono); font-size: 0.82rem; color: var(--c-accent); padding: 1rem; border: 1px solid rgba(61,255,122,0.3); background: var(--c-accent-2); }
+  .form-success[hidden] { display: none; }
+  @media (max-width: 900px) { .contact-inner { grid-template-columns: 1fr; gap: 3rem; } .contact-form-wrap { padding: 1.75rem; } }
+  @media (max-width: 480px) { .form-row { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement | null;
+  const btn = document.getElementById('submit-btn');
+  const success = document.getElementById('form-success');
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!form.checkValidity()) { form.reportValidity(); return; }
+    if (btn) { btn.textContent = '…'; (btn as HTMLButtonElement).disabled = true; }
+    await new Promise((r) => setTimeout(r, 1200));
+    form.style.display = 'none';
+    if (success) success.hidden = false;
+  });
+</script>

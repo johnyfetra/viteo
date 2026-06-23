@@ -1,0 +1,216 @@
+---
+import { useTranslations, useTranslationArray, localizePath } from '../../i18n/utils';
+import type { Lang } from '../../i18n/ui';
+
+interface Props {
+  lang: Lang;
+  compact?: boolean;
+}
+
+const { lang, compact = false } = Astro.props;
+const t = useTranslations(lang);
+const ta = useTranslationArray(lang);
+
+const tiers = [
+  { key: '1', featured: false, priceColor: 'blue'   },
+  { key: '2', featured: true,  priceColor: 'accent' },
+  { key: '3', featured: false, priceColor: 'warn'   },
+] as const;
+---
+
+<section class="section pricing-section" id="pricing">
+  <div class="container">
+    {!compact && (
+      <>
+        <div class="eyebrow reveal">
+          <span class="eyebrow-dot" aria-hidden="true"></span>
+          {t('pricing.eyebrow')}
+        </div>
+        <h2 class="pricing-h2 reveal">{t('pricing.h2')}</h2>
+        <p class="pricing-intro reveal">{t('pricing.intro')}</p>
+      </>
+    )}
+
+    <div class="pricing-grid">
+      {tiers.map(({ key, featured, priceColor }, i) => {
+        const features = ta(`pricing.${key}.features` as Parameters<typeof ta>[0]);
+        return (
+          <article class={`pricing-card reveal reveal-delay-${i + 1} ${featured ? 'pricing-card-featured' : ''}`}>
+            {featured && (
+              <div class="pricing-popular-badge">
+                {t('pricing.popular')}
+              </div>
+            )}
+            <div class="pricing-card-inner">
+              <div class="pricing-tier">{t(`pricing.${key}.tier` as Parameters<typeof t>[0])}</div>
+              <div class="pricing-name">{t(`pricing.${key}.name` as Parameters<typeof t>[0])}</div>
+              <div class={`pricing-price pricing-price-${priceColor}`}>
+                {t(`pricing.${key}.price` as Parameters<typeof t>[0])}
+              </div>
+              <div class="pricing-note">{t(`pricing.${key}.note` as Parameters<typeof t>[0])}</div>
+
+              <hr class="divider" style="margin-block: 1.5rem;" />
+
+              <ul class="pricing-features" aria-label={lang === 'fr' ? 'Fonctionnalités incluses' : 'Included features'}>
+                {features.map((f) => (
+                  <li class="pricing-feature">
+                    <span class="feature-check" aria-hidden="true">✓</span>
+                    <span>{f}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <a
+                href={localizePath('/contact', lang)}
+                class={`btn ${featured ? 'btn-primary' : 'btn-ghost'} pricing-cta`}
+              >
+                {t('pricing.cta1')}
+              </a>
+            </div>
+          </article>
+        );
+      })}
+    </div>
+  </div>
+</section>
+
+<style>
+  .pricing-section {
+    background: var(--c-bg);
+  }
+
+  .pricing-h2 {
+    max-width: 30ch;
+    margin-bottom: 1rem;
+  }
+
+  .pricing-intro {
+    font-size: 1rem;
+    color: var(--c-text-muted);
+    max-width: 60ch;
+    line-height: 1.75;
+    margin-bottom: 3rem;
+  }
+
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--c-border);
+  }
+
+  .pricing-card {
+    background: var(--c-surface);
+    position: relative;
+  }
+
+  .pricing-card-featured {
+    background: var(--c-surface-2);
+  }
+
+  .pricing-popular-badge {
+    position: absolute;
+    top: 0;
+    right: 1.5rem;
+    transform: translateY(-50%);
+    background: var(--c-accent);
+    color: var(--c-bg);
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.65rem;
+  }
+
+  .pricing-card-inner {
+    padding: 2.5rem 2rem;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .pricing-tier {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--c-text-dim);
+    margin-bottom: 0.4rem;
+  }
+
+  .pricing-name {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--c-text);
+    margin-bottom: 0.5rem;
+  }
+
+  .pricing-price {
+    font-family: var(--font-mono);
+    font-size: 2.4rem;
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    margin-bottom: 0.25rem;
+  }
+
+  .pricing-price-accent { color: var(--c-accent); }
+  .pricing-price-blue   { color: var(--c-blue); }
+  .pricing-price-warn   { color: var(--c-warn); }
+
+  .pricing-note {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: var(--c-text-muted);
+    letter-spacing: 0.02em;
+  }
+
+  .pricing-features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    margin-bottom: 2rem;
+    flex: 1;
+  }
+
+  .pricing-feature {
+    display: flex;
+    gap: 0.6rem;
+    font-size: 0.85rem;
+    color: var(--c-text-muted);
+    line-height: 1.5;
+  }
+
+  .feature-check {
+    color: var(--c-accent);
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 0.05em;
+  }
+
+  .pricing-cta {
+    width: 100%;
+    justify-content: center;
+    margin-top: auto;
+  }
+
+  @media (max-width: 860px) {
+    .pricing-grid {
+      grid-template-columns: 1fr;
+      background: none;
+      gap: 1rem;
+    }
+
+    .pricing-card {
+      border: 1px solid var(--c-border);
+    }
+
+    .pricing-card-featured {
+      border-color: var(--c-accent);
+    }
+  }
+</style>

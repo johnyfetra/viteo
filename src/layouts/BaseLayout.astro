@@ -1,0 +1,109 @@
+---
+import '../styles/global.css';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import { getLangFromUrl, useTranslations, getAlternatePath } from '../i18n/utils';
+
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  noindex?: boolean;
+}
+
+const { title, description, image = '/og-viteo.jpg', noindex = false } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const altLang = lang === 'fr' ? 'en' : 'fr';
+const altPath = getAlternatePath(Astro.url, altLang);
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang={lang} data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Primary Meta -->
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+
+    <!-- Hreflang -->
+    <link rel="alternate" hreflang="fr" href={new URL(getAlternatePath(Astro.url, 'fr'), Astro.site)} />
+    <link rel="alternate" hreflang="en" href={new URL(getAlternatePath(Astro.url, 'en'), Astro.site)} />
+    <link rel="alternate" hreflang="x-default" href={new URL(getAlternatePath(Astro.url, 'fr'), Astro.site)} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL(image, Astro.site)} />
+    <meta property="og:locale" content={lang === 'fr' ? 'fr_FR' : 'en_US'} />
+    <meta property="og:site_name" content="Viteo Studio" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={new URL(image, Astro.site)} />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <!-- Schema.org: Organization -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Viteo Studio",
+        "url": "https://viteo.studio",
+        "logo": "https://viteo.studio/og-viteo.jpg",
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "email": "hello@viteo.studio",
+          "contactType": "customer support"
+        },
+        "sameAs": []
+      }
+    </script>
+
+    <!-- Theme init (prevents flash) -->
+    <script is:inline>
+      (function () {
+        const stored = localStorage.getItem('viteo-theme');
+        const pref = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', stored || pref);
+      })();
+    </script>
+  </head>
+
+  <body>
+    <Nav lang={lang} altPath={altPath} altLang={altLang} />
+    <main id="main-content">
+      <slot />
+    </main>
+    <Footer lang={lang} />
+
+    <!-- Scroll reveal -->
+    <script>
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add('visible');
+              observer.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.08, rootMargin: '0px 0px -40px 0px' }
+      );
+
+      document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+    </script>
+  </body>
+</html>

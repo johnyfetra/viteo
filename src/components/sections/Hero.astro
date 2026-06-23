@@ -1,0 +1,528 @@
+---
+import { useTranslations, localizePath } from '../../i18n/utils';
+import type { Lang } from '../../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<section class="hero" aria-label={lang === 'fr' ? 'Accueil' : 'Home'}>
+  <!-- Background grid -->
+  <div class="grid-bg" aria-hidden="true"></div>
+  <!-- Radial glow -->
+  <div class="hero-glow" aria-hidden="true"></div>
+
+  <div class="container hero-inner">
+    <!-- Left: Text -->
+    <div class="hero-text">
+      <div class="eyebrow">
+        <span class="eyebrow-dot" aria-hidden="true"></span>
+        {t('hero.eyebrow')}
+      </div>
+
+      <h1 class="hero-h1">
+        <span class="hero-h1-line">{t('hero.h1a')}</span>
+        <span class="hero-h1-score" aria-label={t('hero.h1b')} id="hero-score-text">
+          <span class="score-counter" id="score-num" aria-hidden="true">0</span>
+          <span class="score-slash" aria-hidden="true"> / 100.</span>
+        </span>
+        <span class="hero-h1-line hero-h1-accent">{t('hero.h1c')}</span>
+      </h1>
+
+      <p class="hero-sub">{t('hero.sub')}</p>
+
+      <div class="hero-actions">
+        <a href={localizePath(lang === 'fr' ? '/tarifs' : '/pricing', lang)} class="btn btn-primary btn-lg">
+          {t('hero.cta1')}
+        </a>
+        <a href={localizePath('/contact', lang)} class="btn btn-ghost btn-lg">
+          {t('hero.cta2')}
+        </a>
+      </div>
+
+      <!-- Trust indicators -->
+      <div class="hero-trust">
+        <div class="trust-item">
+          <span class="trust-icon" aria-hidden="true">✓</span>
+          <span>Score garanti contractuellement</span>
+        </div>
+        <div class="trust-item">
+          <span class="trust-icon" aria-hidden="true">✓</span>
+          <span>Livraison en 7 à 21 jours</span>
+        </div>
+        <div class="trust-item">
+          <span class="trust-icon" aria-hidden="true">✓</span>
+          <span>Code source fourni</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Lighthouse widget -->
+    <div class="hero-widget" aria-label={t('hero.score.label')}>
+      <div class="widget-titlebar" aria-hidden="true">
+        <span class="dot dot-red"></span>
+        <span class="dot dot-yellow"></span>
+        <span class="dot dot-green"></span>
+        <span class="widget-title">{t('hero.score.label')}</span>
+      </div>
+
+      <div class="widget-body">
+        <!-- Score rings -->
+        <div class="score-rings">
+          <div class="score-ring-item">
+            <div class="ring-wrap">
+              <canvas id="ring-perf" width="72" height="72" role="img" aria-label={`${t('hero.score.perf')}: 100`}></canvas>
+              <div class="ring-val" id="rv-perf" aria-hidden="true">0</div>
+            </div>
+            <span class="ring-label">{t('hero.score.perf')}</span>
+          </div>
+          <div class="score-ring-item">
+            <div class="ring-wrap">
+              <canvas id="ring-seo" width="72" height="72" role="img" aria-label={`${t('hero.score.seo')}: 100`}></canvas>
+              <div class="ring-val" id="rv-seo" aria-hidden="true">0</div>
+            </div>
+            <span class="ring-label">{t('hero.score.seo')}</span>
+          </div>
+          <div class="score-ring-item">
+            <div class="ring-wrap">
+              <canvas id="ring-a11y" width="72" height="72" role="img" aria-label={`${t('hero.score.a11y')}: 98`}></canvas>
+              <div class="ring-val" id="rv-a11y" aria-hidden="true">0</div>
+            </div>
+            <span class="ring-label">{t('hero.score.a11y')}</span>
+          </div>
+          <div class="score-ring-item">
+            <div class="ring-wrap">
+              <canvas id="ring-bp" width="72" height="72" role="img" aria-label={`${t('hero.score.bp')}: 100`}></canvas>
+              <div class="ring-val" id="rv-bp" aria-hidden="true">0</div>
+            </div>
+            <span class="ring-label">{t('hero.score.bp')}</span>
+          </div>
+        </div>
+
+        <!-- Core Web Vitals -->
+        <div class="vitals">
+          <p class="vitals-title">{t('hero.vitals')}</p>
+          <div class="vital-row">
+            <span class="vital-name">LCP</span>
+            <div class="vital-track" aria-hidden="true"><div class="vital-bar" id="vb-lcp"></div></div>
+            <span class="vital-val">0.8s</span>
+          </div>
+          <div class="vital-row">
+            <span class="vital-name">INP</span>
+            <div class="vital-track" aria-hidden="true"><div class="vital-bar" id="vb-inp"></div></div>
+            <span class="vital-val">11ms</span>
+          </div>
+          <div class="vital-row">
+            <span class="vital-name">CLS</span>
+            <div class="vital-track" aria-hidden="true"><div class="vital-bar" id="vb-cls"></div></div>
+            <span class="vital-val">0.00</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scroll indicator -->
+  <div class="scroll-indicator" aria-hidden="true">
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: 80px;
+    padding-bottom: 4rem;
+    overflow: hidden;
+  }
+
+  .hero-glow {
+    position: absolute;
+    top: 20%;
+    right: 10%;
+    width: 600px;
+    height: 500px;
+    background: radial-gradient(ellipse at center, var(--c-accent-glow) 0%, transparent 65%);
+    pointer-events: none;
+    animation: glow-drift 8s ease-in-out infinite alternate;
+  }
+
+  @keyframes glow-drift {
+    from { transform: translate(0, 0) scale(1); }
+    to   { transform: translate(-30px, 20px) scale(1.08); }
+  }
+
+  .hero-inner {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 5rem;
+    align-items: center;
+    padding-block: 2rem;
+  }
+
+  /* Text side */
+  .hero-h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2.8rem, 6vw, 5.2rem);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 1.03;
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.05em;
+  }
+
+  .hero-h1-line {
+    display: block;
+  }
+
+  .hero-h1-accent {
+    color: var(--c-accent);
+  }
+
+  .hero-h1-score {
+    display: flex;
+    align-items: baseline;
+    gap: 0;
+    font-family: var(--font-mono);
+    font-size: clamp(3rem, 7vw, 6rem);
+    font-weight: 700;
+    color: var(--c-accent);
+    letter-spacing: -0.05em;
+  }
+
+  .score-slash {
+    font-family: var(--font-mono);
+    font-size: 0.65em;
+    color: var(--c-text-muted);
+    font-weight: 400;
+  }
+
+  .hero-sub {
+    font-size: clamp(1rem, 1.8vw, 1.1rem);
+    color: var(--c-text-muted);
+    max-width: 48ch;
+    line-height: 1.75;
+    margin-bottom: 2.5rem;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+  }
+
+  /* Trust */
+  .hero-trust {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .trust-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--c-text-muted);
+    letter-spacing: 0.02em;
+  }
+
+  .trust-icon {
+    color: var(--c-accent);
+    font-weight: 700;
+  }
+
+  /* Widget */
+  .hero-widget {
+    background: var(--c-surface);
+    border: 1px solid var(--c-border);
+    overflow: hidden;
+    box-shadow: 0 32px 64px rgba(0, 0, 0, 0.3);
+    animation: widget-float 6s ease-in-out infinite alternate;
+  }
+
+  @keyframes widget-float {
+    from { transform: translateY(0); }
+    to   { transform: translateY(-12px); }
+  }
+
+  .widget-titlebar {
+    background: var(--c-surface-2);
+    border-bottom: 1px solid var(--c-border);
+    padding: 0.65rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .dot-red    { background: #FF5F57; }
+  .dot-yellow { background: #FFBD2E; }
+  .dot-green  { background: var(--c-accent); }
+
+  .widget-title {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    color: var(--c-text-dim);
+    margin-left: 0.4rem;
+    letter-spacing: 0.04em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .widget-body {
+    padding: 1.5rem;
+  }
+
+  /* Score rings */
+  .score-rings {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .score-ring-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .ring-wrap {
+    position: relative;
+    width: 72px;
+    height: 72px;
+  }
+
+  .ring-wrap canvas {
+    display: block;
+  }
+
+  .ring-val {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--c-accent);
+    letter-spacing: -0.03em;
+  }
+
+  .ring-label {
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+    color: var(--c-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    text-align: center;
+  }
+
+  /* Vitals */
+  .vitals-title {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--c-text-dim);
+    margin-bottom: 0.75rem;
+  }
+
+  .vital-row {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .vital-name {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: var(--c-text-muted);
+    min-width: 2.5rem;
+  }
+
+  .vital-track {
+    flex: 1;
+    height: 3px;
+    background: var(--c-border);
+    overflow: hidden;
+  }
+
+  .vital-bar {
+    height: 100%;
+    background: var(--c-accent);
+    width: 0;
+    transition: width 1.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .vital-val {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: var(--c-accent);
+    min-width: 3rem;
+    text-align: right;
+  }
+
+  /* Scroll indicator */
+  .scroll-indicator {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 60px;
+    background: linear-gradient(to bottom, var(--c-accent), transparent);
+    animation: scroll-pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes scroll-pulse {
+    0%, 100% { opacity: 0.3; transform: scaleY(0.6); transform-origin: top; }
+    50%       { opacity: 1; transform: scaleY(1); }
+  }
+
+  /* Responsive */
+  @media (max-width: 960px) {
+    .hero-inner {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+      text-align: center;
+    }
+
+    .hero-sub { max-width: 100%; }
+    .hero-actions { justify-content: center; }
+    .hero-trust { align-items: center; }
+
+    .hero-widget {
+      max-width: 480px;
+      margin-inline: auto;
+      animation: none;
+    }
+  }
+
+  @media (max-width: 500px) {
+    .score-rings {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-glow { animation: none; }
+    .hero-widget { animation: none; }
+    .scroll-line { animation: none; opacity: 0.5; }
+    .vital-bar { transition: none; }
+  }
+</style>
+
+<script>
+  const ACCENT = getComputedStyle(document.documentElement).getPropertyValue('--c-accent').trim() || '#3DFF7A';
+  const TRACK  = getComputedStyle(document.documentElement).getPropertyValue('--c-border').trim() || '#1C2A50';
+
+  function drawRing(canvasId: string, progress: number, color: string, track: string) {
+    const canvas = document.getElementById(canvasId) as HTMLCanvasElement | null;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = 72 * dpr;
+    canvas.height = 72 * dpr;
+    canvas.style.width = '72px';
+    canvas.style.height = '72px';
+    ctx.scale(dpr, dpr);
+    const cx = 36, cy = 36, r = 28;
+    ctx.clearRect(0, 0, 72, 72);
+    ctx.beginPath();
+    ctx.arc(cx, cy, r, 0, Math.PI * 2);
+    ctx.strokeStyle = track;
+    ctx.lineWidth = 4;
+    ctx.stroke();
+    if (progress > 0) {
+      ctx.beginPath();
+      ctx.arc(cx, cy, r, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * progress);
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 4;
+      ctx.lineCap = 'round';
+      ctx.stroke();
+    }
+  }
+
+  const rings = [
+    { id: 'ring-perf', val: 'rv-perf', target: 100 },
+    { id: 'ring-seo',  val: 'rv-seo',  target: 100 },
+    { id: 'ring-a11y', val: 'rv-a11y', target: 98  },
+    { id: 'ring-bp',   val: 'rv-bp',   target: 100 },
+  ];
+
+  rings.forEach(({ id }) => drawRing(id, 0, ACCENT, TRACK));
+
+  function animateAll() {
+    const duration = 1800;
+    const start = performance.now();
+    const ease = (t: number) => t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+
+    // Score counter in H1
+    const scoreEl = document.getElementById('score-num');
+
+    function tick(now: number) {
+      const t = Math.min((now - start) / duration, 1);
+      const e = ease(t);
+
+      rings.forEach(({ id, val, target }) => {
+        const progress = e * target / 100;
+        // Refresh accent each tick (handles theme changes)
+        const accent = getComputedStyle(document.documentElement).getPropertyValue('--c-accent').trim() || '#3DFF7A';
+        const track  = getComputedStyle(document.documentElement).getPropertyValue('--c-border').trim() || '#1C2A50';
+        drawRing(id, progress, accent, track);
+        const el = document.getElementById(val);
+        if (el) el.textContent = String(Math.round(e * target));
+      });
+
+      if (scoreEl) scoreEl.textContent = String(Math.round(e * 100));
+
+      if (t < 1) requestAnimationFrame(tick);
+      else {
+        // Animate vitals bars
+        setTimeout(() => {
+          ['vb-lcp', 'vb-inp', 'vb-cls'].forEach((id, i) => {
+            const bar = document.getElementById(id);
+            if (bar) bar.style.width = ['94%', '98%', '100%'][i];
+          });
+        }, 200);
+      }
+    }
+
+    requestAnimationFrame(tick);
+  }
+
+  // Start after a short delay
+  setTimeout(animateAll, 500);
+</script>

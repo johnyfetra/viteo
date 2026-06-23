@@ -1,0 +1,400 @@
+---
+import { useTranslations, localizePath } from '../i18n/utils';
+import type { Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+  altPath: string;
+  altLang: Lang;
+}
+
+const { lang, altPath, altLang } = Astro.props;
+const t = useTranslations(lang);
+
+const links = [
+  { key: 'nav.services', path: '/services' },
+  { key: 'nav.pricing',  path: lang === 'fr' ? '/tarifs' : '/pricing' },
+  { key: 'nav.about',    path: lang === 'fr' ? '/a-propos' : '/about' },
+  { key: 'nav.contact',  path: '/contact' },
+] as const;
+---
+
+<header class="nav" id="nav">
+  <div class="nav-inner container">
+    <!-- Logo -->
+    <a href={`/${lang}/`} class="nav-logo" aria-label="Viteo Studio — accueil">
+      <span class="nav-logo-mark" aria-hidden="true">●</span>
+      <span class="nav-logo-name">Viteo</span>
+      <span class="nav-logo-tld">.studio</span>
+    </a>
+
+    <!-- Desktop links -->
+    <nav class="nav-links" aria-label={lang === 'fr' ? 'Navigation principale' : 'Main navigation'}>
+      {links.map(({ key, path }) => (
+        <a
+          href={localizePath(path, lang)}
+          class="nav-link"
+          aria-current={Astro.url.pathname.includes(path) ? 'page' : undefined}
+        >
+          {t(key as Parameters<typeof t>[0])}
+        </a>
+      ))}
+    </nav>
+
+    <!-- Right side -->
+    <div class="nav-actions">
+      <!-- Language toggle -->
+      <a
+        href={altPath}
+        class="nav-lang"
+        aria-label={lang === 'fr' ? 'Switch to English' : 'Passer en Français'}
+        title={lang === 'fr' ? 'English' : 'Français'}
+      >
+        {altLang.toUpperCase()}
+      </a>
+
+      <!-- Theme toggle -->
+      <button
+        id="theme-toggle"
+        class="nav-theme"
+        aria-label={lang === 'fr' ? 'Changer le thème' : 'Toggle theme'}
+        title={lang === 'fr' ? 'Thème clair / sombre' : 'Light / dark theme'}
+      >
+        <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </button>
+
+      <!-- Mobile menu toggle -->
+      <button
+        id="menu-toggle"
+        class="nav-menu-btn"
+        aria-label={lang === 'fr' ? 'Ouvrir le menu' : 'Open menu'}
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        <span class="menu-bar"></span>
+        <span class="menu-bar"></span>
+        <span class="menu-bar"></span>
+      </button>
+
+      <!-- CTA -->
+      <a href={localizePath('/contact', lang)} class="btn btn-primary btn-sm nav-cta">
+        {t('nav.cta')}
+      </a>
+    </div>
+  </div>
+
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="mobile-menu" aria-hidden="true" role="dialog" aria-label={lang === 'fr' ? 'Menu mobile' : 'Mobile menu'}>
+    <nav class="mobile-nav">
+      {links.map(({ key, path }) => (
+        <a href={localizePath(path, lang)} class="mobile-link">
+          {t(key as Parameters<typeof t>[0])}
+        </a>
+      ))}
+      <a href={localizePath('/contact', lang)} class="btn btn-primary" style="align-self: flex-start; margin-top: 0.5rem;">
+        {t('nav.cta')}
+      </a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 500;
+    height: 60px;
+    background: rgba(6, 8, 14, 0);
+    border-bottom: 1px solid transparent;
+    transition:
+      background 300ms ease,
+      border-color 300ms ease,
+      backdrop-filter 300ms ease;
+  }
+
+  [data-theme="light"] .nav {
+    background: rgba(247, 249, 255, 0);
+  }
+
+  .nav.scrolled {
+    background: rgba(6, 8, 14, 0.88);
+    border-color: var(--c-border-dim);
+    backdrop-filter: blur(16px);
+  }
+
+  [data-theme="light"] .nav.scrolled {
+    background: rgba(247, 249, 255, 0.92);
+  }
+
+  .nav-inner {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+  }
+
+  /* Logo */
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+
+  .nav-logo-mark {
+    color: var(--c-accent);
+    font-size: 0.8rem;
+    line-height: 1;
+  }
+
+  .nav-logo-name {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    color: var(--c-text);
+  }
+
+  .nav-logo-tld {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--c-text-muted);
+    letter-spacing: 0;
+    margin-top: 0.15rem;
+  }
+
+  /* Desktop links */
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .nav-link {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--c-text-muted);
+    text-decoration: none;
+    transition: color var(--duration-fast);
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+  }
+
+  .nav-link:hover,
+  .nav-link[aria-current="page"] {
+    color: var(--c-text);
+  }
+
+  /* Actions */
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-shrink: 0;
+  }
+
+  .nav-lang {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: var(--c-text-muted);
+    text-decoration: none;
+    padding: 0.3rem 0.5rem;
+    border: 1px solid var(--c-border);
+    transition: color var(--duration-fast), border-color var(--duration-fast);
+  }
+
+  .nav-lang:hover {
+    color: var(--c-text);
+    border-color: var(--c-text-muted);
+  }
+
+  .nav-theme {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border: 1px solid var(--c-border);
+    background: none;
+    color: var(--c-text-muted);
+    transition: color var(--duration-fast), border-color var(--duration-fast);
+    cursor: pointer;
+  }
+
+  .nav-theme:hover {
+    color: var(--c-text);
+    border-color: var(--c-text-muted);
+  }
+
+  .nav-theme:focus-visible {
+    outline: 2px solid var(--c-accent);
+    outline-offset: 2px;
+  }
+
+  [data-theme="dark"] .icon-sun  { display: none; }
+  [data-theme="light"] .icon-moon { display: none; }
+
+  /* Mobile button */
+  .nav-menu-btn {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    width: 34px;
+    height: 34px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--c-border);
+    background: none;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .menu-bar {
+    display: block;
+    width: 16px;
+    height: 1.5px;
+    background: var(--c-text-muted);
+    transition: transform var(--duration-base), opacity var(--duration-base);
+  }
+
+  .nav-menu-btn[aria-expanded="true"] .menu-bar:nth-child(1) {
+    transform: translateY(6.5px) rotate(45deg);
+  }
+  .nav-menu-btn[aria-expanded="true"] .menu-bar:nth-child(2) {
+    opacity: 0;
+  }
+  .nav-menu-btn[aria-expanded="true"] .menu-bar:nth-child(3) {
+    transform: translateY(-6.5px) rotate(-45deg);
+  }
+
+  /* Mobile menu */
+  .mobile-menu {
+    display: none;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    right: 0;
+    background: var(--c-surface);
+    border-bottom: 1px solid var(--c-border);
+    padding: 1.5rem;
+    transform: translateY(-8px);
+    opacity: 0;
+    transition: transform var(--duration-base) var(--ease-out), opacity var(--duration-base);
+  }
+
+  .mobile-menu.open {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  .mobile-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .mobile-link {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--c-text-muted);
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--c-border-dim);
+    text-decoration: none;
+    transition: color var(--duration-fast);
+  }
+
+  .mobile-link:last-of-type {
+    border-bottom: none;
+  }
+
+  .mobile-link:hover {
+    color: var(--c-text);
+  }
+
+  /* Skip to content */
+  .skip-link {
+    position: absolute;
+    top: -9999px;
+    left: 1rem;
+    background: var(--c-accent);
+    color: var(--c-bg);
+    padding: 0.5rem 1rem;
+    font-weight: 700;
+    font-size: 0.875rem;
+    z-index: 9999;
+  }
+
+  .skip-link:focus {
+    top: 1rem;
+  }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .nav-links,
+    .nav-cta {
+      display: none;
+    }
+
+    .nav-menu-btn {
+      display: flex;
+    }
+
+    .mobile-menu {
+      display: block;
+    }
+  }
+</style>
+
+<script>
+  // Scroll behaviour
+  const nav = document.getElementById('nav');
+  const handleScroll = () => {
+    nav?.classList.toggle('scrolled', window.scrollY > 20);
+  };
+  window.addEventListener('scroll', handleScroll, { passive: true });
+  handleScroll();
+
+  // Theme toggle
+  const themeBtn = document.getElementById('theme-toggle');
+  themeBtn?.addEventListener('click', () => {
+    const current = document.documentElement.getAttribute('data-theme') ?? 'dark';
+    const next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('viteo-theme', next);
+  });
+
+  // Mobile menu
+  const menuBtn = document.getElementById('menu-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  menuBtn?.addEventListener('click', () => {
+    const expanded = menuBtn.getAttribute('aria-expanded') === 'true';
+    menuBtn.setAttribute('aria-expanded', String(!expanded));
+    mobileMenu?.setAttribute('aria-hidden', String(expanded));
+    mobileMenu?.classList.toggle('open', !expanded);
+  });
+
+  // Close mobile menu on link click
+  mobileMenu?.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => {
+      menuBtn?.setAttribute('aria-expanded', 'false');
+      mobileMenu.setAttribute('aria-hidden', 'true');
+      mobileMenu.classList.remove('open');
+    });
+  });
+</script>
