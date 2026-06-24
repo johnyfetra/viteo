@@ -10,26 +10,63 @@ const { lang } = Astro.props;
 const t = useTranslations(lang);
 
 const stats = ['1', '2', '3', '4'] as const;
+
+// Accent color per stat: green, blue, red, green
+const accentVars = ['--c-accent', '--c-b', '--c-r', '--c-accent'] as const;
 ---
 
-<div class="stats-strip" aria-label={lang === 'fr' ? 'Chiffres clés' : 'Key figures'}>
+<section
+  class="s-stats"
+  aria-label={lang === 'fr' ? 'Chiffres clés' : 'Key figures'}
+>
   <div class="stats-inner">
-    {stats.map((n, i) => (
-      <div class={`stat-block reveal reveal-delay-${i + 1}`}>
-        <div class="stat-num" aria-label={t(`stats.${n}.num` as Parameters<typeof t>[0])}>
-          {t(`stats.${n}.num` as Parameters<typeof t>[0])}
+    {stats.map((n, i) => {
+      const raw = t(`stats.${n}.num` as Parameters<typeof t>[0]);
+      // Extract numeric part for counting animation
+      const numMatch = raw.replace(/\s/g, '').match(/[\d.]+/);
+      const numVal = numMatch ? numMatch[0] : '0';
+      const prefix = raw.split(numVal)[0] ?? '';
+      const suffix = raw.split(numVal)[1] ?? '';
+      const accent = accentVars[i];
+      return (
+        <div
+          class="stat-block"
+          style={`--stat-accent: var(${accent});`}
+          data-count={numVal}
+          data-prefix={prefix}
+          data-suffix={suffix}
+        >
+          <div class="stat-border-accent" aria-hidden="true"></div>
+          <div
+            class="stat-num"
+            aria-label={raw}
+            data-raw={raw}
+          >
+            <span class="stat-prefix">{prefix}</span><span
+              class="stat-counter"
+              data-target={numVal}
+            >{numVal}</span><span class="stat-suffix">{suffix}</span>
+          </div>
+          <div class="stat-underline" aria-hidden="true"></div>
+          <p class="stat-txt">{t(`stats.${n}.txt` as Parameters<typeof t>[0])}</p>
         </div>
-        <p class="stat-txt">{t(`stats.${n}.txt` as Parameters<typeof t>[0])}</p>
-      </div>
-    ))}
+      );
+    })}
   </div>
-</div>
+</section>
 
 <style>
-  .stats-strip {
-    background: var(--c-surface);
-    border-top: 1px solid var(--c-border);
-    border-bottom: 1px solid var(--c-border);
+  .s-stats {
+    --s-stats-bg: #F4F3EF;
+    --s-stats-text: #0F0D0B;
+    background: var(--s-stats-bg);
+    color: var(--s-stats-text);
+    padding-block: clamp(4rem, 8vw, 7rem);
+  }
+
+  :global([data-theme="dark"]) .s-stats {
+    --s-stats-bg: #0F1018;
+    --s-stats-text: var(--c-text);
   }
 
   .stats-inner {
@@ -38,55 +75,181 @@ const stats = ['1', '2', '3', '4'] as const;
     padding-inline: clamp(1.25rem, 4vw, 2.5rem);
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 0;
+    gap: 0 clamp(2rem, 4vw, 3.5rem);
   }
 
+  /* Left border accent */
   .stat-block {
-    padding: 2.5rem 2rem;
-    border-right: 1px solid var(--c-border);
+    position: relative;
+    padding-block: 0.5rem 1.5rem;
+    padding-left: 1.5rem;
+    transition: transform 0.3s ease;
   }
 
-  .stat-block:last-child {
-    border-right: none;
+  .stat-border-accent {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--stat-accent);
+    border-radius: 2px;
   }
 
+  /* Giant number */
   .stat-num {
-    font-family: var(--font-mono);
-    font-size: clamp(1.8rem, 3.5vw, 2.6rem);
-    font-weight: 700;
+    font-family: var(--font-display), 'Space Grotesk', sans-serif;
+    font-size: clamp(3.5rem, 7vw, 9rem);
+    font-weight: 900;
     letter-spacing: -0.04em;
-    color: var(--c-accent);
     line-height: 1;
+    color: var(--s-stats-text);
     margin-bottom: 0.5rem;
+    transition: transform 0.25s ease, text-shadow 0.25s ease;
+    will-change: transform;
   }
 
+  .stat-block:hover .stat-num {
+    transform: scale(1.05);
+    text-shadow: 0 0 40px color-mix(in srgb, var(--stat-accent) 50%, transparent);
+  }
+
+  /* Colored underline beneath number */
+  .stat-underline {
+    height: 3px;
+    width: clamp(2rem, 4vw, 3.5rem);
+    background: var(--stat-accent);
+    border-radius: 2px;
+    margin-bottom: 1rem;
+    transition: width 0.3s ease;
+  }
+
+  .stat-block:hover .stat-underline {
+    width: clamp(3rem, 6vw, 5rem);
+  }
+
+  /* Label / description text */
   .stat-txt {
-    font-size: 0.8rem;
-    color: var(--c-text-muted);
-    line-height: 1.55;
-    max-width: 24ch;
+    font-family: var(--font-body), 'Inter', sans-serif;
+    font-size: clamp(0.75rem, 1.1vw, 0.875rem);
+    font-weight: 400;
+    line-height: 1.6;
+    color: var(--s-stats-text);
+    opacity: 0.6;
+    max-width: 26ch;
   }
 
-  @media (max-width: 860px) {
+  :global([data-theme="dark"]) .stat-txt {
+    color: var(--c-text-muted);
+    opacity: 1;
+  }
+
+  /* Count-up initial state */
+  .stat-block[data-counting] .stat-num {
+    opacity: 1;
+  }
+
+  /* Reveal animation */
+  .stat-block {
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+      opacity 0.6s ease,
+      transform 0.6s ease;
+  }
+
+  .stat-block.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Stagger per child */
+  .stat-block:nth-child(1) { transition-delay: 0ms; }
+  .stat-block:nth-child(2) { transition-delay: 100ms; }
+  .stat-block:nth-child(3) { transition-delay: 200ms; }
+  .stat-block:nth-child(4) { transition-delay: 300ms; }
+
+  /* Override hover transform after reveal */
+  .stat-block.is-visible:hover .stat-num {
+    transform: scale(1.05);
+  }
+
+  @media (max-width: 900px) {
     .stats-inner {
       grid-template-columns: repeat(2, 1fr);
-    }
-    .stat-block:nth-child(2) { border-right: none; }
-    .stat-block:nth-child(1),
-    .stat-block:nth-child(2) {
-      border-bottom: 1px solid var(--c-border);
+      gap: clamp(2rem, 5vw, 3rem) clamp(2rem, 4vw, 3.5rem);
     }
   }
 
   @media (max-width: 480px) {
     .stats-inner {
       grid-template-columns: 1fr;
+      gap: 2.5rem;
     }
-    .stat-block {
-      border-right: none;
-      border-bottom: 1px solid var(--c-border);
+
+    .stat-num {
+      font-size: clamp(3rem, 15vw, 4.5rem);
     }
-    .stat-block:last-child { border-bottom: none; }
-    .stat-block:nth-child(2) { border-bottom: 1px solid var(--c-border); }
   }
 </style>
+
+<script>
+  function easeOutQuart(t: number): number {
+    return 1 - Math.pow(1 - t, 4);
+  }
+
+  function animateCount(el: HTMLElement, target: number, duration: number, isFloat: boolean) {
+    const start = performance.now();
+    function step(now: number) {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = easeOutQuart(progress);
+      const current = eased * target;
+      el.textContent = isFloat
+        ? current.toFixed(1)
+        : Math.floor(current).toString();
+      if (progress < 1) {
+        requestAnimationFrame(step);
+      } else {
+        el.textContent = isFloat ? target.toFixed(1) : target.toString();
+      }
+    }
+    requestAnimationFrame(step);
+  }
+
+  function initStats() {
+    const blocks = document.querySelectorAll<HTMLElement>('.stat-block');
+    if (!blocks.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const block = entry.target as HTMLElement;
+          block.classList.add('is-visible');
+
+          // Count-up animation
+          const counterEl = block.querySelector<HTMLElement>('.stat-counter');
+          if (counterEl && !block.dataset.counted) {
+            block.dataset.counted = '1';
+            const rawTarget = counterEl.dataset.target ?? '0';
+            const isFloat = rawTarget.includes('.');
+            const targetNum = parseFloat(rawTarget);
+            if (!isNaN(targetNum) && targetNum > 0) {
+              animateCount(counterEl, targetNum, 1800, isFloat);
+            }
+          }
+
+          observer.unobserve(block);
+        });
+      },
+      { threshold: 0.2 }
+    );
+
+    blocks.forEach((block) => observer.observe(block));
+  }
+
+  // Run on initial load and after Astro page transitions
+  document.addEventListener('DOMContentLoaded', initStats);
+  document.addEventListener('astro:page-load', initStats);
+</script>

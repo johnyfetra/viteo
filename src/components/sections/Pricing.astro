@@ -12,57 +12,104 @@ const t = useTranslations(lang);
 const ta = useTranslationArray(lang);
 
 const tiers = [
-  { key: '1', featured: false, priceColor: 'blue'   },
-  { key: '2', featured: true,  priceColor: 'accent' },
-  { key: '3', featured: false, priceColor: 'warn'   },
+  { key: '1', personality: 'essential' },
+  { key: '2', personality: 'performance' },
+  { key: '3', personality: 'signature'  },
 ] as const;
+
+const trustLabel = lang === 'fr'
+  ? 'Garantie satisfaction 30 jours — ou remboursé'
+  : '30-day satisfaction guarantee — or your money back';
+
+const deliveryLabels: Record<string, string> = {
+  '1': lang === 'fr' ? '7 jours' : '7 days',
+  '2': lang === 'fr' ? '14 jours' : '14 days',
+  '3': lang === 'fr' ? '21 jours' : '21 days',
+};
 ---
 
-<section class="section pricing-section" id="pricing">
-  <div class="container">
+<section class="s-pricing" id="pricing">
+  <div class="pc-wrap">
+
     {!compact && (
-      <>
-        <div class="eyebrow reveal">
-          <span class="eyebrow-dot" aria-hidden="true"></span>
+      <header class="pc-header reveal">
+        <span class="pc-eyebrow" aria-label="Section pricing">
+          <span class="pc-eyebrow-dot" aria-hidden="true"></span>
           {t('pricing.eyebrow')}
-        </div>
-        <h2 class="pricing-h2 reveal">{t('pricing.h2')}</h2>
-        <p class="pricing-intro reveal">{t('pricing.intro')}</p>
-      </>
+        </span>
+        <h2 class="pc-h2">{t('pricing.h2')}</h2>
+        <p class="pc-intro">{t('pricing.intro')}</p>
+      </header>
     )}
 
-    <div class="pricing-grid">
-      {tiers.map(({ key, featured, priceColor }, i) => {
+    <div class="pc-grid" role="list">
+      {tiers.map(({ key, personality }, i) => {
         const features = ta(`pricing.${key}.features` as Parameters<typeof ta>[0]);
+        const isPerf = personality === 'performance';
+        const isSig  = personality === 'signature';
         return (
-          <article class={`pricing-card reveal reveal-delay-${i + 1} ${featured ? 'pricing-card-featured' : ''}`}>
-            {featured && (
-              <div class="pricing-popular-badge">
+          <article
+            class={`pc-card pc-card--${personality} reveal reveal-delay-${i + 1}`}
+            role="listitem"
+            aria-label={t(`pricing.${key}.name` as Parameters<typeof t>[0])}
+          >
+            {isPerf && (
+              <div class="pc-badge pc-badge--perf" aria-label={t('pricing.popular')}>
                 {t('pricing.popular')}
               </div>
             )}
-            <div class="pricing-card-inner">
-              <div class="pricing-tier">{t(`pricing.${key}.tier` as Parameters<typeof t>[0])}</div>
-              <div class="pricing-name">{t(`pricing.${key}.name` as Parameters<typeof t>[0])}</div>
-              <div class={`pricing-price pricing-price-${priceColor}`}>
-                {t(`pricing.${key}.price` as Parameters<typeof t>[0])}
+            {isSig && (
+              <div class="pc-badge pc-badge--sig" aria-label={lang === 'fr' ? 'Premium' : 'Premium'}>
+                {lang === 'fr' ? 'Premium' : 'Premium'}
               </div>
-              <div class="pricing-note">{t(`pricing.${key}.note` as Parameters<typeof t>[0])}</div>
+            )}
 
-              <hr class="divider" style="margin-block: 1.5rem;" />
+            <div class="pc-card-body">
+              <div class="pc-tier-label">
+                {t(`pricing.${key}.tier` as Parameters<typeof t>[0])}
+              </div>
 
-              <ul class="pricing-features" aria-label={lang === 'fr' ? 'Fonctionnalités incluses' : 'Included features'}>
-                {features.map((f) => (
-                  <li class="pricing-feature">
-                    <span class="feature-check" aria-hidden="true">✓</span>
+              <div class="pc-name">
+                {t(`pricing.${key}.name` as Parameters<typeof t>[0])}
+              </div>
+
+              <div class="pc-price-block">
+                <span class="pc-price">
+                  {t(`pricing.${key}.price` as Parameters<typeof t>[0])}
+                </span>
+                <span class="pc-delivery" aria-label={lang === 'fr' ? `Livraison en ${deliveryLabels[key]}` : `Delivery in ${deliveryLabels[key]}`}>
+                  {deliveryLabels[key]}
+                </span>
+              </div>
+
+              <p class="pc-note">
+                {t(`pricing.${key}.note` as Parameters<typeof t>[0])}
+              </p>
+
+              <div class="pc-divider" aria-hidden="true"></div>
+
+              <ul
+                class="pc-features"
+                aria-label={lang === 'fr' ? 'Fonctionnalités incluses' : 'Included features'}
+              >
+                {features.map((f, fi) => (
+                  <li class="pc-feature">
+                    <span class="pc-check" aria-hidden="true">
+                      <svg width="12" height="10" viewBox="0 0 12 10" fill="none" aria-hidden="true">
+                        <path d="M1 5L4.5 8.5L11 1.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </span>
                     <span>{f}</span>
                   </li>
                 ))}
               </ul>
+            </div>
 
+            <div class="pc-card-footer">
               <a
                 href={localizePath('/contact', lang)}
-                class={`btn ${featured ? 'btn-primary' : 'btn-ghost'} pricing-cta`}
+                class={`pc-cta pc-cta--${personality}`}
+                aria-label={`${t('pricing.cta1')} — ${t(`pricing.${key}.name` as Parameters<typeof t>[0])}`}
               >
                 {t('pricing.cta1')}
               </a>
@@ -71,146 +118,583 @@ const tiers = [
         );
       })}
     </div>
+
+    <div class="pc-trust reveal" aria-label={trustLabel}>
+      <span class="pc-trust-icon" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M8 1L10.2 5.5L15 6.2L11.5 9.6L12.4 14.4L8 12.1L3.6 14.4L4.5 9.6L1 6.2L5.8 5.5L8 1Z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      {trustLabel}
+    </div>
+
   </div>
 </section>
 
 <style>
-  .pricing-section {
-    background: var(--c-bg);
+  /* ─── Section shell ──────────────────────────────────────────── */
+  .s-pricing {
+    background: var(--s-pricing-bg, #F8F6F2);
+    color: var(--s-pricing-text, #0F0D0B);
+    padding-block: 7rem 6rem;
   }
 
-  .pricing-h2 {
-    max-width: 30ch;
+  :global([data-theme="dark"]) .s-pricing {
+    --s-pricing-bg: #0A0C12;
+    --s-pricing-text: #D8DFF0;
+  }
+
+  .pc-wrap {
+    width: min(1160px, 100% - 3rem);
+    margin-inline: auto;
+  }
+
+  /* ─── Header ─────────────────────────────────────────────────── */
+  .pc-header {
+    margin-bottom: 4rem;
+    max-width: 52ch;
+  }
+
+  .pc-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--c-text-muted, #5B6FA3);
+    margin-bottom: 1.25rem;
+  }
+
+  :global([data-theme="dark"]) .pc-eyebrow {
+    color: #5B6FA3;
+  }
+
+  .pc-eyebrow-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--c-accent, #007A34);
+    flex-shrink: 0;
+  }
+
+  :global([data-theme="dark"]) .pc-eyebrow-dot {
+    background: #3DFF7A;
+  }
+
+  .pc-h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 3.5vw, 2.75rem);
+    font-weight: 700;
+    letter-spacing: -0.035em;
+    line-height: 1.1;
+    color: var(--s-pricing-text, #0F0D0B);
     margin-bottom: 1rem;
   }
 
-  .pricing-intro {
-    font-size: 1rem;
-    color: var(--c-text-muted);
-    max-width: 60ch;
-    line-height: 1.75;
-    margin-bottom: 3rem;
+  .pc-intro {
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: #5B6867;
+    max-width: 58ch;
   }
 
-  .pricing-grid {
+  :global([data-theme="dark"]) .pc-intro {
+    color: #5B6FA3;
+  }
+
+  /* ─── Grid ───────────────────────────────────────────────────── */
+  .pc-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    background: var(--c-border);
+    gap: 1.25rem;
+    align-items: start;
   }
 
-  .pricing-card {
-    background: var(--c-surface);
+  /* ─── Card base ──────────────────────────────────────────────── */
+  .pc-card {
     position: relative;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
 
-  .pricing-card-featured {
-    background: var(--c-surface-2);
+  .pc-card:focus-within {
+    outline: 2px solid var(--c-accent, #007A34);
+    outline-offset: 2px;
   }
 
-  .pricing-popular-badge {
+  /* ─── Essentiel personality ──────────────────────────────────── */
+  .pc-card--essential {
+    background: #FFFFFF;
+    border: 1px solid #E0DDD6;
+  }
+
+  :global([data-theme="dark"]) .pc-card--essential {
+    background: #0D1119;
+    border-color: #1C2A50;
+  }
+
+  .pc-card--essential:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.06);
+  }
+
+  :global([data-theme="dark"]) .pc-card--essential:hover {
+    box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+  }
+
+  /* ─── Performance personality ────────────────────────────────── */
+  .pc-card--performance {
+    background: linear-gradient(150deg, #0C1828 0%, #0A1422 100%);
+    border: 2px solid #3DFF7A;
+    box-shadow: 0 0 0 0 rgba(61,255,122,0);
+    margin-top: -1rem;
+    margin-bottom: -1rem;
+    z-index: 2;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .pc-card--performance:hover {
+    transform: translateY(-4px);
+    box-shadow:
+      0 0 0 4px rgba(61, 255, 122, 0.08),
+      0 20px 60px rgba(61, 255, 122, 0.12);
+  }
+
+  /* ─── Signature personality ──────────────────────────────────── */
+  .pc-card--signature {
+    background: #0F0C08;
+    border: 1px solid #2A2118;
+    background-image:
+      repeating-linear-gradient(
+        45deg,
+        rgba(201,169,110,0.025) 0px,
+        rgba(201,169,110,0.025) 1px,
+        transparent 1px,
+        transparent 6px
+      );
+  }
+
+  .pc-card--signature:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 50px rgba(201,169,110,0.1);
+  }
+
+  /* ─── Badges ─────────────────────────────────────────────────── */
+  .pc-badge {
     position: absolute;
-    top: 0;
-    right: 1.5rem;
-    transform: translateY(-50%);
-    background: var(--c-accent);
-    color: var(--c-bg);
+    top: 1.25rem;
+    right: 1.25rem;
     font-family: var(--font-mono);
-    font-size: 0.58rem;
+    font-size: 0.56rem;
     font-weight: 700;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    padding: 0.25rem 0.65rem;
+    padding: 0.28rem 0.65rem;
+    border-radius: 2px;
   }
 
-  .pricing-card-inner {
-    padding: 2.5rem 2rem;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
+  .pc-badge--perf {
+    background: #3DFF7A;
+    color: #050E08;
   }
 
-  .pricing-tier {
-    font-family: var(--font-mono);
-    font-size: 0.6rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--c-text-dim);
-    margin-bottom: 0.4rem;
+  .pc-badge--sig {
+    background: transparent;
+    border: 1px solid #C9A96E;
+    color: #C9A96E;
   }
 
-  .pricing-name {
-    font-family: var(--font-display);
-    font-size: 1.4rem;
-    font-weight: 700;
-    letter-spacing: -0.03em;
-    color: var(--c-text);
-    margin-bottom: 0.5rem;
-  }
-
-  .pricing-price {
-    font-family: var(--font-mono);
-    font-size: 2.4rem;
-    font-weight: 700;
-    letter-spacing: -0.04em;
-    line-height: 1;
-    margin-bottom: 0.25rem;
-  }
-
-  .pricing-price-accent { color: var(--c-accent); }
-  .pricing-price-blue   { color: var(--c-blue); }
-  .pricing-price-warn   { color: var(--c-warn); }
-
-  .pricing-note {
-    font-family: var(--font-mono);
-    font-size: 0.68rem;
-    color: var(--c-text-muted);
-    letter-spacing: 0.02em;
-  }
-
-  .pricing-features {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 0.65rem;
-    margin-bottom: 2rem;
+  /* ─── Card body ──────────────────────────────────────────────── */
+  .pc-card-body {
+    padding: 2.25rem 2rem 1.5rem;
     flex: 1;
   }
 
-  .pricing-feature {
-    display: flex;
-    gap: 0.6rem;
-    font-size: 0.85rem;
-    color: var(--c-text-muted);
-    line-height: 1.5;
+  .pc-tier-label {
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
   }
 
-  .feature-check {
-    color: var(--c-accent);
+  .pc-card--essential .pc-tier-label   { color: #9BA8B0; }
+  .pc-card--performance .pc-tier-label { color: rgba(61,255,122,0.5); }
+  .pc-card--signature .pc-tier-label   { color: rgba(201,169,110,0.5); }
+
+  .pc-name {
+    font-family: var(--font-display);
     font-weight: 700;
+    font-size: 1.3rem;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+  }
+
+  .pc-card--essential .pc-name {
+    color: #0F0D0B;
+  }
+
+  :global([data-theme="dark"]) .pc-card--essential .pc-name {
+    color: #D8DFF0;
+  }
+
+  .pc-card--performance .pc-name {
+    color: #E8F4FF;
+  }
+
+  .pc-card--signature .pc-name {
+    color: #C9A96E;
+  }
+
+  /* ─── Price block ────────────────────────────────────────────── */
+  .pc-price-block {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    margin-bottom: 0.35rem;
+  }
+
+  .pc-price {
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: clamp(2.4rem, 4vw, 3rem);
+    letter-spacing: -0.04em;
+    line-height: 1;
+  }
+
+  .pc-card--essential .pc-price {
+    color: #0F0D0B;
+  }
+
+  :global([data-theme="dark"]) .pc-card--essential .pc-price {
+    color: #D8DFF0;
+  }
+
+  .pc-card--performance .pc-price {
+    color: #3DFF7A;
+  }
+
+  .pc-card--signature .pc-price {
+    color: #C9A96E;
+  }
+
+  .pc-delivery {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+    padding: 0.2rem 0.5rem;
+    border-radius: 2px;
+  }
+
+  .pc-card--essential .pc-delivery {
+    background: #F0EDE8;
+    color: #6B6460;
+  }
+
+  :global([data-theme="dark"]) .pc-card--essential .pc-delivery {
+    background: #1C2A50;
+    color: #5B6FA3;
+  }
+
+  .pc-card--performance .pc-delivery {
+    background: rgba(61,255,122,0.1);
+    color: rgba(61,255,122,0.7);
+  }
+
+  .pc-card--signature .pc-delivery {
+    background: rgba(201,169,110,0.08);
+    color: rgba(201,169,110,0.6);
+  }
+
+  .pc-note {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.03em;
+    margin-bottom: 0;
+  }
+
+  .pc-card--essential .pc-note {
+    color: #9BA8B0;
+  }
+
+  :global([data-theme="dark"]) .pc-card--essential .pc-note {
+    color: #3E4F70;
+  }
+
+  .pc-card--performance .pc-note {
+    color: rgba(200,220,255,0.35);
+  }
+
+  .pc-card--signature .pc-note {
+    color: rgba(201,169,110,0.4);
+  }
+
+  /* ─── Divider ────────────────────────────────────────────────── */
+  .pc-divider {
+    height: 1px;
+    margin-block: 1.5rem;
+  }
+
+  .pc-card--essential .pc-divider {
+    background: #E8E4DE;
+  }
+
+  :global([data-theme="dark"]) .pc-card--essential .pc-divider {
+    background: #1C2A50;
+  }
+
+  .pc-card--performance .pc-divider {
+    background: rgba(61,255,122,0.12);
+  }
+
+  .pc-card--signature .pc-divider {
+    background: rgba(201,169,110,0.15);
+  }
+
+  /* ─── Features ───────────────────────────────────────────────── */
+  .pc-features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    margin: 0;
+    padding: 0;
+  }
+
+  .pc-feature {
+    display: flex;
+    gap: 0.65rem;
+    font-family: var(--font-body);
+    font-size: 0.82rem;
+    line-height: 1.5;
+    align-items: flex-start;
+  }
+
+  .pc-card--essential .pc-feature {
+    color: #4A4845;
+  }
+
+  :global([data-theme="dark"]) .pc-card--essential .pc-feature {
+    color: #7A8FAE;
+  }
+
+  .pc-card--performance .pc-feature {
+    color: rgba(200,220,255,0.65);
+  }
+
+  .pc-card--signature .pc-feature {
+    color: rgba(220,200,170,0.6);
+  }
+
+  .pc-check {
     flex-shrink: 0;
-    margin-top: 0.05em;
-  }
-
-  .pricing-cta {
-    width: 100%;
+    margin-top: 0.22em;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
     justify-content: center;
-    margin-top: auto;
   }
 
-  @media (max-width: 860px) {
-    .pricing-grid {
+  .pc-card--essential .pc-check {
+    background: #EDF7F1;
+    color: #007A34;
+  }
+
+  :global([data-theme="dark"]) .pc-card--essential .pc-check {
+    background: rgba(61,255,122,0.08);
+    color: #3DFF7A;
+  }
+
+  .pc-card--performance .pc-check {
+    background: rgba(61,255,122,0.12);
+    color: #3DFF7A;
+  }
+
+  .pc-card--signature .pc-check {
+    background: rgba(201,169,110,0.1);
+    color: #C9A96E;
+  }
+
+  /* ─── Card footer / CTA ──────────────────────────────────────── */
+  .pc-card-footer {
+    padding: 0 2rem 2rem;
+  }
+
+  .pc-cta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 0.85rem 1.5rem;
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    text-decoration: none;
+    border-radius: 3px;
+    transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .pc-cta:focus-visible {
+    outline: 2px solid var(--c-accent, #007A34);
+    outline-offset: 3px;
+  }
+
+  .pc-cta--essential {
+    background: transparent;
+    color: #0F0D0B;
+    border: 1.5px solid #C8C4BC;
+  }
+
+  .pc-cta--essential:hover {
+    background: #0F0D0B;
+    color: #F8F6F2;
+    border-color: #0F0D0B;
+  }
+
+  :global([data-theme="dark"]) .pc-cta--essential {
+    color: #D8DFF0;
+    border-color: #1C2A50;
+  }
+
+  :global([data-theme="dark"]) .pc-cta--essential:hover {
+    background: #1C2A50;
+    color: #D8DFF0;
+  }
+
+  .pc-cta--performance {
+    background: #3DFF7A;
+    color: #030E07;
+    border: none;
+  }
+
+  .pc-cta--performance:hover {
+    background: #5EFFA0;
+    box-shadow: 0 6px 24px rgba(61,255,122,0.3);
+  }
+
+  .pc-cta--signature {
+    background: transparent;
+    color: #C9A96E;
+    border: 1.5px solid #C9A96E;
+  }
+
+  .pc-cta--signature:hover {
+    background: #C9A96E;
+    color: #0F0C08;
+  }
+
+  /* ─── Trust strip ────────────────────────────────────────────── */
+  .pc-trust {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 3rem;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #9BA8B0;
+  }
+
+  :global([data-theme="dark"]) .pc-trust {
+    color: #3E4F70;
+  }
+
+  .pc-trust-icon {
+    display: flex;
+    align-items: center;
+    color: var(--c-accent, #007A34);
+    flex-shrink: 0;
+  }
+
+  :global([data-theme="dark"]) .pc-trust-icon {
+    color: #3DFF7A;
+  }
+
+  /* ─── Scroll reveal ──────────────────────────────────────────── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px) scale(0.98);
+    transition: opacity 0.55s ease, transform 0.55s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  .reveal-delay-1 { transition-delay: 0.05s; }
+  .reveal-delay-2 { transition-delay: 0.18s; }
+  .reveal-delay-3 { transition-delay: 0.31s; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+
+  /* ─── Responsive ─────────────────────────────────────────────── */
+  @media (max-width: 900px) {
+    .pc-grid {
       grid-template-columns: 1fr;
-      background: none;
       gap: 1rem;
     }
 
-    .pricing-card {
-      border: 1px solid var(--c-border);
+    .pc-card--performance {
+      margin-top: 0;
+      margin-bottom: 0;
     }
 
-    .pricing-card-featured {
-      border-color: var(--c-accent);
+    .s-pricing {
+      padding-block: 5rem 4rem;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .pc-card-body {
+      padding: 1.75rem 1.5rem 1.25rem;
+    }
+
+    .pc-card-footer {
+      padding: 0 1.5rem 1.75rem;
     }
   }
 </style>
+
+<script>
+  // Intersection observer for reveal animations
+  if (typeof IntersectionObserver !== 'undefined') {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+    );
+
+    document.querySelectorAll('#pricing .reveal').forEach((el) => {
+      observer.observe(el);
+    });
+  } else {
+    // Fallback: show all immediately if IntersectionObserver unavailable
+    document.querySelectorAll('#pricing .reveal').forEach((el) => {
+      el.classList.add('visible');
+    });
+  }
+</script>

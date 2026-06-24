@@ -8,136 +8,412 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = useTranslations(lang);
+
+// Headline split: line 1 = main statement, line 2 (accent) = time promise
+const h2Full = t('cta.h2');
+const splitPhrase = lang === 'fr' ? 'dans 7 jours' : 'in 7 days';
+const splitIdx = h2Full.toLowerCase().indexOf(splitPhrase);
+const ctaLine1 = splitIdx > 0
+  ? h2Full.slice(0, splitIdx).trim().replace(/[,.]$/, '') + '.'
+  : h2Full;
+const ctaLine2 = splitIdx > 0
+  ? h2Full.slice(splitIdx).charAt(0).toUpperCase() + h2Full.slice(splitIdx + 1)
+  : (lang === 'fr' ? 'En 7 jours.' : 'In 7 days.');
 ---
 
-<section class="cta-section" aria-labelledby="cta-heading">
+<section class="s-cta" aria-labelledby="cta-heading">
+
+  <!-- Fine grid background -->
+  <div class="cta-grid" aria-hidden="true"></div>
+
+  <!-- Pulsing radial glow -->
   <div class="cta-glow" aria-hidden="true"></div>
 
-  <div class="container cta-inner">
-    <div class="cta-content">
-      <div class="eyebrow reveal">
-        <span class="eyebrow-dot" aria-hidden="true"></span>
-        {t('cta.eyebrow')}
+  <div class="cta-container">
+
+    <!-- Eyebrow label -->
+    <div class="cta-eyebrow" aria-hidden="true">
+      <span class="cta-eyebrow-dot"></span>
+      <span class="cta-eyebrow-text">{t('cta.eyebrow')}</span>
+    </div>
+
+    <!-- Main headline — split animation: line 1 slides from left, line 2 (accent) from right -->
+    <h2 class="cta-headline" id="cta-heading">
+      <span class="cta-line cta-line--left">{ctaLine1}</span>
+      <span class="cta-line cta-line--right cta-line--accent">{ctaLine2}</span>
+    </h2>
+
+    <!-- Subtext -->
+    <p class="cta-sub">{t('cta.sub')}</p>
+
+    <!-- CTA buttons — magnetic effect -->
+    <div class="cta-actions">
+      <a
+        href={localizePath('/contact', lang)}
+        class="cta-btn cta-btn--primary"
+        data-magnetic
+      >
+        <span class="cta-btn-inner">{t('cta.btn1')}</span>
+        <span class="cta-btn-arrow" aria-hidden="true">→</span>
+      </a>
+      <a
+        href={localizePath(lang === 'fr' ? '/tarifs' : '/pricing', lang)}
+        class="cta-btn cta-btn--ghost"
+        data-magnetic
+      >
+        <span class="cta-btn-inner">{t('cta.btn2')}</span>
+      </a>
+    </div>
+
+    <!-- Metrics bar -->
+    <div class="cta-metrics" role="list" aria-label={lang === 'fr' ? 'Indicateurs clés' : 'Key metrics'}>
+      <div class="cta-metric" role="listitem">
+        <span class="cta-metric-val">98<span class="cta-metric-sup">+</span></span>
+        <span class="cta-metric-label">Lighthouse Score</span>
       </div>
-      <h2 class="cta-h2 reveal" id="cta-heading">{t('cta.h2')}</h2>
-      <p class="cta-sub reveal">{t('cta.sub')}</p>
-      <div class="cta-actions reveal">
-        <a href={localizePath('/contact', lang)} class="btn btn-primary btn-lg">
-          {t('cta.btn1')}
-        </a>
-        <a href={localizePath(lang === 'fr' ? '/tarifs' : '/pricing', lang)} class="btn btn-ghost btn-lg">
-          {t('cta.btn2')}
-        </a>
+      <div class="cta-metric-divider" aria-hidden="true"></div>
+      <div class="cta-metric" role="listitem">
+        <span class="cta-metric-val">40<span class="cta-metric-sup">+</span></span>
+        <span class="cta-metric-label">{lang === 'fr' ? 'Sites livrés' : 'Sites shipped'}</span>
+      </div>
+      <div class="cta-metric-divider" aria-hidden="true"></div>
+      <div class="cta-metric" role="listitem">
+        <span class="cta-metric-val">100<span class="cta-metric-sup">%</span></span>
+        <span class="cta-metric-label">{lang === 'fr' ? 'Satisfaction client' : 'Client satisfaction'}</span>
       </div>
     </div>
 
-    <!-- Decorative metrics -->
-    <div class="cta-metrics" aria-hidden="true">
-      <div class="cta-metric">
-        <span class="cta-metric-val metric-value">100</span>
-        <span class="cta-metric-label">Performance</span>
-      </div>
-      <div class="cta-metric">
-        <span class="cta-metric-val metric-value">100</span>
-        <span class="cta-metric-label">SEO</span>
-      </div>
-      <div class="cta-metric">
-        <span class="cta-metric-val metric-value">7j</span>
-        <span class="cta-metric-label">{lang === 'fr' ? 'Livraison' : 'Delivery'}</span>
-      </div>
-      <div class="cta-metric">
-        <span class="cta-metric-val metric-value">0€</span>
-        <span class="cta-metric-label">{lang === 'fr' ? '1er échange' : 'First call'}</span>
-      </div>
-    </div>
+    <!-- Fine print -->
+    <p class="cta-fine">
+      {lang === 'fr'
+        ? 'Premier échange gratuit · Aucun engagement · Livraison garantie sous 7 jours ou remboursé'
+        : 'Free first call · No commitment · Delivery guaranteed in 7 days or refunded'}
+    </p>
+
   </div>
 </section>
 
 <style>
-  .cta-section {
-    padding-block: var(--space-2xl);
+  /* ── Section shell ─────────────────────────────────────────────────────── */
+  .s-cta {
+    background: #030408;
+    color: #E0E8FF;
     position: relative;
     overflow: hidden;
-    background: var(--c-bg);
+    padding-block: clamp(5rem, 12vw, 10rem);
+    isolation: isolate;
   }
 
+  /* ── Fine grid ─────────────────────────────────────────────────────────── */
+  .cta-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      repeating-linear-gradient(0deg,   transparent, transparent 59px, rgba(28, 42, 80, 0.18) 59px, rgba(28, 42, 80, 0.18) 60px),
+      repeating-linear-gradient(90deg,  transparent, transparent 59px, rgba(28, 42, 80, 0.18) 59px, rgba(28, 42, 80, 0.18) 60px);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── Pulsing radial glow ───────────────────────────────────────────────── */
   .cta-glow {
     position: absolute;
     inset: 0;
-    background: radial-gradient(ellipse 60% 80% at 30% 60%, var(--c-accent-glow), transparent 65%);
+    background: radial-gradient(ellipse 55% 60% at 50% 52%, rgba(61, 255, 122, 0.07), transparent 70%);
     pointer-events: none;
+    z-index: 0;
+    animation: ctaGlowPulse 3s ease-in-out infinite;
   }
 
-  .cta-inner {
-    display: grid;
-    grid-template-columns: 1.4fr 0.6fr;
-    gap: 5rem;
-    align-items: center;
+  @keyframes ctaGlowPulse {
+    0%, 100% { transform: scale(1);    opacity: 1; }
+    50%       { transform: scale(1.12); opacity: 0.7; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cta-glow { animation: none; }
+  }
+
+  /* ── Container ─────────────────────────────────────────────────────────── */
+  .cta-container {
     position: relative;
     z-index: 1;
+    max-width: 860px;
+    margin-inline: auto;
+    padding-inline: clamp(1.25rem, 5vw, 3rem);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0;
   }
 
-  .cta-h2 {
-    max-width: 30ch;
-    margin-bottom: 1rem;
-    font-size: clamp(2rem, 4vw, 3.2rem);
-  }
-
-  .cta-sub {
-    font-size: 1rem;
-    color: var(--c-text-muted);
-    line-height: 1.75;
+  /* ── Eyebrow ───────────────────────────────────────────────────────────── */
+  .cta-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
     margin-bottom: 2rem;
-    max-width: 50ch;
+    font-family: var(--font-mono, ui-monospace);
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #5B6FA3;
   }
 
+  .cta-eyebrow-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #3DFF7A;
+    flex-shrink: 0;
+    animation: ctaDotBlink 2.4s ease-in-out infinite;
+  }
+
+  @keyframes ctaDotBlink {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0.3; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cta-eyebrow-dot { animation: none; }
+  }
+
+  /* ── Headline ──────────────────────────────────────────────────────────── */
+  .cta-headline {
+    font-family: var(--font-display, 'Space Grotesk Variable', sans-serif);
+    font-size: clamp(2.8rem, 8vw, 7rem);
+    font-weight: 900;
+    letter-spacing: -0.035em;
+    line-height: 0.96;
+    margin-bottom: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.08em;
+  }
+
+  .cta-line {
+    display: block;
+    opacity: 0;
+    transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .cta-line--left  { transform: translateX(-3rem); }
+  .cta-line--right { transform: translateX(3rem); }
+  .cta-line--accent { color: #3DFF7A; }
+
+  /* Revealed state */
+  .s-cta.is-visible .cta-line { opacity: 1; transform: translateX(0); }
+  .s-cta.is-visible .cta-line--right { transition-delay: 0.12s; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cta-line { opacity: 1; transform: none; transition: none; }
+  }
+
+  /* ── Sub ───────────────────────────────────────────────────────────────── */
+  .cta-sub {
+    font-family: var(--font-body, 'Inter Variable', sans-serif);
+    font-size: clamp(0.95rem, 1.6vw, 1.1rem);
+    color: #5B6FA3;
+    line-height: 1.7;
+    max-width: 520px;
+    margin-bottom: 2.5rem;
+  }
+
+  /* ── Buttons ───────────────────────────────────────────────────────────── */
   .cta-actions {
     display: flex;
-    gap: 0.75rem;
+    gap: 0.875rem;
     flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 3.5rem;
   }
 
-  /* Metrics decorative */
+  .cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-display, 'Space Grotesk Variable', sans-serif);
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    padding: 0.875rem 1.75rem;
+    border-radius: 3px;
+    cursor: pointer;
+    text-decoration: none;
+    position: relative;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    will-change: transform;
+  }
+
+  .cta-btn:focus-visible {
+    outline: 2px solid #3DFF7A;
+    outline-offset: 3px;
+  }
+
+  .cta-btn--primary {
+    background: #3DFF7A;
+    color: #030408;
+    box-shadow: 0 0 0 0 rgba(61, 255, 122, 0);
+  }
+
+  .cta-btn--primary:hover {
+    box-shadow: 0 0 28px rgba(61, 255, 122, 0.35);
+  }
+
+  .cta-btn--ghost {
+    background: transparent;
+    color: #E0E8FF;
+    border: 1px solid #1C2A50;
+  }
+
+  .cta-btn--ghost:hover {
+    border-color: #3DFF7A;
+    color: #3DFF7A;
+  }
+
+  .cta-btn-arrow {
+    display: inline-block;
+    transition: transform 0.2s ease;
+  }
+
+  .cta-btn--primary:hover .cta-btn-arrow {
+    transform: translateX(3px);
+  }
+
+  /* ── Metrics bar ───────────────────────────────────────────────────────── */
   .cta-metrics {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1px;
-    background: var(--c-border);
-    border: 1px solid var(--c-border);
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+    margin-bottom: 2rem;
+    padding: 1.75rem 2.5rem;
+    border: 1px solid #1C2A50;
+    border-radius: 3px;
+    background: rgba(12, 18, 32, 0.6);
+    backdrop-filter: blur(4px);
   }
 
   .cta-metric {
-    background: var(--c-surface);
-    padding: 1.5rem;
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 0.3rem;
   }
 
   .cta-metric-val {
-    font-family: var(--font-mono);
-    font-size: 2rem;
-    font-weight: 700;
+    font-family: var(--font-display, 'Space Grotesk Variable', sans-serif);
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
+    font-weight: 900;
     letter-spacing: -0.04em;
     line-height: 1;
+    color: #E0E8FF;
+  }
+
+  .cta-metric-sup {
+    font-size: 0.55em;
+    color: #3DFF7A;
+    vertical-align: super;
+    margin-left: 0.05em;
   }
 
   .cta-metric-label {
-    font-family: var(--font-mono);
-    font-size: 0.62rem;
-    letter-spacing: 0.1em;
+    font-family: var(--font-mono, ui-monospace);
+    font-size: 0.58rem;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--c-text-muted);
+    color: #5B6FA3;
+    white-space: nowrap;
   }
 
-  @media (max-width: 860px) {
-    .cta-inner {
-      grid-template-columns: 1fr;
-      gap: 2.5rem;
+  .cta-metric-divider {
+    width: 1px;
+    height: 2.5rem;
+    background: #1C2A50;
+    flex-shrink: 0;
+  }
+
+  /* ── Fine print ────────────────────────────────────────────────────────── */
+  .cta-fine {
+    font-family: var(--font-mono, ui-monospace);
+    font-size: 0.58rem;
+    letter-spacing: 0.1em;
+    color: #2E3D60;
+    text-transform: uppercase;
+    line-height: 1.8;
+  }
+
+  /* ── Responsive ────────────────────────────────────────────────────────── */
+  @media (max-width: 640px) {
+    .cta-metrics {
+      flex-direction: column;
+      gap: 1.25rem;
+      padding: 1.5rem;
+      width: 100%;
+      max-width: 320px;
     }
 
-    .cta-metrics {
-      max-width: 400px;
+    .cta-metric-divider {
+      width: 2.5rem;
+      height: 1px;
+    }
+
+    .cta-actions {
+      flex-direction: column;
+      width: 100%;
+      max-width: 320px;
+    }
+
+    .cta-btn {
+      justify-content: center;
+      width: 100%;
     }
   }
 </style>
+
+<script>
+  // ── Scroll reveal ─────────────────────────────────────────────────────────
+  (function () {
+    const section = document.querySelector('.s-cta');
+    if (!section) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.2 }
+    );
+
+    observer.observe(section);
+  })();
+
+  // ── Magnetic button effect ────────────────────────────────────────────────
+  (function () {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (window.matchMedia('(hover: none)').matches) return;
+
+    const STRENGTH = 0.28;
+
+    document.querySelectorAll('[data-magnetic]').forEach((el) => {
+      const btn = /** @type {HTMLElement} */ (el);
+
+      btn.addEventListener('mousemove', (e) => {
+        const rect = btn.getBoundingClientRect();
+        const cx = rect.left + rect.width  / 2;
+        const cy = rect.top  + rect.height / 2;
+        const dx = (/** @type {MouseEvent} */ (e).clientX - cx) * STRENGTH;
+        const dy = (/** @type {MouseEvent} */ (e).clientY - cy) * STRENGTH;
+        btn.style.transform = `translate(${dx}px, ${dy}px)`;
+      });
+
+      btn.addEventListener('mouseleave', () => {
+        btn.style.transform = 'translate(0, 0)';
+      });
+    });
+  })();
+</script>

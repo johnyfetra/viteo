@@ -12,133 +12,559 @@ const t = useTranslations(lang);
 const steps = ['1', '2', '3', '4'] as const;
 ---
 
-<section class="section process-section" id="process">
-  <div class="container">
-    <div class="eyebrow reveal">
-      <span class="eyebrow-dot" aria-hidden="true"></span>
-      {t('process.eyebrow')}
-    </div>
-    <h2 class="process-h2 reveal">{t('process.h2')}</h2>
+<section class="s-process process-section" id="process" aria-label={lang === 'fr' ? 'Notre processus' : 'Our process'}>
+  <div class="process-container">
 
-    <ol class="process-steps" aria-label={lang === 'fr' ? 'Étapes du processus' : 'Process steps'}>
-      {steps.map((n, i) => (
-        <li class={`process-step reveal reveal-delay-${i + 1}`}>
-          <div class="step-num" aria-hidden="true">{t(`process.${n}.num` as Parameters<typeof t>[0])}</div>
-          <div class="step-body">
-            <div class="step-connector" aria-hidden="true"></div>
-            <h3 class="step-title">{t(`process.${n}.title` as Parameters<typeof t>[0])}</h3>
-            <p class="step-text">{t(`process.${n}.text` as Parameters<typeof t>[0])}</p>
-          </div>
-        </li>
-      ))}
-    </ol>
-  </div>
+    <!-- Header -->
+    <header class="process-header">
+      <span class="process-eyebrow" aria-hidden="true">
+        <span class="eyebrow-line" aria-hidden="true"></span>
+        {t('process.eyebrow')}
+      </span>
+      <h2 class="process-h2">{t('process.h2')}</h2>
+    </header>
+
+    <!-- Timeline track + steps -->
+    <div class="process-track-wrap" role="presentation">
+
+      <!-- Animated SVG timeline (desktop only) -->
+      <div class="timeline-svg-wrap" aria-hidden="true">
+        <svg
+          class="timeline-svg"
+          viewBox="0 0 1000 8"
+          preserveAspectRatio="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <defs>
+            <linearGradient id="proc-grad" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#3DFF7A" />
+              <stop offset="60%" stop-color="#2B52FF" />
+              <stop offset="100%" stop-color="#2B52FF" stop-opacity="0.4" />
+            </linearGradient>
+          </defs>
+          <!-- Background track -->
+          <line x1="0" y1="4" x2="1000" y2="4" stroke="#1C2A50" stroke-width="1" />
+          <!-- Animated progress line -->
+          <line
+            class="timeline-progress"
+            x1="0" y1="4" x2="1000" y2="4"
+            stroke="url(#proc-grad)"
+            stroke-width="2"
+            stroke-linecap="round"
+          />
+        </svg>
+        <!-- Step anchor dots -->
+        <div class="timeline-dots" aria-hidden="true">
+          {steps.map((_, i) => (
+            <div class={`timeline-dot timeline-dot-${i}`} />
+          ))}
+        </div>
+      </div>
+
+      <!-- Step cards -->
+      <ol
+        class="process-steps"
+        aria-label={lang === 'fr' ? 'Étapes du processus' : 'Process steps'}
+      >
+        {steps.map((n, i) => (
+          <li class={`process-step step-${i}`} data-step={i}>
+
+            <!-- Faded watermark number -->
+            <span class="step-watermark" aria-hidden="true">
+              {t(`process.${n}.num` as Parameters<typeof t>[0])}
+            </span>
+
+            <!-- Step icon -->
+            <div class="step-icon" aria-hidden="true">
+              {i === 0 && (
+                <div class="icon-discovery">
+                  <span class="pulse-ring" />
+                  <span class="pulse-dot" />
+                </div>
+              )}
+              {i === 1 && (
+                <div class="icon-design">
+                  <span class="cross-h" />
+                  <span class="cross-v" />
+                </div>
+              )}
+              {i === 2 && (
+                <div class="icon-dev">
+                  <span class="bracket bracket-open">&#123;</span>
+                  <span class="bracket bracket-close">&#125;</span>
+                </div>
+              )}
+              {i === 3 && (
+                <div class="icon-launch">
+                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M12 20V4M12 4L6 10M12 4L18 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+              )}
+            </div>
+
+            <!-- Step content -->
+            <div class="step-content">
+              <p class="step-num-label" aria-label={`${lang === 'fr' ? 'Étape' : 'Step'} ${t(`process.${n}.num` as Parameters<typeof t>[0])}`}>
+                {t(`process.${n}.num` as Parameters<typeof t>[0])}
+              </p>
+              <h3 class="step-title">{t(`process.${n}.title` as Parameters<typeof t>[0])}</h3>
+              <p class="step-text">{t(`process.${n}.text` as Parameters<typeof t>[0])}</p>
+            </div>
+
+          </li>
+        ))}
+      </ol>
+    </div><!-- /.process-track-wrap -->
+  </div><!-- /.process-container -->
 </section>
 
 <style>
+  /* ─── Section shell ─────────────────────────────────────── */
   .process-section {
+    /* .s-process sets background: #080C10; color: #E8EAF0 */
     position: relative;
     overflow: hidden;
+    padding-block: 6rem 7rem;
+    padding-inline: clamp(1.5rem, 5vw, 4rem);
+  }
+
+  .process-container {
+    max-width: 1200px;
+    width: 100%;
+    margin-inline: auto;
+  }
+
+  /* ─── Header ────────────────────────────────────────────── */
+  .process-header {
+    margin-bottom: 4.5rem;
+  }
+
+  .process-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #3DFF7A;
+    margin-bottom: 1.25rem;
+    opacity: 0;
+    transform: translateY(12px);
+    animation: fadeUp 0.55s ease forwards;
+    animation-delay: 0.05s;
+  }
+
+  .eyebrow-line {
+    display: inline-block;
+    width: 2rem;
+    height: 1px;
+    background: #3DFF7A;
+    flex-shrink: 0;
   }
 
   .process-h2 {
-    max-width: 30ch;
-    margin-bottom: 3.5rem;
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 700;
+    letter-spacing: -0.035em;
+    line-height: 1.1;
+    color: #E8EAF0;
+    max-width: 26ch;
+    opacity: 0;
+    transform: translateY(14px);
+    animation: fadeUp 0.6s ease forwards;
+    animation-delay: 0.15s;
   }
 
-  .process-steps {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 0;
-    list-style: none;
-    counter-reset: steps;
+  /* ─── Timeline SVG track ────────────────────────────────── */
+  .process-track-wrap {
     position: relative;
   }
 
-  /* Horizontal connector line */
-  .process-steps::before {
-    content: '';
+  .timeline-svg-wrap {
+    position: relative;
+    margin-bottom: 2.5rem;
+    height: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .timeline-svg {
+    width: 100%;
+    height: 8px;
+    display: block;
+    overflow: visible;
+  }
+
+  .timeline-progress {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    transition: none;
+  }
+
+  /* Dots positioned at 12.5%, 37.5%, 62.5%, 87.5% of the line */
+  .timeline-dots {
     position: absolute;
-    top: 1.5rem;
-    left: calc(0.5rem + 1px);
-    right: calc(0.5rem + 1px);
-    height: 1px;
-    background: linear-gradient(to right, var(--c-accent), var(--c-border), var(--c-border), transparent);
+    top: 50%;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: space-around;
+    padding: 0 calc(100% / 8);
+    pointer-events: none;
+  }
+
+  .timeline-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #1C2A50;
+    border: 1px solid #1C2A50;
+    transition: background 0.3s ease, border-color 0.3s ease;
+    flex-shrink: 0;
+  }
+
+  .timeline-dot.is-active {
+    background: #3DFF7A;
+    border-color: #3DFF7A;
+    box-shadow: 0 0 6px #3DFF7A88;
+  }
+
+  /* ─── Steps grid ────────────────────────────────────────── */
+  .process-steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0 2rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* ─── Individual step ───────────────────────────────────── */
+  .process-step {
+    position: relative;
+    padding-top: 1rem;
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.55s ease, transform 0.55s ease;
+  }
+
+  .process-step.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Stagger via JS sets --delay; fallback below */
+  .step-0 { transition-delay: 0.05s; }
+  .step-1 { transition-delay: 0.15s; }
+  .step-2 { transition-delay: 0.25s; }
+  .step-3 { transition-delay: 0.35s; }
+
+  /* ─── Watermark number ──────────────────────────────────── */
+  .step-watermark {
+    position: absolute;
+    top: -0.5rem;
+    right: 0;
+    font-family: var(--font-display);
+    font-size: clamp(5rem, 8vw, 8rem);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    color: #E8EAF0;
+    opacity: 0.04;
+    user-select: none;
+    pointer-events: none;
     z-index: 0;
   }
 
-  .process-step {
-    padding: 0 1.5rem 0 0;
+  /* ─── Step icon ─────────────────────────────────────────── */
+  .step-icon {
+    position: relative;
+    z-index: 1;
+    width: 2.5rem;
+    height: 2.5rem;
+    margin-bottom: 1.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Discovery: pulsing dot */
+  .icon-discovery {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .pulse-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #3DFF7A;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 2;
+  }
+
+  .pulse-ring {
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: transparent;
+    border: 1px solid #3DFF7A;
+    animation: pulse-out 2.2s ease-out infinite;
+  }
+
+  @keyframes pulse-out {
+    0%   { transform: scale(1); opacity: 0.8; }
+    100% { transform: scale(4.5); opacity: 0; }
+  }
+
+  /* Design: crossing lines */
+  .icon-design {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  .cross-h,
+  .cross-v {
+    position: absolute;
+    background: #3DFF7A;
+    border-radius: 1px;
+    top: 50%;
+    left: 50%;
+    transform-origin: center;
+  }
+
+  .cross-h {
+    width: 24px;
+    height: 1px;
+    transform: translate(-50%, -50%) rotate(35deg);
+  }
+
+  .cross-v {
+    width: 24px;
+    height: 1px;
+    transform: translate(-50%, -50%) rotate(-35deg);
+  }
+
+  /* Dev: code brackets */
+  .icon-dev {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    animation: bracket-rotate 4s ease-in-out infinite;
+    transform-origin: center;
+  }
+
+  @keyframes bracket-rotate {
+    0%,  100% { transform: rotate(0deg);  }
+    25%        { transform: rotate(8deg);  }
+    75%        { transform: rotate(-8deg); }
+  }
+
+  .bracket {
+    font-family: var(--font-mono);
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #3DFF7A;
+    line-height: 1;
+    display: block;
+  }
+
+  /* Launch: arrow */
+  .icon-launch {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #3DFF7A;
+    animation: launch-float 2.6s ease-in-out infinite;
+  }
+
+  .icon-launch svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  @keyframes launch-float {
+    0%,  100% { transform: translateY(0);   }
+    50%        { transform: translateY(-4px); }
+  }
+
+  /* ─── Step content ──────────────────────────────────────── */
+  .step-content {
     position: relative;
     z-index: 1;
   }
 
-  .process-step:last-child {
-    padding-right: 0;
-  }
-
-  .step-num {
+  .step-num-label {
     font-family: var(--font-mono);
-    font-size: 0.68rem;
+    font-size: 0.65rem;
     font-weight: 700;
-    letter-spacing: 0.1em;
-    color: var(--c-accent);
-    background: var(--c-bg);
-    border: 1px solid var(--c-accent);
-    width: 3rem;
-    height: 3rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 1.5rem;
-    position: relative;
-    z-index: 2;
-    transition: background var(--duration-slow);
-  }
-
-  [data-theme="light"] .step-num {
-    background: var(--c-surface);
-  }
-
-  .step-body {
-    position: relative;
+    letter-spacing: 0.12em;
+    color: #3DFF7A;
+    margin-bottom: 0.55rem;
   }
 
   .step-title {
     font-family: var(--font-display);
-    font-size: 1.05rem;
+    font-size: clamp(1.05rem, 1.5vw, 1.25rem);
     font-weight: 700;
-    letter-spacing: -0.02em;
-    color: var(--c-text);
-    margin-bottom: 0.65rem;
+    letter-spacing: -0.025em;
+    color: #E8EAF0;
+    margin-bottom: 0.7rem;
+    line-height: 1.2;
   }
 
   .step-text {
-    font-size: 0.85rem;
-    color: var(--c-text-muted);
-    line-height: 1.7;
-    max-width: 100%;
+    font-family: var(--font-body);
+    font-size: 0.84rem;
+    line-height: 1.75;
+    color: #5B6FA3;
   }
 
-  @media (max-width: 860px) {
-    .process-steps {
-      grid-template-columns: 1fr 1fr;
-      gap: 2.5rem;
+  /* ─── Fade-up base animation ────────────────────────────── */
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ─── Reduced motion ────────────────────────────────────── */
+  @media (prefers-reduced-motion: reduce) {
+    .process-eyebrow,
+    .process-h2,
+    .process-step {
+      animation: none;
+      opacity: 1;
+      transform: none;
+      transition: none;
     }
 
-    .process-steps::before {
+    .pulse-ring,
+    .icon-dev,
+    .icon-launch {
+      animation: none;
+    }
+
+    .timeline-progress {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  /* ─── Responsive ────────────────────────────────────────── */
+  @media (max-width: 900px) {
+    .process-steps {
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem 2rem;
+    }
+
+    .timeline-svg-wrap {
       display: none;
     }
 
-    .process-step {
-      padding: 0;
+    .step-watermark {
+      font-size: 5rem;
     }
   }
 
-  @media (max-width: 480px) {
+  @media (max-width: 520px) {
+    .process-section {
+      padding: 4rem 0 5rem;
+    }
+
     .process-steps {
       grid-template-columns: 1fr;
-      gap: 2rem;
+      gap: 2.5rem;
+    }
+
+    .process-header {
+      margin-bottom: 3rem;
     }
   }
 </style>
+
+<script>
+  (function () {
+    // SVG timeline draw animation
+    const progressLine = document.querySelector<SVGLineElement>('.timeline-progress');
+    const dots = document.querySelectorAll<HTMLElement>('.timeline-dot');
+    const steps = document.querySelectorAll<HTMLElement>('.process-step');
+    const section = document.querySelector<HTMLElement>('.process-section');
+
+    if (!section) return;
+
+    // Skip animation entirely if reduced motion
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced) {
+      steps.forEach(s => s.classList.add('is-visible'));
+      dots.forEach(d => d.classList.add('is-active'));
+      return;
+    }
+
+    // Intersection Observer for step cards
+    const stepObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            (entry.target as HTMLElement).classList.add('is-visible');
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+
+    steps.forEach((step) => stepObserver.observe(step));
+
+    // SVG progress line tied to scroll position within section
+    if (!progressLine) return;
+
+    // Measure dasharray from actual SVG element length
+    const totalLength = 1000; // matches viewBox width
+    progressLine.style.strokeDasharray = String(totalLength);
+    progressLine.style.strokeDashoffset = String(totalLength);
+
+    function updateTimeline() {
+      if (!section || !progressLine) return;
+
+      const rect = section.getBoundingClientRect();
+      const windowH = window.innerHeight;
+
+      // Progress: 0 when section top enters viewport, 1 when section bottom exits top
+      const start = windowH * 0.85;
+      const end = rect.height - windowH * 0.2;
+      const scrolled = start - rect.top;
+      const progress = Math.min(1, Math.max(0, scrolled / end));
+
+      const offset = totalLength * (1 - progress);
+      progressLine.style.strokeDashoffset = String(offset);
+
+      // Activate dots at 0%, 25%, 50%, 75% progress thresholds
+      const dotThresholds = [0.05, 0.3, 0.55, 0.8];
+      dots.forEach((dot, i) => {
+        if (progress >= dotThresholds[i]) {
+          dot.classList.add('is-active');
+        } else {
+          dot.classList.remove('is-active');
+        }
+      });
+    }
+
+    // Initial call + scroll listener (passive)
+    updateTimeline();
+    window.addEventListener('scroll', updateTimeline, { passive: true });
+    window.addEventListener('resize', updateTimeline, { passive: true });
+  })();
+</script>
