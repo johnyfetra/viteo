@@ -134,9 +134,15 @@ const deliveryLabels: Record<string, string> = {
 <style>
   /* ─── Section shell ──────────────────────────────────────────── */
   .s-pricing {
-    background: var(--s-pricing-bg, #F8F6F2);
+    background: var(--s-pricing-bg, #EAE7E0);
     color: var(--s-pricing-text, #0F0D0B);
     padding-block: 7rem 6rem;
+    transition: background-color 0.35s ease, color 0.35s ease;
+  }
+
+  :global([data-theme="light"]) .s-pricing {
+    --s-pricing-bg: #EAE7E0;
+    --s-pricing-text: #0F0D0B;
   }
 
   :global([data-theme="dark"]) .s-pricing {
@@ -145,8 +151,10 @@ const deliveryLabels: Record<string, string> = {
   }
 
   .pc-wrap {
-    width: min(1160px, 100% - 3rem);
+    max-width: 1160px;
+    width: 100%;
     margin-inline: auto;
+    padding-inline: clamp(1.25rem, 5vw, 3rem);
   }
 
   /* ─── Header ─────────────────────────────────────────────────── */
@@ -163,24 +171,18 @@ const deliveryLabels: Record<string, string> = {
     font-size: 0.65rem;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--c-text-muted, #5B6FA3);
+    color: var(--c-text-muted);
     margin-bottom: 1.25rem;
-  }
-
-  :global([data-theme="dark"]) .pc-eyebrow {
-    color: #5B6FA3;
+    transition: color 0.35s ease;
   }
 
   .pc-eyebrow-dot {
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background: var(--c-accent, #007A34);
+    background: var(--c-accent);
     flex-shrink: 0;
-  }
-
-  :global([data-theme="dark"]) .pc-eyebrow-dot {
-    background: #3DFF7A;
+    transition: background-color 0.35s ease;
   }
 
   .pc-h2 {
@@ -191,18 +193,16 @@ const deliveryLabels: Record<string, string> = {
     line-height: 1.1;
     color: var(--s-pricing-text, #0F0D0B);
     margin-bottom: 1rem;
+    transition: color 0.35s ease;
   }
 
   .pc-intro {
     font-family: var(--font-body);
     font-size: 0.95rem;
     line-height: 1.7;
-    color: #5B6867;
+    color: var(--c-text-muted);
     max-width: 58ch;
-  }
-
-  :global([data-theme="dark"]) .pc-intro {
-    color: #5B6FA3;
+    transition: color 0.35s ease;
   }
 
   /* ─── Grid ───────────────────────────────────────────────────── */
@@ -603,22 +603,16 @@ const deliveryLabels: Record<string, string> = {
     font-size: 0.65rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: #9BA8B0;
-  }
-
-  :global([data-theme="dark"]) .pc-trust {
-    color: #3E4F70;
+    color: var(--c-text-muted);
+    transition: color 0.35s ease;
   }
 
   .pc-trust-icon {
     display: flex;
     align-items: center;
-    color: var(--c-accent, #007A34);
+    color: var(--c-accent);
     flex-shrink: 0;
-  }
-
-  :global([data-theme="dark"]) .pc-trust-icon {
-    color: #3DFF7A;
+    transition: color 0.35s ease;
   }
 
   /* ─── Scroll reveal ──────────────────────────────────────────── */

@@ -209,17 +209,19 @@ button { font-family: var(--font-body); cursor: pointer; }
 
 /* Stats — adapts light/dark via variables */
 .s-stats {
-  background: var(--s-stats-bg, #F4F3EF);
+  background: var(--s-stats-bg, #E8E6E0);
   color: var(--s-stats-text, #0F0D0B);
+  transition: background-color 0.35s ease, color 0.35s ease;
 }
 
 /* Services — follows main theme */
 .s-services {
   background: var(--c-bg);
   color: var(--c-text);
+  transition: background-color 0.35s ease, color 0.35s ease;
 }
 
-/* Process — always dark-warm, intentional */
+/* Process — always dark-warm, intentional, never changes */
 .s-process {
   background: #080C10;
   color: #E8EAF0;
@@ -227,17 +229,18 @@ button { font-family: var(--font-body); cursor: pointer; }
 
 /* Pricing — adapts light/dark via variables */
 .s-pricing {
-  background: var(--s-pricing-bg, #F8F6F2);
+  background: var(--s-pricing-bg, #EAE7E0);
   color: var(--s-pricing-text, #0F0D0B);
+  transition: background-color 0.35s ease, color 0.35s ease;
 }
 
-/* Testimonials — always dark section */
+/* Testimonials — always dark section, never changes */
 .s-testimonials {
   background: #060A0E;
   color: #D8DFF0;
 }
 
-/* CTA — always darkest, cinematic */
+/* CTA — always darkest, cinematic, never changes */
 .s-cta {
   background: #030408;
   color: #F0EFE8;

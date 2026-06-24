@@ -56,17 +56,22 @@ const accentVars = ['--c-accent', '--c-b', '--c-r', '--c-accent'] as const;
 </section>
 
 <style>
+  /* Adapts to theme via global CSS vars — no local override needed */
   .s-stats {
-    --s-stats-bg: #F4F3EF;
-    --s-stats-text: #0F0D0B;
-    background: var(--s-stats-bg);
-    color: var(--s-stats-text);
+    background: var(--s-stats-bg, #E8E6E0);
+    color: var(--s-stats-text, #0F0D0B);
     padding-block: clamp(4rem, 8vw, 7rem);
+    transition: background-color 0.35s ease, color 0.35s ease;
+  }
+
+  :global([data-theme="light"]) .s-stats {
+    --s-stats-bg: #E8E6E0;
+    --s-stats-text: #0F0D0B;
   }
 
   :global([data-theme="dark"]) .s-stats {
     --s-stats-bg: #0F1018;
-    --s-stats-text: var(--c-text);
+    --s-stats-text: #E0E8FF;
   }
 
   .stats-inner {
@@ -105,7 +110,7 @@ const accentVars = ['--c-accent', '--c-b', '--c-r', '--c-accent'] as const;
     line-height: 1;
     color: var(--s-stats-text);
     margin-bottom: 0.5rem;
-    transition: transform 0.25s ease, text-shadow 0.25s ease;
+    transition: transform 0.25s ease, text-shadow 0.25s ease, color 0.35s ease;
     will-change: transform;
   }
 
@@ -134,13 +139,17 @@ const accentVars = ['--c-accent', '--c-b', '--c-r', '--c-accent'] as const;
     font-size: clamp(0.75rem, 1.1vw, 0.875rem);
     font-weight: 400;
     line-height: 1.6;
-    color: var(--s-stats-text);
-    opacity: 0.6;
     max-width: 26ch;
+    transition: color 0.35s ease;
+  }
+
+  :global([data-theme="light"]) .stat-txt {
+    color: #6B6460;
+    opacity: 1;
   }
 
   :global([data-theme="dark"]) .stat-txt {
-    color: var(--c-text-muted);
+    color: #5B6FA3;
     opacity: 1;
   }
 

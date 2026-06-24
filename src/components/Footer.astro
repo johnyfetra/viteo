@@ -134,6 +134,12 @@ const socials = [
   padding-right: clamp(1.5rem, 5vw, 4rem);
 }
 
+/* Always dark — lock even in light mode */
+:global([data-theme="light"]) .ft {
+  background-color: #030408;
+  color: #E0E8FF;
+}
+
 /* ── Fine grid ─────────────────────────────────────────────── */
 .ft-grid {
   position: absolute;

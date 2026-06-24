@@ -62,6 +62,7 @@ const services = [
   /* ─── Section shell ─────────────────────────────────────── */
   .services-section {
     padding-block: clamp(4rem, 8vw, 7rem);
+    transition: background-color 0.35s ease, color 0.35s ease;
   }
 
   .svc-container {
@@ -146,6 +147,7 @@ const services = [
       transform 200ms cubic-bezier(0.22, 1, 0.36, 1),
       box-shadow 200ms cubic-bezier(0.22, 1, 0.36, 1),
       border-color 200ms ease,
+      background-color 0.35s ease,
       background 200ms ease;
     cursor: default;
     min-height: 220px;
@@ -348,36 +350,58 @@ const services = [
   .svc-card--delivery:hover .svc-watermark { opacity: 0.14; transform: scale(1.04); }
 
   /* ─── Light theme overrides ─────────────────────────────── */
-  :global([data-theme="light"]) .svc-card {
-    background: #ffffff;
-    border-top: 3px solid transparent;
+  :global([data-theme="light"]) .svc-bento {
+    background: #D8D5CE;
+    border-color: #D8D5CE;
   }
 
-  :global([data-theme="light"]) .svc-card--perf    { border-top-color: var(--c-r); }
-  :global([data-theme="light"]) .svc-card--seo     { border-top-color: var(--c-b); }
-  :global([data-theme="light"]) .svc-card--design  { border-top-color: var(--c-accent); }
-  :global([data-theme="light"]) .svc-card--cms     { border-top-color: var(--c-b); }
-  :global([data-theme="light"]) .svc-card--rgpd    { border-top-color: var(--c-accent); }
-  :global([data-theme="light"]) .svc-card--delivery { border-top-color: var(--c-accent); }
+  /* Cards: white base + keep color personality via subtle tints */
+  :global([data-theme="light"]) .svc-card {
+    border-top: 2px solid transparent;
+  }
+
+  :global([data-theme="light"]) .svc-card--perf {
+    background: linear-gradient(145deg, rgba(204,0,32,0.04) 0%, transparent 60%), #FFFFFF;
+    border-top-color: #CC0020;
+  }
+  :global([data-theme="light"]) .svc-card--seo {
+    background:
+      repeating-linear-gradient(0deg, rgba(26,63,204,0.04) 0px, rgba(26,63,204,0.04) 1px, transparent 1px, transparent 22px),
+      repeating-linear-gradient(90deg, rgba(26,63,204,0.04) 0px, rgba(26,63,204,0.04) 1px, transparent 1px, transparent 22px),
+      #FFFFFF;
+    border-top-color: #1A3FCC;
+  }
+  :global([data-theme="light"]) .svc-card--design {
+    background: linear-gradient(145deg, rgba(0,122,52,0.04) 0%, transparent 60%), #FFFFFF;
+    border-top-color: #007A34;
+  }
+  :global([data-theme="light"]) .svc-card--cms {
+    background:
+      repeating-linear-gradient(90deg, rgba(26,63,204,0.03) 0px, rgba(26,63,204,0.03) 1px, transparent 1px, transparent 28px),
+      #FFFFFF;
+    border-top-color: #1A3FCC;
+  }
+  :global([data-theme="light"]) .svc-card--rgpd {
+    background: radial-gradient(ellipse 60% 80% at 80% 50%, rgba(0,122,52,0.05), transparent), #FFFFFF;
+    border-top-color: #007A34;
+  }
+  :global([data-theme="light"]) .svc-card--delivery {
+    background:
+      repeating-linear-gradient(-45deg, rgba(0,122,52,0.03) 0px, rgba(0,122,52,0.03) 1px, transparent 1px, transparent 16px),
+      #FFFFFF;
+    border-top-color: #007A34;
+  }
+
+  /* Watermarks: slightly more visible on white */
+  :global([data-theme="light"]) .svc-card--perf .svc-watermark    { color: #CC0020; opacity: 0.07; }
+  :global([data-theme="light"]) .svc-card--seo .svc-watermark     { color: #1A3FCC; opacity: 0.06; }
+  :global([data-theme="light"]) .svc-card--design .svc-watermark  { color: #007A34; opacity: 0.07; }
+  :global([data-theme="light"]) .svc-card--cms .svc-watermark     { color: #1A3FCC; opacity: 0.06; }
+  :global([data-theme="light"]) .svc-card--rgpd .svc-watermark    { color: #007A34; opacity: 0.06; }
+  :global([data-theme="light"]) .svc-card--delivery .svc-watermark { color: #007A34; opacity: 0.07; }
 
   :global([data-theme="light"]) .svc-card:hover {
-    box-shadow:
-      0 8px 32px rgba(0, 0, 0, 0.10),
-      0 2px 8px rgba(0, 0, 0, 0.06);
-  }
-
-  :global([data-theme="light"]) .svc-bento {
-    background: #E0DDD6;
-    border-color: #E0DDD6;
-  }
-
-  :global([data-theme="light"]) .svc-card--perf,
-  :global([data-theme="light"]) .svc-card--seo,
-  :global([data-theme="light"]) .svc-card--design,
-  :global([data-theme="light"]) .svc-card--cms,
-  :global([data-theme="light"]) .svc-card--rgpd,
-  :global([data-theme="light"]) .svc-card--delivery {
-    background: #ffffff;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.09), 0 2px 8px rgba(0, 0, 0, 0.05);
   }
 
   /* ─── Reveal animation ──────────────────────────────────── */

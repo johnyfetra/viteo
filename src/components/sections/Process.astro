@@ -122,11 +122,19 @@ const steps = ['1', '2', '3', '4'] as const;
 <style>
   /* ─── Section shell ─────────────────────────────────────── */
   .process-section {
-    /* .s-process sets background: #080C10; color: #E8EAF0 */
     position: relative;
     overflow: hidden;
     padding-block: 6rem 7rem;
     padding-inline: clamp(1.5rem, 5vw, 4rem);
+    /* Always dark — intentional even in light mode */
+    background: #080C10;
+    color: #E8EAF0;
+  }
+
+  /* Lock to dark regardless of theme */
+  :global([data-theme="light"]) .process-section {
+    background: #080C10;
+    color: #E8EAF0;
   }
 
   .process-container {

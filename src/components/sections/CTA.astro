@@ -104,6 +104,12 @@ const ctaLine2 = splitIdx > 0
     isolation: isolate;
   }
 
+  /* Always dark — lock even in light mode */
+  :global([data-theme="light"]) .s-cta {
+    background: #030408;
+    color: #E0E8FF;
+  }
+
   /* ── Fine grid ─────────────────────────────────────────────────────────── */
   .cta-grid {
     position: absolute;
