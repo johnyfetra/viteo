@@ -51,17 +51,72 @@ const services = [
   },
 ];
 
+const SVG = {
+  astro: `<svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M10 2L14 13H6L10 2Z" fill="currentColor"/>
+    <path d="M6 13C4.8 15.2 4 17.8 4.5 18.5C6 16 7.8 15 10 15C12.2 15 14 16 15.5 18.5C16 17.8 15.2 15.2 14 13H6Z" fill="currentColor" opacity="0.55"/>
+  </svg>`,
+  typescript: `<svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="2" y="2" width="16" height="16" rx="2.5" stroke="currentColor" stroke-width="1.4"/>
+    <path d="M5.5 8.5H10.5M8 8.5V15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+    <path d="M13 13C13 14 13.7 14.8 14.5 14.8C15.3 14.8 16 14 16 13C16 11.5 13 11.5 13 10C13 9 13.7 8.2 14.5 8.2C15.3 8.2 16 9 16 10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+  </svg>`,
+  tailwind: `<svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M3 7C4.5 5 6.5 5 8 7C9.5 9 11.5 9 13 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M3 11C4.5 9 6.5 9 8 11C9.5 13 11.5 13 13 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M7 15C8.5 13 10.5 13 12 15C13.5 17 15.5 17 17 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+  </svg>`,
+  vercel: `<svg width="18" height="18" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+    <path d="M10 2L18.5 17H1.5L10 2Z"/>
+  </svg>`,
+  storyblok: `<svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="3" y="5" width="14" height="11" rx="2" stroke="currentColor" stroke-width="1.4"/>
+    <path d="M3 9H17" stroke="currentColor" stroke-width="1" opacity="0.4"/>
+    <path d="M6.5 3H14.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" opacity="0.6"/>
+    <path d="M7 12.5H10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M7 14.5H13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity="0.5"/>
+  </svg>`,
+  plausible: `<svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M2 17H18" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+    <path d="M4 17V13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    <path d="M8 17V10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    <path d="M12 17V7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    <path d="M16 17V4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+  </svg>`,
+  spaceGrotesk: `<svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M3 16L10 3L17 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M6.5 11.5H13.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+  </svg>`,
+  inter: `<svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M10 3V17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+    <path d="M7 3H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M7 17H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M4 10H7M13 10H16" stroke="currentColor" stroke-width="1" stroke-linecap="round" opacity="0.35"/>
+  </svg>`,
+  webp: `<svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="2" y="4" width="16" height="12" rx="2" stroke="currentColor" stroke-width="1.4"/>
+    <path d="M2 12.5L6 8.5L9.5 11.5L13 8L18 13.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="6.5" cy="7.5" r="1.2" fill="currentColor"/>
+  </svg>`,
+  schema: `<svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="10" cy="4" r="2" stroke="currentColor" stroke-width="1.4"/>
+    <circle cx="4" cy="15.5" r="2" stroke="currentColor" stroke-width="1.4"/>
+    <circle cx="16" cy="15.5" r="2" stroke="currentColor" stroke-width="1.4"/>
+    <path d="M8.3 5.6L5.5 13.7M11.7 5.6L14.5 13.7M6 15.5H14" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity="0.6"/>
+  </svg>`,
+};
+
 const stack = [
-  { name: 'Astro 5',          version: 'v5.x',    icon: '🚀', desc: 'Zéro JS par défaut' },
-  { name: 'TypeScript',       version: '5.x',     icon: '🔷', desc: 'Typage strict' },
-  { name: 'Tailwind CSS 4',   version: 'v4.x',    icon: '🎨', desc: 'CSS-first' },
-  { name: 'Vercel Edge',      version: '100+ PoP', icon: '🌍', desc: 'CDN mondial' },
-  { name: 'Storyblok',        version: 'v2',      icon: '📝', desc: 'CMS headless visuel' },
-  { name: 'Plausible',        version: 'RGPD',    icon: '📊', desc: 'Analytics léger' },
-  { name: 'Space Grotesk',    version: 'Variable', icon: '𝗔',  desc: 'Auto-hébergé' },
-  { name: 'Inter Variable',   version: 'Variable', icon: '𝑨',  desc: 'Auto-hébergé' },
-  { name: 'WebP / AVIF',      version: 'Auto',    icon: '🖼️', desc: 'Images optimisées' },
-  { name: 'Schema.org',       version: 'JSON-LD', icon: '🔗', desc: 'SEO structuré' },
+  { name: 'Astro 5',          version: 'v5.x',     icon: SVG.astro,       desc: 'Zéro JS par défaut' },
+  { name: 'TypeScript',       version: '5.x',      icon: SVG.typescript,  desc: 'Typage strict' },
+  { name: 'Tailwind CSS 4',   version: 'v4.x',     icon: SVG.tailwind,    desc: 'CSS-first' },
+  { name: 'Vercel Edge',      version: '100+ PoP', icon: SVG.vercel,      desc: 'CDN mondial' },
+  { name: 'Storyblok',        version: 'v2',       icon: SVG.storyblok,   desc: 'CMS headless visuel' },
+  { name: 'Plausible',        version: 'RGPD',     icon: SVG.plausible,   desc: 'Analytics léger' },
+  { name: 'Space Grotesk',    version: 'Variable', icon: SVG.spaceGrotesk, desc: 'Auto-hébergé' },
+  { name: 'Inter Variable',   version: 'Variable', icon: SVG.inter,       desc: 'Auto-hébergé' },
+  { name: 'WebP / AVIF',      version: 'Auto',     icon: SVG.webp,        desc: 'Images optimisées' },
+  { name: 'Schema.org',       version: 'JSON-LD',  icon: SVG.schema,      desc: 'SEO structuré' },
 ];
 
 const steps = [
@@ -203,7 +258,7 @@ const steps = [
             style={`transition-delay: ${i * 45}ms`}
             role="listitem"
           >
-            <span class="svc-pill__icon" aria-hidden="true">{tech.icon}</span>
+            <span class="svc-pill__icon" aria-hidden="true" set:html={tech.icon}></span>
             <span class="svc-pill__name">{tech.name}</span>
             <span class="svc-pill__version">{tech.version}</span>
             <span class="svc-pill__desc">{tech.desc}</span>
@@ -583,8 +638,23 @@ const steps = [
   }
 
   .svc-pill__icon {
-    font-size: 1rem;
-    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.1rem;
+    height: 1.1rem;
+    flex-shrink: 0;
+    color: rgba(224, 232, 255, 0.65);
+    transition: color 200ms ease;
+  }
+
+  .svc-pill:hover .svc-pill__icon {
+    color: #3DFF7A;
+  }
+
+  .svc-pill__icon svg {
+    width: 100%;
+    height: 100%;
   }
 
   .svc-pill__name {
