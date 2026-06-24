@@ -10,14 +10,12 @@ const { lang } = Astro.props;
 const t = useTranslations(lang);
 ---
 
-<section class="hero" aria-label={lang === 'fr' ? 'Accueil' : 'Home'}>
-  <!-- Background grid -->
+<section class="hero s-hero" aria-label={lang === 'fr' ? 'Accueil' : 'Home'}>
+  <!-- Subtle grid background behind text side only -->
   <div class="grid-bg" aria-hidden="true"></div>
-  <!-- Radial glow -->
-  <div class="hero-glow" aria-hidden="true"></div>
 
-  <div class="container hero-inner">
-    <!-- Left: Text -->
+  <div class="hero-inner">
+    <!-- Left: Text column -->
     <div class="hero-text">
       <div class="eyebrow">
         <span class="eyebrow-dot" aria-hidden="true"></span>
@@ -28,7 +26,7 @@ const t = useTranslations(lang);
         <span class="hero-h1-line">{t('hero.h1a')}</span>
         <span class="hero-h1-score" aria-label={t('hero.h1b')} id="hero-score-text">
           <span class="score-counter" id="score-num" aria-hidden="true">0</span>
-          <span class="score-slash" aria-hidden="true"> / 100.</span>
+          <span class="score-slash" aria-hidden="true">&thinsp;/&thinsp;100.</span>
         </span>
         <span class="hero-h1-line hero-h1-accent">{t('hero.h1c')}</span>
       </h1>
@@ -47,81 +45,33 @@ const t = useTranslations(lang);
       <!-- Trust indicators -->
       <div class="hero-trust">
         <div class="trust-item">
-          <span class="trust-icon" aria-hidden="true">✓</span>
-          <span>Score garanti contractuellement</span>
+          <span class="trust-check" aria-hidden="true">✓</span>
+          <span>{lang === 'fr' ? 'Score garanti contractuellement' : 'Score guaranteed by contract'}</span>
         </div>
         <div class="trust-item">
-          <span class="trust-icon" aria-hidden="true">✓</span>
-          <span>Livraison en 7 à 21 jours</span>
+          <span class="trust-check" aria-hidden="true">✓</span>
+          <span>{lang === 'fr' ? 'Livraison en 7 à 21 jours' : 'Delivery in 7 to 21 days'}</span>
         </div>
         <div class="trust-item">
-          <span class="trust-icon" aria-hidden="true">✓</span>
-          <span>Code source fourni</span>
+          <span class="trust-check" aria-hidden="true">✓</span>
+          <span>{lang === 'fr' ? 'Code source fourni' : 'Source code provided'}</span>
         </div>
       </div>
     </div>
 
-    <!-- Right: Lighthouse widget -->
-    <div class="hero-widget" aria-label={t('hero.score.label')}>
-      <div class="widget-titlebar" aria-hidden="true">
-        <span class="dot dot-red"></span>
-        <span class="dot dot-yellow"></span>
-        <span class="dot dot-green"></span>
-        <span class="widget-title">{t('hero.score.label')}</span>
-      </div>
+    <!-- Right: Face canvas -->
+    <div class="hero-canvas-wrap">
+      <canvas
+        id="face-canvas"
+        aria-label={lang === 'fr' ? 'Portrait Viteo Studio, éclairage RGB' : 'Viteo Studio portrait, RGB lighting'}
+        role="img"
+      ></canvas>
 
-      <div class="widget-body">
-        <!-- Score rings -->
-        <div class="score-rings">
-          <div class="score-ring-item">
-            <div class="ring-wrap">
-              <canvas id="ring-perf" width="72" height="72" role="img" aria-label={`${t('hero.score.perf')}: 100`}></canvas>
-              <div class="ring-val" id="rv-perf" aria-hidden="true">0</div>
-            </div>
-            <span class="ring-label">{t('hero.score.perf')}</span>
-          </div>
-          <div class="score-ring-item">
-            <div class="ring-wrap">
-              <canvas id="ring-seo" width="72" height="72" role="img" aria-label={`${t('hero.score.seo')}: 100`}></canvas>
-              <div class="ring-val" id="rv-seo" aria-hidden="true">0</div>
-            </div>
-            <span class="ring-label">{t('hero.score.seo')}</span>
-          </div>
-          <div class="score-ring-item">
-            <div class="ring-wrap">
-              <canvas id="ring-a11y" width="72" height="72" role="img" aria-label={`${t('hero.score.a11y')}: 98`}></canvas>
-              <div class="ring-val" id="rv-a11y" aria-hidden="true">0</div>
-            </div>
-            <span class="ring-label">{t('hero.score.a11y')}</span>
-          </div>
-          <div class="score-ring-item">
-            <div class="ring-wrap">
-              <canvas id="ring-bp" width="72" height="72" role="img" aria-label={`${t('hero.score.bp')}: 100`}></canvas>
-              <div class="ring-val" id="rv-bp" aria-hidden="true">0</div>
-            </div>
-            <span class="ring-label">{t('hero.score.bp')}</span>
-          </div>
-        </div>
-
-        <!-- Core Web Vitals -->
-        <div class="vitals">
-          <p class="vitals-title">{t('hero.vitals')}</p>
-          <div class="vital-row">
-            <span class="vital-name">LCP</span>
-            <div class="vital-track" aria-hidden="true"><div class="vital-bar" id="vb-lcp"></div></div>
-            <span class="vital-val">0.8s</span>
-          </div>
-          <div class="vital-row">
-            <span class="vital-name">INP</span>
-            <div class="vital-track" aria-hidden="true"><div class="vital-bar" id="vb-inp"></div></div>
-            <span class="vital-val">11ms</span>
-          </div>
-          <div class="vital-row">
-            <span class="vital-name">CLS</span>
-            <div class="vital-track" aria-hidden="true"><div class="vital-bar" id="vb-cls"></div></div>
-            <span class="vital-val">0.00</span>
-          </div>
-        </div>
+      <!-- Lighthouse score badge -->
+      <div class="score-badge" aria-hidden="true">
+        <span class="score-badge-icon">⬡</span>
+        <span class="score-badge-label">Lighthouse</span>
+        <span class="score-badge-num">99</span>
       </div>
     </div>
   </div>
@@ -136,82 +86,85 @@ const t = useTranslations(lang);
   .hero {
     position: relative;
     min-height: 100svh;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    padding-top: 80px;
-    padding-bottom: 4rem;
-    overflow: hidden;
   }
 
-  .hero-glow {
+  .grid-bg {
     position: absolute;
-    top: 20%;
-    right: 10%;
-    width: 600px;
-    height: 500px;
-    background: radial-gradient(ellipse at center, var(--c-accent-glow) 0%, transparent 65%);
+    inset: 0;
+    width: 45%;
+    background-image:
+      linear-gradient(rgba(28, 42, 80, 0.35) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(28, 42, 80, 0.35) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 90% 80% at 30% 40%, black 10%, transparent 80%);
     pointer-events: none;
-    animation: glow-drift 8s ease-in-out infinite alternate;
-  }
-
-  @keyframes glow-drift {
-    from { transform: translate(0, 0) scale(1); }
-    to   { transform: translate(-30px, 20px) scale(1.08); }
+    z-index: 0;
   }
 
   .hero-inner {
+    position: relative;
+    z-index: 1;
     display: grid;
-    grid-template-columns: 1.05fr 0.95fr;
-    gap: 5rem;
-    align-items: center;
-    padding-block: 2rem;
+    grid-template-columns: 45fr 55fr;
+    min-height: 100svh;
   }
 
-  /* Text side */
+  /* ── Text column ── */
+  .hero-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 100px clamp(1.5rem, 4vw, 3.5rem) 5rem clamp(1.25rem, 4vw, 2.5rem);
+    max-width: 640px;
+    margin-left: auto;
+  }
+
   .hero-h1 {
     font-family: var(--font-display);
-    font-size: clamp(2.8rem, 6vw, 5.2rem);
+    font-size: clamp(2.8rem, 5.5vw, 5rem);
     font-weight: 800;
-    letter-spacing: -0.04em;
-    line-height: 1.03;
+    letter-spacing: -0.045em;
+    line-height: 1.02;
     margin-bottom: 1.5rem;
     display: flex;
     flex-direction: column;
-    gap: 0.05em;
+    gap: 0.04em;
   }
 
   .hero-h1-line {
     display: block;
+    color: #E0E8FF;
   }
 
   .hero-h1-accent {
-    color: var(--c-accent);
+    color: #3DFF7A;
   }
 
   .hero-h1-score {
     display: flex;
     align-items: baseline;
-    gap: 0;
     font-family: var(--font-mono);
-    font-size: clamp(3rem, 7vw, 6rem);
+    font-size: clamp(3rem, 6vw, 5.6rem);
     font-weight: 700;
-    color: var(--c-accent);
+    color: #3DFF7A;
     letter-spacing: -0.05em;
+    line-height: 1;
   }
 
   .score-slash {
-    font-family: var(--font-mono);
-    font-size: 0.65em;
-    color: var(--c-text-muted);
+    font-size: 0.6em;
+    color: rgba(224, 232, 255, 0.35);
     font-weight: 400;
   }
 
   .hero-sub {
-    font-size: clamp(1rem, 1.8vw, 1.1rem);
-    color: var(--c-text-muted);
-    max-width: 48ch;
-    line-height: 1.75;
+    font-size: clamp(0.95rem, 1.6vw, 1.05rem);
+    color: rgba(224, 232, 255, 0.55);
+    max-width: 44ch;
+    line-height: 1.78;
     margin-bottom: 2.5rem;
   }
 
@@ -219,14 +172,13 @@ const t = useTranslations(lang);
     display: flex;
     gap: 0.75rem;
     flex-wrap: wrap;
-    margin-bottom: 2rem;
+    margin-bottom: 2.25rem;
   }
 
-  /* Trust */
   .hero-trust {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.45rem;
   }
 
   .trust-item {
@@ -234,164 +186,80 @@ const t = useTranslations(lang);
     align-items: center;
     gap: 0.5rem;
     font-family: var(--font-mono);
-    font-size: 0.72rem;
-    color: var(--c-text-muted);
+    font-size: 0.68rem;
+    color: rgba(224, 232, 255, 0.4);
     letter-spacing: 0.02em;
   }
 
-  .trust-icon {
-    color: var(--c-accent);
+  .trust-check {
+    color: #3DFF7A;
     font-weight: 700;
+    font-size: 0.75rem;
   }
 
-  /* Widget */
-  .hero-widget {
-    background: var(--c-surface);
-    border: 1px solid var(--c-border);
-    overflow: hidden;
-    box-shadow: 0 32px 64px rgba(0, 0, 0, 0.3);
-    animation: widget-float 6s ease-in-out infinite alternate;
-  }
-
-  @keyframes widget-float {
-    from { transform: translateY(0); }
-    to   { transform: translateY(-12px); }
-  }
-
-  .widget-titlebar {
-    background: var(--c-surface-2);
-    border-bottom: 1px solid var(--c-border);
-    padding: 0.65rem 1rem;
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-  }
-
-  .dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-  .dot-red    { background: #FF5F57; }
-  .dot-yellow { background: #FFBD2E; }
-  .dot-green  { background: var(--c-accent); }
-
-  .widget-title {
-    font-family: var(--font-mono);
-    font-size: 0.62rem;
-    color: var(--c-text-dim);
-    margin-left: 0.4rem;
-    letter-spacing: 0.04em;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  .widget-body {
-    padding: 1.5rem;
-  }
-
-  /* Score rings */
-  .score-rings {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 0.5rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .score-ring-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.4rem;
-  }
-
-  .ring-wrap {
+  /* ── Canvas column ── */
+  .hero-canvas-wrap {
     position: relative;
-    width: 72px;
-    height: 72px;
+    display: flex;
+    align-items: stretch;
   }
 
-  .ring-wrap canvas {
+  #face-canvas {
     display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 100svh;
   }
 
-  .ring-val {
+  /* Lighthouse score badge */
+  .score-badge {
     position: absolute;
-    inset: 0;
+    bottom: clamp(3rem, 6vw, 5rem);
+    left: clamp(1.5rem, 4vw, 3rem);
     display: flex;
     align-items: center;
-    justify-content: center;
-    font-family: var(--font-mono);
-    font-size: 1.05rem;
-    font-weight: 700;
-    color: var(--c-accent);
-    letter-spacing: -0.03em;
+    gap: 0.5rem;
+    background: rgba(5, 6, 10, 0.72);
+    border: 1px solid rgba(61, 255, 122, 0.28);
+    padding: 0.45rem 0.9rem;
+    backdrop-filter: blur(8px);
+    animation: badge-float 4s ease-in-out infinite alternate;
   }
 
-  .ring-label {
-    font-family: var(--font-mono);
-    font-size: 0.58rem;
-    color: var(--c-text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    text-align: center;
+  .score-badge-icon {
+    color: #3DFF7A;
+    font-size: 0.9rem;
+    line-height: 1;
   }
 
-  /* Vitals */
-  .vitals-title {
+  .score-badge-label {
     font-family: var(--font-mono);
     font-size: 0.6rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--c-text-dim);
-    margin-bottom: 0.75rem;
+    color: rgba(224, 232, 255, 0.5);
   }
 
-  .vital-row {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    margin-bottom: 0.6rem;
-  }
-
-  .vital-name {
+  .score-badge-num {
     font-family: var(--font-mono);
-    font-size: 0.68rem;
-    color: var(--c-text-muted);
-    min-width: 2.5rem;
-  }
-
-  .vital-track {
-    flex: 1;
-    height: 3px;
-    background: var(--c-border);
-    overflow: hidden;
-  }
-
-  .vital-bar {
-    height: 100%;
-    background: var(--c-accent);
-    width: 0;
-    transition: width 1.6s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .vital-val {
-    font-family: var(--font-mono);
-    font-size: 0.68rem;
+    font-size: 0.88rem;
     font-weight: 700;
-    color: var(--c-accent);
-    min-width: 3rem;
-    text-align: right;
+    color: #3DFF7A;
+    letter-spacing: -0.02em;
   }
 
-  /* Scroll indicator */
+  @keyframes badge-float {
+    from { transform: translateY(0px); }
+    to   { transform: translateY(-6px); }
+  }
+
+  /* ── Scroll indicator ── */
   .scroll-indicator {
     position: absolute;
     bottom: 2rem;
-    left: 50%;
+    left: 22.5%; /* center of left column */
     transform: translateX(-50%);
+    z-index: 2;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -399,130 +267,378 @@ const t = useTranslations(lang);
 
   .scroll-line {
     width: 1px;
-    height: 60px;
-    background: linear-gradient(to bottom, var(--c-accent), transparent);
+    height: 56px;
+    background: linear-gradient(to bottom, #3DFF7A, transparent);
     animation: scroll-pulse 2s ease-in-out infinite;
   }
 
   @keyframes scroll-pulse {
-    0%, 100% { opacity: 0.3; transform: scaleY(0.6); transform-origin: top; }
-    50%       { opacity: 1; transform: scaleY(1); }
+    0%, 100% { opacity: 0.25; transform: scaleY(0.5); transform-origin: top; }
+    50%       { opacity: 0.9; transform: scaleY(1); }
   }
 
-  /* Responsive */
-  @media (max-width: 960px) {
+  /* ── Responsive ── */
+  @media (max-width: 900px) {
     .hero-inner {
       grid-template-columns: 1fr;
-      gap: 3rem;
-      text-align: center;
+      grid-template-rows: 40svh 1fr;
+      min-height: 100svh;
     }
 
-    .hero-sub { max-width: 100%; }
+    .hero-canvas-wrap {
+      grid-row: 1;
+      min-height: 40svh;
+    }
+
+    #face-canvas {
+      min-height: 40svh;
+    }
+
+    .hero-text {
+      grid-row: 2;
+      max-width: 100%;
+      margin-left: 0;
+      padding: 2.5rem clamp(1.25rem, 4vw, 2.5rem) 5rem;
+      text-align: center;
+      align-items: center;
+    }
+
+    .hero-sub { max-width: 52ch; text-align: center; }
     .hero-actions { justify-content: center; }
     .hero-trust { align-items: center; }
 
-    .hero-widget {
-      max-width: 480px;
-      margin-inline: auto;
-      animation: none;
+    .score-badge {
+      bottom: 1rem;
+      left: 1rem;
+    }
+
+    .grid-bg { width: 100%; }
+
+    .scroll-indicator {
+      left: 50%;
     }
   }
 
-  @media (max-width: 500px) {
-    .score-rings {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1rem;
+  @media (max-width: 480px) {
+    .hero-h1 {
+      font-size: clamp(2.2rem, 10vw, 3.2rem);
+    }
+
+    .hero-h1-score {
+      font-size: clamp(2.5rem, 12vw, 4rem);
     }
   }
 
+  /* ── Reduced motion ── */
   @media (prefers-reduced-motion: reduce) {
-    .hero-glow { animation: none; }
-    .hero-widget { animation: none; }
-    .scroll-line { animation: none; opacity: 0.5; }
-    .vital-bar { transition: none; }
+    .score-badge { animation: none; }
+    .scroll-line { animation: none; opacity: 0.4; }
   }
 </style>
 
 <script>
-  const ACCENT = getComputedStyle(document.documentElement).getPropertyValue('--c-accent').trim() || '#3DFF7A';
-  const TRACK  = getComputedStyle(document.documentElement).getPropertyValue('--c-border').trim() || '#1C2A50';
+(function () {
+  'use strict';
 
-  function drawRing(canvasId: string, progress: number, color: string, track: string) {
-    const canvas = document.getElementById(canvasId) as HTMLCanvasElement | null;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-    const dpr = window.devicePixelRatio || 1;
-    canvas.width = 72 * dpr;
-    canvas.height = 72 * dpr;
-    canvas.style.width = '72px';
-    canvas.style.height = '72px';
-    ctx.scale(dpr, dpr);
-    const cx = 36, cy = 36, r = 28;
-    ctx.clearRect(0, 0, 72, 72);
-    ctx.beginPath();
-    ctx.arc(cx, cy, r, 0, Math.PI * 2);
-    ctx.strokeStyle = track;
-    ctx.lineWidth = 4;
-    ctx.stroke();
-    if (progress > 0) {
-      ctx.beginPath();
-      ctx.arc(cx, cy, r, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * progress);
-      ctx.strokeStyle = color;
-      ctx.lineWidth = 4;
-      ctx.lineCap = 'round';
-      ctx.stroke();
-    }
+  // ── Score counter in headline ──
+  const scoreEl = document.getElementById('score-num') as HTMLElement | null;
+  const duration = 1800;
+  const startDelay = 400;
+
+  function easeOut(t: number): number {
+    return 1 - Math.pow(1 - t, 3);
   }
 
-  const rings = [
-    { id: 'ring-perf', val: 'rv-perf', target: 100 },
-    { id: 'ring-seo',  val: 'rv-seo',  target: 100 },
-    { id: 'ring-a11y', val: 'rv-a11y', target: 98  },
-    { id: 'ring-bp',   val: 'rv-bp',   target: 100 },
-  ];
-
-  rings.forEach(({ id }) => drawRing(id, 0, ACCENT, TRACK));
-
-  function animateAll() {
-    const duration = 1800;
+  function runScoreCounter() {
     const start = performance.now();
-    const ease = (t: number) => t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
-
-    // Score counter in H1
-    const scoreEl = document.getElementById('score-num');
-
     function tick(now: number) {
-      const t = Math.min((now - start) / duration, 1);
-      const e = ease(t);
-
-      rings.forEach(({ id, val, target }) => {
-        const progress = e * target / 100;
-        // Refresh accent each tick (handles theme changes)
-        const accent = getComputedStyle(document.documentElement).getPropertyValue('--c-accent').trim() || '#3DFF7A';
-        const track  = getComputedStyle(document.documentElement).getPropertyValue('--c-border').trim() || '#1C2A50';
-        drawRing(id, progress, accent, track);
-        const el = document.getElementById(val);
-        if (el) el.textContent = String(Math.round(e * target));
-      });
-
+      const raw = Math.min((now - start) / duration, 1);
+      const e = easeOut(raw);
       if (scoreEl) scoreEl.textContent = String(Math.round(e * 100));
-
-      if (t < 1) requestAnimationFrame(tick);
-      else {
-        // Animate vitals bars
-        setTimeout(() => {
-          ['vb-lcp', 'vb-inp', 'vb-cls'].forEach((id, i) => {
-            const bar = document.getElementById(id);
-            if (bar) bar.style.width = ['94%', '98%', '100%'][i];
-          });
-        }, 200);
-      }
+      if (raw < 1) requestAnimationFrame(tick);
     }
-
     requestAnimationFrame(tick);
   }
 
-  // Start after a short delay
-  setTimeout(animateAll, 500);
+  setTimeout(runScoreCounter, startDelay);
+
+  // ── Face canvas ──
+  const canvas = document.getElementById('face-canvas') as HTMLCanvasElement | null;
+  if (!canvas) return;
+
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return;
+
+  let W = 0, H = 0;
+  let mouseX = 0.5, mouseY = 0.5;
+  let targetMouseX = 0.5, targetMouseY = 0.5;
+  let rafId = 0;
+  let startTime = 0;
+
+  const BG = '#05060A';
+
+  function resize() {
+    const dpr = window.devicePixelRatio || 1;
+    const rect = canvas!.getBoundingClientRect();
+    W = rect.width;
+    H = rect.height;
+    canvas!.width = Math.round(W * dpr);
+    canvas!.height = Math.round(H * dpr);
+    ctx!.scale(dpr, dpr);
+  }
+
+  function buildFacePath(fcx: number, fcy: number, fs: number): Path2D {
+    const p = new Path2D();
+    // Head oval
+    p.moveTo(fcx, fcy - fs * 0.72);
+    p.bezierCurveTo(fcx + fs * 0.50, fcy - fs * 0.72, fcx + fs * 0.53, fcy - fs * 0.10, fcx + fs * 0.53, fcy + fs * 0.18);
+    // Right jaw
+    p.bezierCurveTo(fcx + fs * 0.53, fcy + fs * 0.62, fcx + fs * 0.36, fcy + fs * 0.72, fcx, fcy + fs * 0.72);
+    // Left jaw
+    p.bezierCurveTo(fcx - fs * 0.36, fcy + fs * 0.72, fcx - fs * 0.53, fcy + fs * 0.62, fcx - fs * 0.53, fcy + fs * 0.18);
+    // Left side
+    p.bezierCurveTo(fcx - fs * 0.53, fcy - fs * 0.10, fcx - fs * 0.50, fcy - fs * 0.72, fcx, fcy - fs * 0.72);
+    p.closePath();
+    return p;
+  }
+
+  function buildNeckPath(fcx: number, fcy: number, fs: number): Path2D {
+    const p = new Path2D();
+    const neckTop = fcy + fs * 0.72;
+    const neckBot = neckTop + fs * 0.38;
+    const nw = fs * 0.16;
+    p.rect(fcx - nw, neckTop, nw * 2, fs * 0.38 + 2);
+    return p;
+  }
+
+  function buildShoulderPath(fcx: number, fcy: number, fs: number): Path2D {
+    const p = new Path2D();
+    const neckTop = fcy + fs * 0.72;
+    const neckBot = neckTop + fs * 0.38;
+    const nw = fs * 0.16;
+    // From neck-base, bezier out to shoulders, down to canvas bottom
+    p.moveTo(fcx - nw, neckBot);
+    p.bezierCurveTo(fcx - nw * 1.4, neckBot + fs * 0.1, fcx - fs * 0.9, neckBot + fs * 0.3, fcx - fs * 1.15, H + 20);
+    p.lineTo(fcx + fs * 1.15, H + 20);
+    p.bezierCurveTo(fcx + fs * 0.9, neckBot + fs * 0.3, fcx + nw * 1.4, neckBot + fs * 0.1, fcx + nw, neckBot);
+    p.closePath();
+    return p;
+  }
+
+  function buildSilhouette(fcx: number, fcy: number, fs: number): Path2D {
+    // Combine face + neck + shoulders as one clipping shape
+    const p = new Path2D();
+
+    // Head
+    p.moveTo(fcx, fcy - fs * 0.72);
+    p.bezierCurveTo(fcx + fs * 0.50, fcy - fs * 0.72, fcx + fs * 0.53, fcy - fs * 0.10, fcx + fs * 0.53, fcy + fs * 0.18);
+    p.bezierCurveTo(fcx + fs * 0.53, fcy + fs * 0.62, fcx + fs * 0.36, fcy + fs * 0.72, fcx, fcy + fs * 0.72);
+    p.bezierCurveTo(fcx - fs * 0.36, fcy + fs * 0.72, fcx - fs * 0.53, fcy + fs * 0.62, fcx - fs * 0.53, fcy + fs * 0.18);
+    p.bezierCurveTo(fcx - fs * 0.53, fcy - fs * 0.10, fcx - fs * 0.50, fcy - fs * 0.72, fcx, fcy - fs * 0.72);
+    p.closePath();
+
+    // Neck + shoulders as a separate sub-path (additive)
+    const neckTop = fcy + fs * 0.72;
+    const neckBot = neckTop + fs * 0.38;
+    const nw = fs * 0.16;
+    p.moveTo(fcx - nw, neckTop);
+    p.lineTo(fcx + nw, neckTop);
+    p.lineTo(fcx + nw, neckBot);
+    p.bezierCurveTo(fcx + nw * 1.4, neckBot + fs * 0.1, fcx + fs * 0.9, neckBot + fs * 0.3, fcx + fs * 1.15, H + 20);
+    p.lineTo(fcx - fs * 1.15, H + 20);
+    p.bezierCurveTo(fcx - fs * 0.9, neckBot + fs * 0.3, fcx - nw * 1.4, neckBot + fs * 0.1, fcx - nw, neckBot);
+    p.closePath();
+
+    return p;
+  }
+
+  function drawFrame(timestamp: number) {
+    if (!ctx || !canvas) return;
+
+    if (startTime === 0) startTime = timestamp;
+    const t = (timestamp - startTime) / 1000; // seconds
+
+    // Smooth mouse lerp
+    mouseX += (targetMouseX - mouseX) * 0.04;
+    mouseY += (targetMouseY - mouseY) * 0.04;
+
+    // Face center and scale
+    const fcx = W * 0.46;
+    const fcy = H * 0.42;
+    const fs = Math.min(W, H) * 0.42;
+
+    // ── 1. Background ──
+    ctx.clearRect(0, 0, W, H);
+    ctx.fillStyle = BG;
+    ctx.fillRect(0, 0, W, H);
+
+    // ── 2. Draw face silhouette (dark base) ──
+    const silhouette = buildSilhouette(fcx, fcy, fs);
+    ctx.save();
+    ctx.fillStyle = '#0E0F14';
+    ctx.fill(silhouette, 'nonzero');
+    ctx.restore();
+
+    // ── 3. RGB lights — clipped to silhouette ──
+    // Each light breathes with a gentle sin offset
+    const breathR = 0.82 + Math.sin(t * 0.41) * 0.12;
+    const breathG = 0.78 + Math.sin(t * 0.37 + 1.1) * 0.14;
+    const breathB = 0.80 + Math.sin(t * 0.44 + 2.3) * 0.11;
+
+    // Green light follows mouse subtly
+    const gOffX = (mouseX - 0.5) * fs * 0.22;
+    const gOffY = (mouseY - 0.5) * fs * 0.18;
+
+    ctx.save();
+    ctx.clip(silhouette, 'nonzero');
+    ctx.globalCompositeOperation = 'screen';
+
+    // Red — bottom-left
+    const rGrad = ctx.createRadialGradient(
+      fcx - fs * 0.62, fcy + fs * 0.55, 0,
+      fcx - fs * 0.62, fcy + fs * 0.55, fs * 1.18
+    );
+    rGrad.addColorStop(0, `rgba(255, 32, 64, ${0.88 * breathR})`);
+    rGrad.addColorStop(0.45, `rgba(255, 32, 64, ${0.42 * breathR})`);
+    rGrad.addColorStop(1, 'rgba(255, 32, 64, 0)');
+    ctx.fillStyle = rGrad;
+    ctx.fillRect(0, 0, W, H);
+
+    // Green — top-center (mouse-following)
+    const gGrad = ctx.createRadialGradient(
+      fcx + gOffX, fcy - fs * 0.60 + gOffY, 0,
+      fcx + gOffX, fcy - fs * 0.60 + gOffY, fs * 1.22
+    );
+    gGrad.addColorStop(0, `rgba(0, 255, 120, ${0.85 * breathG})`);
+    gGrad.addColorStop(0.4, `rgba(0, 255, 120, ${0.38 * breathG})`);
+    gGrad.addColorStop(1, 'rgba(0, 255, 120, 0)');
+    ctx.fillStyle = gGrad;
+    ctx.fillRect(0, 0, W, H);
+
+    // Blue — right side
+    const bGrad = ctx.createRadialGradient(
+      fcx + fs * 0.72, fcy + fs * 0.05, 0,
+      fcx + fs * 0.72, fcy + fs * 0.05, fs * 1.20
+    );
+    bGrad.addColorStop(0, `rgba(43, 82, 255, ${0.88 * breathB})`);
+    bGrad.addColorStop(0.42, `rgba(43, 82, 255, ${0.40 * breathB})`);
+    bGrad.addColorStop(1, 'rgba(43, 82, 255, 0)');
+    ctx.fillStyle = bGrad;
+    ctx.fillRect(0, 0, W, H);
+
+    ctx.restore();
+
+    // ── 4. Eye glow spots ──
+    ctx.save();
+    ctx.clip(silhouette, 'nonzero');
+    ctx.globalCompositeOperation = 'screen';
+
+    const eyeY = fcy - fs * 0.12;
+    const eyeSpread = fs * 0.22;
+
+    // Left eye
+    const le = ctx.createRadialGradient(fcx - eyeSpread, eyeY, 0, fcx - eyeSpread, eyeY, fs * 0.14);
+    le.addColorStop(0, 'rgba(255,255,255,0.55)');
+    le.addColorStop(0.5, 'rgba(255,255,255,0.10)');
+    le.addColorStop(1, 'rgba(255,255,255,0)');
+    ctx.fillStyle = le;
+    ctx.fillRect(0, 0, W, H);
+
+    // Right eye
+    const re = ctx.createRadialGradient(fcx + eyeSpread, eyeY, 0, fcx + eyeSpread, eyeY, fs * 0.14);
+    re.addColorStop(0, 'rgba(255,255,255,0.55)');
+    re.addColorStop(0.5, 'rgba(255,255,255,0.10)');
+    re.addColorStop(1, 'rgba(255,255,255,0)');
+    ctx.fillStyle = re;
+    ctx.fillRect(0, 0, W, H);
+
+    ctx.restore();
+
+    // ── 5. Edge vignette on silhouette ──
+    ctx.save();
+    ctx.clip(silhouette, 'nonzero');
+    ctx.globalCompositeOperation = 'multiply';
+    const vig = ctx.createRadialGradient(fcx, fcy, fs * 0.18, fcx, fcy, fs * 1.0);
+    vig.addColorStop(0, 'rgba(255,255,255,1)');
+    vig.addColorStop(0.55, 'rgba(180,180,180,1)');
+    vig.addColorStop(1, 'rgba(20,20,20,1)');
+    ctx.fillStyle = vig;
+    ctx.fillRect(0, 0, W, H);
+    ctx.restore();
+
+    // ── 6. Dark halo around silhouette (atmospheric bleed) ──
+    ctx.save();
+    ctx.globalCompositeOperation = 'source-over';
+    // Very soft outer glow: draw silhouette-shaped shadow bleed
+    ctx.shadowColor = 'rgba(0,200,100,0.07)';
+    ctx.shadowBlur = 48;
+    ctx.fillStyle = 'transparent';
+    ctx.fill(silhouette, 'nonzero');
+    ctx.restore();
+
+    rafId = requestAnimationFrame(drawFrame);
+  }
+
+  // Mouse tracking
+  canvas.closest('section')?.addEventListener('mousemove', (e: Event) => {
+    const me = e as MouseEvent;
+    const rect = canvas.getBoundingClientRect();
+    targetMouseX = (me.clientX - rect.left) / rect.width;
+    targetMouseY = (me.clientY - rect.top) / rect.height;
+  });
+
+  // Resize observer
+  const ro = new ResizeObserver(() => {
+    cancelAnimationFrame(rafId);
+    resize();
+    rafId = requestAnimationFrame(drawFrame);
+  });
+  ro.observe(canvas);
+
+  // Start
+  resize();
+  rafId = requestAnimationFrame(drawFrame);
+
+  // Pause when off-screen
+  const io = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting) {
+      rafId = requestAnimationFrame(drawFrame);
+    } else {
+      cancelAnimationFrame(rafId);
+    }
+  }, { threshold: 0 });
+  io.observe(canvas);
+
+  // Reduced motion: stop animation, draw single still frame
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+  if (prefersReduced.matches) {
+    cancelAnimationFrame(rafId);
+    resize();
+    // Draw a single static frame at t=0 with no breathing
+    const fcx = W * 0.46;
+    const fcy = H * 0.42;
+    const fs = Math.min(W, H) * 0.42;
+    ctx.fillStyle = BG;
+    ctx.fillRect(0, 0, W, H);
+    const sil = buildSilhouette(fcx, fcy, fs);
+    ctx.fillStyle = '#0E0F14';
+    ctx.fill(sil, 'nonzero');
+    ctx.save();
+    ctx.clip(sil, 'nonzero');
+    ctx.globalCompositeOperation = 'screen';
+    const rg = ctx.createRadialGradient(fcx - fs * 0.62, fcy + fs * 0.55, 0, fcx - fs * 0.62, fcy + fs * 0.55, fs * 1.18);
+    rg.addColorStop(0, 'rgba(255,32,64,0.82)');
+    rg.addColorStop(1, 'rgba(255,32,64,0)');
+    ctx.fillStyle = rg; ctx.fillRect(0, 0, W, H);
+    const gg = ctx.createRadialGradient(fcx, fcy - fs * 0.60, 0, fcx, fcy - fs * 0.60, fs * 1.22);
+    gg.addColorStop(0, 'rgba(0,255,120,0.80)');
+    gg.addColorStop(1, 'rgba(0,255,120,0)');
+    ctx.fillStyle = gg; ctx.fillRect(0, 0, W, H);
+    const bg2 = ctx.createRadialGradient(fcx + fs * 0.72, fcy + fs * 0.05, 0, fcx + fs * 0.72, fcy + fs * 0.05, fs * 1.20);
+    bg2.addColorStop(0, 'rgba(43,82,255,0.82)');
+    bg2.addColorStop(1, 'rgba(43,82,255,0)');
+    ctx.fillStyle = bg2; ctx.fillRect(0, 0, W, H);
+    ctx.restore();
+  }
+})();
 </script>
