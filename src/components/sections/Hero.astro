@@ -238,8 +238,8 @@ const t = useTranslations(lang);
     inset: 0;
     background: radial-gradient(
       ellipse 60% 50% at 40% 35%,
-      rgba(61, 255, 122, 0.12) 0%,
-      rgba(61, 255, 122, 0.04) 50%,
+      rgba(61, 255, 122, 0.05) 0%,
+      rgba(61, 255, 122, 0.02) 50%,
       transparent 80%
     );
     mix-blend-mode: screen;
@@ -251,8 +251,8 @@ const t = useTranslations(lang);
     position: absolute;
     inset: 0;
     background:
-      radial-gradient(ellipse 55% 45% at 75% 60%, rgba(43, 82, 255, 0.18) 0%, transparent 65%),
-      radial-gradient(ellipse 40% 35% at 20% 70%, rgba(255, 32, 64, 0.10) 0%, transparent 60%);
+      radial-gradient(ellipse 55% 45% at 75% 60%, rgba(43, 82, 255, 0.07) 0%, transparent 65%),
+      radial-gradient(ellipse 40% 35% at 20% 70%, rgba(255, 32, 64, 0.04) 0%, transparent 60%);
     pointer-events: none;
   }
 
@@ -407,29 +407,49 @@ const t = useTranslations(lang);
 
   setTimeout(runScoreCounter, startDelay);
 
-  // ── Portrait parallax ──
+  // ── Portrait : parallax souris + dezoom/fade au scroll ──
   const portrait = document.getElementById('portrait-inner') as HTMLElement | null;
   if (!portrait) return;
+
+  const portraitWrap = portrait.parentElement as HTMLElement;
+  const section = portrait.closest('section') as HTMLElement;
 
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
   let targetX = 0, targetY = 0;
   let currentX = 0, currentY = 0;
+  let scrollProgress = 0;
   let rafId = 0;
 
-  portrait.closest('section')?.addEventListener('mousemove', (e: Event) => {
+  // Mouse parallax
+  section?.addEventListener('mousemove', (e: Event) => {
     const me = e as MouseEvent;
-    const rect = (portrait.closest('section') as HTMLElement).getBoundingClientRect();
+    const rect = section.getBoundingClientRect();
     const nx = (me.clientX - rect.left) / rect.width - 0.5;
     const ny = (me.clientY - rect.top) / rect.height - 0.5;
     targetX = nx * 10;
     targetY = ny * 6;
   });
 
+  // Scroll tracking
+  function onScroll() {
+    const rect = section.getBoundingClientRect();
+    scrollProgress = Math.max(0, Math.min(1, -rect.top / rect.height));
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+
   function animate() {
     currentX += (targetX - currentX) * 0.06;
     currentY += (targetY - currentY) * 0.06;
-    portrait.style.transform = `translate(${currentX}px, ${currentY}px)`;
+
+    // Dezoom : scale de 1.0 → 0.80 sur toute la hauteur du hero
+    const scale = 1 - scrollProgress * 0.20;
+    // Fade : disparaît à 65% du scroll
+    const opacity = Math.max(0, 1 - scrollProgress * 1.6);
+
+    portrait.style.transform = `translate(${currentX}px, ${currentY}px) scale(${scale})`;
+    portraitWrap.style.opacity = String(opacity);
+
     rafId = requestAnimationFrame(animate);
   }
 
