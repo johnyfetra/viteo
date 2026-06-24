@@ -29,6 +29,9 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalURL} />
+    {(Astro.url.pathname === `/${lang}/` || Astro.url.pathname === `/${lang}`) && (
+      <link rel="preload" as="image" href="/hero-portrait.webp" type="image/webp" fetchpriority="high" />
+    )}
     {noindex && <meta name="robots" content="noindex, nofollow" />}
 
     <!-- Hreflang -->

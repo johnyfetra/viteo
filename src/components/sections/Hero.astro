@@ -24,7 +24,7 @@ const t = useTranslations(lang);
 
       <h1 class="hero-h1">
         <span class="hero-h1-line">{t('hero.h1a')}</span>
-        <span class="hero-h1-score" aria-label={t('hero.h1b')} id="hero-score-text">
+        <span class="hero-h1-score" role="img" aria-label={t('hero.h1b')} id="hero-score-text">
           <span class="score-counter" id="score-num" aria-hidden="true">0</span>
           <span class="score-slash" aria-hidden="true">&thinsp;/&thinsp;100.</span>
         </span>
@@ -63,7 +63,7 @@ const t = useTranslations(lang);
     <div class="hero-portrait-wrap">
       <div class="hero-portrait-inner" id="portrait-inner">
         <img
-          src="/hero-portrait.png"
+          src="/hero-portrait.webp"
           alt={lang === 'fr' ? 'Portrait du fondateur — Viteo Studio, studio web haute performance' : 'Founder portrait — Viteo Studio, high-performance web studio'}
           class="hero-portrait-img"
           width="900"
