@@ -222,13 +222,13 @@ export const ui = {
     'seo.home.desc':    'Création de sites vitrines ultra-rapides, indexés par Google, livrés en 7 à 21 jours. Score Lighthouse 95+ garanti. Pour artisans, professions libérales et PME.',
 
     // Services page
-    'page.services.title': 'Nos services — Viteo Studio',
+    'page.services.title': 'Services — Sites vitrines haute performance — Viteo Studio',
     'page.services.desc':  'Performance technique, SEO, design sur-mesure, CMS headless et conformité RGPD. Tout ce qu\'un site vitrine PME doit avoir pour performer.',
     'page.services.h1':    'Chaque site livré est une vitrine qui travaille 24h/24.',
     'page.services.sub':   "Un site vitrine n'est pas une brochure en ligne. C'est un commercial qui ne dort jamais, qui répond aux questions avant qu'on les pose, et qui convainc sans forcer. Voici comment nous le construisons.",
 
     // Pricing page
-    'page.pricing.title': 'Tarifs — Viteo Studio',
+    'page.pricing.title': 'Tarifs — Sites vitrines à partir de 890€ — Viteo Studio',
     'page.pricing.desc':  'Formules claires sans surprise : Essentiel à 890€, Performance à 1890€, Signature à 3900€. Score Lighthouse garanti, livraison en 7 à 21 jours.',
     'page.pricing.h1':    'Des formules pensées pour la réalité des PME.',
     'page.pricing.sub':   "Pas de forfait mensuel caché, pas de renouvellement automatique. Vous payez une fois, vous êtes propriétaire du code.",
@@ -269,11 +269,11 @@ export const ui = {
     ],
 
     // About page
-    'page.about.title': 'À propos — Viteo Studio',
+    'page.about.title': 'À propos — Studio web haute performance — Viteo Studio',
     'page.about.desc':  'Viteo est un studio web spécialisé dans les sites vitrines haute performance pour PME françaises. Performance garantie, code propre, résultats mesurables.',
 
     // Contact page
-    'page.contact.title': 'Contact — Viteo Studio',
+    'page.contact.title': 'Contactez Viteo Studio — Devis site vitrine gratuit',
     'page.contact.desc':  'Démarrez votre projet vitrine. Premier échange gratuit, réponse sous 24h. Sites Astro haute performance pour PME, artisans et professions libérales.',
   },
 
@@ -491,13 +491,13 @@ export const ui = {
     'seo.home.desc':    'Ultra-fast showcase website creation, Google-indexed, delivered in 7 to 21 days. Lighthouse 95+ score guaranteed. For artisans, freelancers and small businesses.',
 
     // Services page
-    'page.services.title': 'Services — Viteo Studio',
+    'page.services.title': 'Web services — High-performance Astro sites — Viteo Studio',
     'page.services.desc':  'Technical performance, SEO, custom design, headless CMS, and GDPR compliance. Everything an SMB showcase site needs to perform.',
     'page.services.h1':    'Every delivered site is a showcase that works 24/7.',
     'page.services.sub':   "A showcase site isn't an online brochure. It's a salesperson who never sleeps, answers questions before they're asked, and convinces without pressure. Here's how we build it.",
 
     // Pricing page
-    'page.pricing.title': 'Pricing — Viteo Studio',
+    'page.pricing.title': 'Pricing — Showcase websites from €890 — Viteo Studio',
     'page.pricing.desc':  'Clear packages with no surprises: Essential at €890, Performance at €1,890, Signature at €3,900. Lighthouse score guaranteed, delivery in 7 to 21 days.',
     'page.pricing.h1':    'Packages built for the reality of small businesses.',
     'page.pricing.sub':   "No hidden monthly fees, no automatic renewal. You pay once, you own the code.",
@@ -538,11 +538,11 @@ export const ui = {
     ],
 
     // About page
-    'page.about.title': 'About — Viteo Studio',
+    'page.about.title': 'About — High-performance Astro web studio — Viteo Studio',
     'page.about.desc':  'Viteo is a web studio specialised in high-performance showcase sites for small businesses. Guaranteed performance, clean code, measurable results.',
 
     // Contact page
-    'page.contact.title': 'Contact — Viteo Studio',
+    'page.contact.title': 'Contact Viteo Studio — Free showcase website quote',
     'page.contact.desc':  'Start your showcase project. Free first conversation, reply within 24h. High-performance Astro sites for SMBs, artisans and independent professionals.',
   },
 } as const;

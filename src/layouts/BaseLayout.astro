@@ -63,12 +63,21 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
         "name": "Viteo Studio",
         "url": "https://viteo.studio",
         "logo": "https://viteo.studio/og-viteo.jpg",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Antananarivo",
+          "addressCountry": "MG"
+        },
         "contactPoint": {
           "@type": "ContactPoint",
           "email": "hello@viteo.studio",
           "contactType": "customer support"
         },
-        "sameAs": []
+        "sameAs": [
+          "https://linkedin.com/company/viteo-studio",
+          "https://github.com/viteo-studio",
+          "https://twitter.com/viteo_studio"
+        ]
       }
     </script>
 
