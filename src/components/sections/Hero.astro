@@ -59,13 +59,23 @@ const t = useTranslations(lang);
       </div>
     </div>
 
-    <!-- Right: Face canvas -->
-    <div class="hero-canvas-wrap">
-      <canvas
-        id="face-canvas"
-        aria-label={lang === 'fr' ? 'Portrait Viteo Studio, éclairage RGB' : 'Viteo Studio portrait, RGB lighting'}
-        role="img"
-      ></canvas>
+    <!-- Right: Portrait -->
+    <div class="hero-portrait-wrap">
+      <div class="hero-portrait-inner" id="portrait-inner">
+        <img
+          src="/hero-portrait.png"
+          alt={lang === 'fr' ? 'Portrait — Viteo Studio' : 'Portrait — Viteo Studio'}
+          class="hero-portrait-img"
+          width="900"
+          height="1100"
+          fetchpriority="high"
+          decoding="async"
+        />
+        <!-- Green accent overlay -->
+        <div class="portrait-overlay-green" aria-hidden="true"></div>
+        <!-- Ambient glow behind the portrait -->
+        <div class="portrait-glow" aria-hidden="true"></div>
+      </div>
 
       <!-- Lighthouse score badge -->
       <div class="score-badge" aria-hidden="true">
@@ -197,18 +207,53 @@ const t = useTranslations(lang);
     font-size: 0.75rem;
   }
 
-  /* ── Canvas column ── */
-  .hero-canvas-wrap {
+  /* ── Portrait column ── */
+  .hero-portrait-wrap {
     position: relative;
     display: flex;
     align-items: stretch;
+    overflow: hidden;
   }
 
-  #face-canvas {
+  .hero-portrait-inner {
+    position: relative;
+    width: 100%;
+    will-change: transform;
+    transition: transform 0.05s linear;
+  }
+
+  .hero-portrait-img {
     display: block;
     width: 100%;
     height: 100%;
     min-height: 100svh;
+    object-fit: cover;
+    object-position: center top;
+    mix-blend-mode: normal;
+  }
+
+  /* Subtle green tint overlay — ties the photo into the design system */
+  .portrait-overlay-green {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      ellipse 60% 50% at 40% 35%,
+      rgba(61, 255, 122, 0.12) 0%,
+      rgba(61, 255, 122, 0.04) 50%,
+      transparent 80%
+    );
+    mix-blend-mode: screen;
+    pointer-events: none;
+  }
+
+  /* Ambient glow behind the subject */
+  .portrait-glow {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 55% 45% at 75% 60%, rgba(43, 82, 255, 0.18) 0%, transparent 65%),
+      radial-gradient(ellipse 40% 35% at 20% 70%, rgba(255, 32, 64, 0.10) 0%, transparent 60%);
+    pointer-events: none;
   }
 
   /* Lighthouse score badge */
@@ -281,17 +326,17 @@ const t = useTranslations(lang);
   @media (max-width: 900px) {
     .hero-inner {
       grid-template-columns: 1fr;
-      grid-template-rows: 40svh 1fr;
+      grid-template-rows: 45svh 1fr;
       min-height: 100svh;
     }
 
-    .hero-canvas-wrap {
+    .hero-portrait-wrap {
       grid-row: 1;
-      min-height: 40svh;
+      min-height: 45svh;
     }
 
-    #face-canvas {
-      min-height: 40svh;
+    .hero-portrait-img {
+      min-height: 45svh;
     }
 
     .hero-text {
@@ -362,283 +407,32 @@ const t = useTranslations(lang);
 
   setTimeout(runScoreCounter, startDelay);
 
-  // ── Face canvas ──
-  const canvas = document.getElementById('face-canvas') as HTMLCanvasElement | null;
-  if (!canvas) return;
+  // ── Portrait parallax ──
+  const portrait = document.getElementById('portrait-inner') as HTMLElement | null;
+  if (!portrait) return;
 
-  const ctx = canvas.getContext('2d');
-  if (!ctx) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-  let W = 0, H = 0;
-  let mouseX = 0.5, mouseY = 0.5;
-  let targetMouseX = 0.5, targetMouseY = 0.5;
+  let targetX = 0, targetY = 0;
+  let currentX = 0, currentY = 0;
   let rafId = 0;
-  let startTime = 0;
 
-  const BG = '#05060A';
-
-  function resize() {
-    const dpr = window.devicePixelRatio || 1;
-    const rect = canvas!.getBoundingClientRect();
-    W = rect.width;
-    H = rect.height;
-    canvas!.width = Math.round(W * dpr);
-    canvas!.height = Math.round(H * dpr);
-    ctx!.scale(dpr, dpr);
-  }
-
-  function buildFacePath(fcx: number, fcy: number, fs: number): Path2D {
-    const p = new Path2D();
-    // Head oval
-    p.moveTo(fcx, fcy - fs * 0.72);
-    p.bezierCurveTo(fcx + fs * 0.50, fcy - fs * 0.72, fcx + fs * 0.53, fcy - fs * 0.10, fcx + fs * 0.53, fcy + fs * 0.18);
-    // Right jaw
-    p.bezierCurveTo(fcx + fs * 0.53, fcy + fs * 0.62, fcx + fs * 0.36, fcy + fs * 0.72, fcx, fcy + fs * 0.72);
-    // Left jaw
-    p.bezierCurveTo(fcx - fs * 0.36, fcy + fs * 0.72, fcx - fs * 0.53, fcy + fs * 0.62, fcx - fs * 0.53, fcy + fs * 0.18);
-    // Left side
-    p.bezierCurveTo(fcx - fs * 0.53, fcy - fs * 0.10, fcx - fs * 0.50, fcy - fs * 0.72, fcx, fcy - fs * 0.72);
-    p.closePath();
-    return p;
-  }
-
-  function buildNeckPath(fcx: number, fcy: number, fs: number): Path2D {
-    const p = new Path2D();
-    const neckTop = fcy + fs * 0.72;
-    const neckBot = neckTop + fs * 0.38;
-    const nw = fs * 0.16;
-    p.rect(fcx - nw, neckTop, nw * 2, fs * 0.38 + 2);
-    return p;
-  }
-
-  function buildShoulderPath(fcx: number, fcy: number, fs: number): Path2D {
-    const p = new Path2D();
-    const neckTop = fcy + fs * 0.72;
-    const neckBot = neckTop + fs * 0.38;
-    const nw = fs * 0.16;
-    // From neck-base, bezier out to shoulders, down to canvas bottom
-    p.moveTo(fcx - nw, neckBot);
-    p.bezierCurveTo(fcx - nw * 1.4, neckBot + fs * 0.1, fcx - fs * 0.9, neckBot + fs * 0.3, fcx - fs * 1.15, H + 20);
-    p.lineTo(fcx + fs * 1.15, H + 20);
-    p.bezierCurveTo(fcx + fs * 0.9, neckBot + fs * 0.3, fcx + nw * 1.4, neckBot + fs * 0.1, fcx + nw, neckBot);
-    p.closePath();
-    return p;
-  }
-
-  function buildSilhouette(fcx: number, fcy: number, fs: number): Path2D {
-    // Combine face + neck + shoulders as one clipping shape
-    const p = new Path2D();
-
-    // Head
-    p.moveTo(fcx, fcy - fs * 0.72);
-    p.bezierCurveTo(fcx + fs * 0.50, fcy - fs * 0.72, fcx + fs * 0.53, fcy - fs * 0.10, fcx + fs * 0.53, fcy + fs * 0.18);
-    p.bezierCurveTo(fcx + fs * 0.53, fcy + fs * 0.62, fcx + fs * 0.36, fcy + fs * 0.72, fcx, fcy + fs * 0.72);
-    p.bezierCurveTo(fcx - fs * 0.36, fcy + fs * 0.72, fcx - fs * 0.53, fcy + fs * 0.62, fcx - fs * 0.53, fcy + fs * 0.18);
-    p.bezierCurveTo(fcx - fs * 0.53, fcy - fs * 0.10, fcx - fs * 0.50, fcy - fs * 0.72, fcx, fcy - fs * 0.72);
-    p.closePath();
-
-    // Neck + shoulders as a separate sub-path (additive)
-    const neckTop = fcy + fs * 0.72;
-    const neckBot = neckTop + fs * 0.38;
-    const nw = fs * 0.16;
-    p.moveTo(fcx - nw, neckTop);
-    p.lineTo(fcx + nw, neckTop);
-    p.lineTo(fcx + nw, neckBot);
-    p.bezierCurveTo(fcx + nw * 1.4, neckBot + fs * 0.1, fcx + fs * 0.9, neckBot + fs * 0.3, fcx + fs * 1.15, H + 20);
-    p.lineTo(fcx - fs * 1.15, H + 20);
-    p.bezierCurveTo(fcx - fs * 0.9, neckBot + fs * 0.3, fcx - nw * 1.4, neckBot + fs * 0.1, fcx - nw, neckBot);
-    p.closePath();
-
-    return p;
-  }
-
-  function drawFrame(timestamp: number) {
-    if (!ctx || !canvas) return;
-
-    if (startTime === 0) startTime = timestamp;
-    const t = (timestamp - startTime) / 1000; // seconds
-
-    // Smooth mouse lerp
-    mouseX += (targetMouseX - mouseX) * 0.04;
-    mouseY += (targetMouseY - mouseY) * 0.04;
-
-    // Face center and scale
-    const fcx = W * 0.46;
-    const fcy = H * 0.42;
-    const fs = Math.min(W, H) * 0.42;
-
-    // ── 1. Background ──
-    ctx.clearRect(0, 0, W, H);
-    ctx.fillStyle = BG;
-    ctx.fillRect(0, 0, W, H);
-
-    // ── 2. Draw face silhouette (dark base) ──
-    const silhouette = buildSilhouette(fcx, fcy, fs);
-    ctx.save();
-    ctx.fillStyle = '#0E0F14';
-    ctx.fill(silhouette, 'nonzero');
-    ctx.restore();
-
-    // ── 3. RGB lights — clipped to silhouette ──
-    // Each light breathes with a gentle sin offset
-    const breathR = 0.82 + Math.sin(t * 0.41) * 0.12;
-    const breathG = 0.78 + Math.sin(t * 0.37 + 1.1) * 0.14;
-    const breathB = 0.80 + Math.sin(t * 0.44 + 2.3) * 0.11;
-
-    // Green light follows mouse subtly
-    const gOffX = (mouseX - 0.5) * fs * 0.22;
-    const gOffY = (mouseY - 0.5) * fs * 0.18;
-
-    ctx.save();
-    ctx.clip(silhouette, 'nonzero');
-    ctx.globalCompositeOperation = 'screen';
-
-    // Red — bottom-left
-    const rGrad = ctx.createRadialGradient(
-      fcx - fs * 0.62, fcy + fs * 0.55, 0,
-      fcx - fs * 0.62, fcy + fs * 0.55, fs * 1.18
-    );
-    rGrad.addColorStop(0, `rgba(255, 32, 64, ${0.88 * breathR})`);
-    rGrad.addColorStop(0.45, `rgba(255, 32, 64, ${0.42 * breathR})`);
-    rGrad.addColorStop(1, 'rgba(255, 32, 64, 0)');
-    ctx.fillStyle = rGrad;
-    ctx.fillRect(0, 0, W, H);
-
-    // Green — top-center (mouse-following)
-    const gGrad = ctx.createRadialGradient(
-      fcx + gOffX, fcy - fs * 0.60 + gOffY, 0,
-      fcx + gOffX, fcy - fs * 0.60 + gOffY, fs * 1.22
-    );
-    gGrad.addColorStop(0, `rgba(0, 255, 120, ${0.85 * breathG})`);
-    gGrad.addColorStop(0.4, `rgba(0, 255, 120, ${0.38 * breathG})`);
-    gGrad.addColorStop(1, 'rgba(0, 255, 120, 0)');
-    ctx.fillStyle = gGrad;
-    ctx.fillRect(0, 0, W, H);
-
-    // Blue — right side
-    const bGrad = ctx.createRadialGradient(
-      fcx + fs * 0.72, fcy + fs * 0.05, 0,
-      fcx + fs * 0.72, fcy + fs * 0.05, fs * 1.20
-    );
-    bGrad.addColorStop(0, `rgba(43, 82, 255, ${0.88 * breathB})`);
-    bGrad.addColorStop(0.42, `rgba(43, 82, 255, ${0.40 * breathB})`);
-    bGrad.addColorStop(1, 'rgba(43, 82, 255, 0)');
-    ctx.fillStyle = bGrad;
-    ctx.fillRect(0, 0, W, H);
-
-    ctx.restore();
-
-    // ── 4. Eye glow spots ──
-    ctx.save();
-    ctx.clip(silhouette, 'nonzero');
-    ctx.globalCompositeOperation = 'screen';
-
-    const eyeY = fcy - fs * 0.12;
-    const eyeSpread = fs * 0.22;
-
-    // Left eye
-    const le = ctx.createRadialGradient(fcx - eyeSpread, eyeY, 0, fcx - eyeSpread, eyeY, fs * 0.14);
-    le.addColorStop(0, 'rgba(255,255,255,0.55)');
-    le.addColorStop(0.5, 'rgba(255,255,255,0.10)');
-    le.addColorStop(1, 'rgba(255,255,255,0)');
-    ctx.fillStyle = le;
-    ctx.fillRect(0, 0, W, H);
-
-    // Right eye
-    const re = ctx.createRadialGradient(fcx + eyeSpread, eyeY, 0, fcx + eyeSpread, eyeY, fs * 0.14);
-    re.addColorStop(0, 'rgba(255,255,255,0.55)');
-    re.addColorStop(0.5, 'rgba(255,255,255,0.10)');
-    re.addColorStop(1, 'rgba(255,255,255,0)');
-    ctx.fillStyle = re;
-    ctx.fillRect(0, 0, W, H);
-
-    ctx.restore();
-
-    // ── 5. Edge vignette on silhouette ──
-    ctx.save();
-    ctx.clip(silhouette, 'nonzero');
-    ctx.globalCompositeOperation = 'multiply';
-    const vig = ctx.createRadialGradient(fcx, fcy, fs * 0.18, fcx, fcy, fs * 1.0);
-    vig.addColorStop(0, 'rgba(255,255,255,1)');
-    vig.addColorStop(0.55, 'rgba(180,180,180,1)');
-    vig.addColorStop(1, 'rgba(20,20,20,1)');
-    ctx.fillStyle = vig;
-    ctx.fillRect(0, 0, W, H);
-    ctx.restore();
-
-    // ── 6. Dark halo around silhouette (atmospheric bleed) ──
-    ctx.save();
-    ctx.globalCompositeOperation = 'source-over';
-    // Very soft outer glow: draw silhouette-shaped shadow bleed
-    ctx.shadowColor = 'rgba(0,200,100,0.07)';
-    ctx.shadowBlur = 48;
-    ctx.fillStyle = 'transparent';
-    ctx.fill(silhouette, 'nonzero');
-    ctx.restore();
-
-    rafId = requestAnimationFrame(drawFrame);
-  }
-
-  // Mouse tracking
-  canvas.closest('section')?.addEventListener('mousemove', (e: Event) => {
+  portrait.closest('section')?.addEventListener('mousemove', (e: Event) => {
     const me = e as MouseEvent;
-    const rect = canvas.getBoundingClientRect();
-    targetMouseX = (me.clientX - rect.left) / rect.width;
-    targetMouseY = (me.clientY - rect.top) / rect.height;
+    const rect = (portrait.closest('section') as HTMLElement).getBoundingClientRect();
+    const nx = (me.clientX - rect.left) / rect.width - 0.5;
+    const ny = (me.clientY - rect.top) / rect.height - 0.5;
+    targetX = nx * 10;
+    targetY = ny * 6;
   });
 
-  // Resize observer
-  const ro = new ResizeObserver(() => {
-    cancelAnimationFrame(rafId);
-    resize();
-    rafId = requestAnimationFrame(drawFrame);
-  });
-  ro.observe(canvas);
-
-  // Start
-  resize();
-  rafId = requestAnimationFrame(drawFrame);
-
-  // Pause when off-screen
-  const io = new IntersectionObserver((entries) => {
-    if (entries[0].isIntersecting) {
-      rafId = requestAnimationFrame(drawFrame);
-    } else {
-      cancelAnimationFrame(rafId);
-    }
-  }, { threshold: 0 });
-  io.observe(canvas);
-
-  // Reduced motion: stop animation, draw single still frame
-  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)');
-  if (prefersReduced.matches) {
-    cancelAnimationFrame(rafId);
-    resize();
-    // Draw a single static frame at t=0 with no breathing
-    const fcx = W * 0.46;
-    const fcy = H * 0.42;
-    const fs = Math.min(W, H) * 0.42;
-    ctx.fillStyle = BG;
-    ctx.fillRect(0, 0, W, H);
-    const sil = buildSilhouette(fcx, fcy, fs);
-    ctx.fillStyle = '#0E0F14';
-    ctx.fill(sil, 'nonzero');
-    ctx.save();
-    ctx.clip(sil, 'nonzero');
-    ctx.globalCompositeOperation = 'screen';
-    const rg = ctx.createRadialGradient(fcx - fs * 0.62, fcy + fs * 0.55, 0, fcx - fs * 0.62, fcy + fs * 0.55, fs * 1.18);
-    rg.addColorStop(0, 'rgba(255,32,64,0.82)');
-    rg.addColorStop(1, 'rgba(255,32,64,0)');
-    ctx.fillStyle = rg; ctx.fillRect(0, 0, W, H);
-    const gg = ctx.createRadialGradient(fcx, fcy - fs * 0.60, 0, fcx, fcy - fs * 0.60, fs * 1.22);
-    gg.addColorStop(0, 'rgba(0,255,120,0.80)');
-    gg.addColorStop(1, 'rgba(0,255,120,0)');
-    ctx.fillStyle = gg; ctx.fillRect(0, 0, W, H);
-    const bg2 = ctx.createRadialGradient(fcx + fs * 0.72, fcy + fs * 0.05, 0, fcx + fs * 0.72, fcy + fs * 0.05, fs * 1.20);
-    bg2.addColorStop(0, 'rgba(43,82,255,0.82)');
-    bg2.addColorStop(1, 'rgba(43,82,255,0)');
-    ctx.fillStyle = bg2; ctx.fillRect(0, 0, W, H);
-    ctx.restore();
+  function animate() {
+    currentX += (targetX - currentX) * 0.06;
+    currentY += (targetY - currentY) * 0.06;
+    portrait.style.transform = `translate(${currentX}px, ${currentY}px)`;
+    rafId = requestAnimationFrame(animate);
   }
+
+  rafId = requestAnimationFrame(animate);
 })();
 </script>
