@@ -27,7 +27,7 @@ const links = [
   <div class="nav-inner">
 
     <!-- Logo -->
-    <a href={`/${lang}/`} class="nav-logo" aria-label="Viteo Studio — accueil">
+    <a href={`/${lang}/`} class="nav-logo" aria-label={lang === 'fr' ? 'Viteo.studio — accueil' : 'Viteo.studio — home'}>
       <span class="nav-logo-dot" aria-hidden="true"></span>
       <span class="nav-logo-name">Viteo</span><span class="nav-logo-tld">.studio</span>
     </a>
@@ -261,7 +261,7 @@ const links = [
     font-size: 0.6rem;
     font-weight: 500;
     letter-spacing: 0;
-    color: var(--c-text-muted);
+    color: #7B8EC4;
     align-self: flex-end;
     margin-bottom: 0.05em;
     transition: color 250ms;
