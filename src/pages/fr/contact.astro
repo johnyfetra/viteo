@@ -10,370 +10,962 @@ const t = useTranslations(lang);
   title={t('page.contact.title')}
   description={t('page.contact.desc')}
 >
-  <section class="contact-page section">
-    <div class="container contact-inner">
-      <!-- Left: info -->
-      <div class="contact-info">
-        <div class="eyebrow reveal">
+  <!-- ══════════════════════════════════════
+       SECTION 1 — HERO SPLIT
+       Background fixe dark #06080E
+       Ligne accent verticale sur gauche
+  ═══════════════════════════════════════ -->
+  <section class="c-hero">
+    <div class="c-hero__grid container">
+
+      <!-- Colonne gauche -->
+      <div class="c-hero__left reveal-left">
+        <div class="c-hero__accent-line" aria-hidden="true"></div>
+
+        <p class="c-hero__eyebrow">
           <span class="eyebrow-dot" aria-hidden="true"></span>
           {t('contact.eyebrow')}
-        </div>
-        <h1 class="contact-h1 reveal">{t('contact.h1')}</h1>
-        <p class="contact-sub reveal">{t('contact.sub')}</p>
+        </p>
 
-        <div class="contact-details">
-          <a href={`mailto:${t('contact.info.email')}`} class="contact-detail reveal">
-            <span class="detail-icon" aria-hidden="true">@</span>
-            <div>
-              <div class="detail-label">Email</div>
-              <div class="detail-val">{t('contact.info.email')}</div>
-            </div>
-          </a>
-          <div class="contact-detail reveal reveal-delay-1">
-            <span class="detail-icon" aria-hidden="true">↩</span>
-            <div>
-              <div class="detail-label">{lang === 'fr' ? 'Délai de réponse' : 'Response time'}</div>
-              <div class="detail-val">{t('contact.info.resp')}</div>
-            </div>
-          </div>
-          <div class="contact-detail reveal reveal-delay-2">
-            <span class="detail-icon" aria-hidden="true">☎</span>
-            <div>
-              <div class="detail-label">{lang === 'fr' ? 'Premier appel' : 'First call'}</div>
-              <div class="detail-val">{t('contact.info.call')}</div>
-            </div>
-          </div>
-        </div>
+        <h1 class="c-hero__h1">
+          <span class="c-hero__h1-big">Parlons</span>
+          <span class="c-hero__h1-rest">de votre projet.</span>
+        </h1>
 
-        <!-- Process reminder -->
-        <div class="contact-process reveal reveal-delay-3">
-          <div class="cp-title">Ce qui se passe après votre message</div>
-          <ol class="cp-steps">
-            <li>Réponse sous 24h avec les prochaines étapes</li>
-            <li>Appel de 45 min pour cadrer votre projet</li>
-            <li>Devis précis envoyé sous 48h</li>
-            <li>Démarrage sous 7 jours après validation</li>
-          </ol>
+        <p class="c-hero__sub">
+          Répondons sous 24h, jours ouvrés. Premier échange gratuit — pas d'engagement, pas de relance commerciale.
+        </p>
+
+        <div class="c-hero__meta">
+          <div class="c-hero__meta-item">
+            <span class="c-hero__meta-label">Délai de réponse</span>
+            <span class="c-hero__meta-val">Sous 24h</span>
+          </div>
+          <div class="c-hero__meta-divider" aria-hidden="true"></div>
+          <div class="c-hero__meta-item">
+            <span class="c-hero__meta-label">Premier appel</span>
+            <span class="c-hero__meta-val">Offert · 45 min</span>
+          </div>
+          <div class="c-hero__meta-divider" aria-hidden="true"></div>
+          <div class="c-hero__meta-item">
+            <span class="c-hero__meta-label">Email direct</span>
+            <a href={`mailto:${t('contact.info.email')}`} class="c-hero__meta-val c-hero__meta-link">
+              {t('contact.info.email')}
+            </a>
+          </div>
         </div>
       </div>
 
-      <!-- Right: Form -->
-      <div class="contact-form-wrap reveal reveal-delay-1">
-        <form
-          class="contact-form"
-          method="POST"
-          action="/api/contact"
-          name="contact"
-          novalidate
-          id="contact-form"
-        >
-          <div class="form-row">
-            <div class="form-group">
-              <label for="name" class="form-label">{t('contact.form.name')} *</label>
+      <!-- Colonne droite — formulaire -->
+      <div class="c-hero__right reveal-right">
+        <div class="c-form-card">
+
+          <form
+            class="c-form"
+            method="POST"
+            action="/api/contact"
+            novalidate
+            id="contact-form"
+            aria-label="Formulaire de contact"
+          >
+            <!-- Nom + Email côte à côte -->
+            <div class="c-form__row">
+              <div class="c-form__field">
+                <label for="name" class="c-form__label">
+                  <span class="c-form__label-text">Votre nom</span>
+                  <span class="c-form__required" aria-label="obligatoire">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  class="c-form__input"
+                  required
+                  autocomplete="name"
+                  placeholder="Sarah Moreau"
+                />
+                <span class="c-form__line" aria-hidden="true"></span>
+              </div>
+
+              <div class="c-form__field">
+                <label for="email" class="c-form__label">
+                  <span class="c-form__label-text">Email professionnel</span>
+                  <span class="c-form__required" aria-label="obligatoire">*</span>
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  class="c-form__input"
+                  required
+                  autocomplete="email"
+                  placeholder="sarah@mon-cabinet.fr"
+                />
+                <span class="c-form__line" aria-hidden="true"></span>
+              </div>
+            </div>
+
+            <!-- Activité -->
+            <div class="c-form__field">
+              <label for="business" class="c-form__label">
+                <span class="c-form__label-text">Votre activité</span>
+                <span class="c-form__optional">(optionnel)</span>
+              </label>
               <input
                 type="text"
-                id="name"
-                name="name"
-                class="form-input"
-                required
-                autocomplete="name"
-                placeholder="Sarah Moreau"
+                id="business"
+                name="business"
+                class="c-form__input"
+                autocomplete="organization"
+                placeholder="Ostéopathe, Avocat, Architecte…"
               />
+              <span class="c-form__line" aria-hidden="true"></span>
             </div>
-            <div class="form-group">
-              <label for="email" class="form-label">{t('contact.form.email')} *</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                class="form-input"
+
+            <!-- Budget -->
+            <div class="c-form__field">
+              <label for="budget" class="c-form__label">
+                <span class="c-form__label-text">Budget envisagé</span>
+                <span class="c-form__optional">(optionnel)</span>
+              </label>
+              <div class="c-form__select-wrap">
+                <select id="budget" name="budget" class="c-form__input c-form__select">
+                  <option value="" disabled selected>Choisir une fourchette…</option>
+                  <option value="essential">Formule Essentiel — 890 €</option>
+                  <option value="performance">Formule Performance — 1 890 €</option>
+                  <option value="signature">Formule Signature — 3 900 €</option>
+                  <option value="unknown">Je ne sais pas encore</option>
+                </select>
+                <span class="c-form__select-arrow" aria-hidden="true">↓</span>
+              </div>
+              <span class="c-form__line" aria-hidden="true"></span>
+            </div>
+
+            <!-- Message -->
+            <div class="c-form__field">
+              <label for="message" class="c-form__label">
+                <span class="c-form__label-text">Décrivez votre projet</span>
+                <span class="c-form__required" aria-label="obligatoire">*</span>
+              </label>
+              <textarea
+                id="message"
+                name="message"
+                class="c-form__input c-form__textarea"
                 required
-                autocomplete="email"
-                placeholder="sarah@mon-cabinet.fr"
-              />
+                rows="4"
+                placeholder="Mon site WordPress met 8 secondes à charger, je cherche à le remplacer…"
+              ></textarea>
+              <span class="c-form__line" aria-hidden="true"></span>
             </div>
+
+            <!-- RGPD -->
+            <p class="c-form__rgpd">
+              Vos données servent uniquement à répondre à votre demande. Aucun marketing, aucun partage tiers.
+              <a href="/fr/confidentialite" class="c-form__rgpd-link">Politique de confidentialité →</a>
+            </p>
+
+            <!-- Submit -->
+            <button type="submit" class="c-form__submit" id="submit-btn">
+              <span class="c-form__submit-text">Envoyer le message</span>
+              <span class="c-form__submit-arrow" aria-hidden="true">→</span>
+            </button>
+          </form>
+
+          <!-- État succès — remplace le formulaire -->
+          <div id="form-success" class="c-form__success" aria-live="polite" hidden>
+            <div class="c-form__success-check" aria-hidden="true">✓</div>
+            <p class="c-form__success-title">Message envoyé.</p>
+            <p class="c-form__success-sub">
+              Nous vous répondons sous 24h avec les prochaines étapes.<br>
+              À très vite.
+            </p>
           </div>
 
-          <div class="form-group">
-            <label for="business" class="form-label">{t('contact.form.biz')}</label>
-            <input
-              type="text"
-              id="business"
-              name="business"
-              class="form-input"
-              placeholder="Ostéopathe, Avocat, Architecte..."
-            />
-          </div>
+        </div>
+      </div>
 
-          <div class="form-group">
-            <label for="message" class="form-label">{t('contact.form.msg')} *</label>
-            <textarea
-              id="message"
-              name="message"
-              class="form-input form-textarea"
-              required
-              rows="5"
-              placeholder="J'ai un site WordPress qui met 8 secondes à charger, je cherche à le remplacer..."
-            ></textarea>
-          </div>
+    </div>
+  </section>
 
-          <!-- RGPD notice -->
-          <p class="form-rgpd">
-            En soumettant ce formulaire, vous acceptez que vos données soient utilisées uniquement pour répondre à votre demande. Aucun marketing, aucun partage. <a href="/fr/confidentialite" class="form-rgpd-link">Politique de confidentialité</a>.
-          </p>
-
-          <button type="submit" class="btn btn-primary btn-lg form-submit" id="submit-btn">
-            {t('contact.form.send')}
-          </button>
-
-          <!-- Success message -->
-          <div id="form-success" class="form-success" aria-live="polite" hidden>
-            <span aria-hidden="true">✓</span>
-            Message envoyé ! Nous vous répondons sous 24h.
-          </div>
-        </form>
+  <!-- ══════════════════════════════════════
+       SECTION 2 — PROCESS STRIP
+       4 étapes connectées par une ligne
+  ═══════════════════════════════════════ -->
+  <section class="c-process">
+    <div class="container">
+      <p class="c-process__label reveal">Ce qui se passe après votre message</p>
+      <div class="c-process__track" role="list">
+        <div class="c-process__item reveal" role="listitem">
+          <div class="c-process__node" aria-hidden="true">01</div>
+          <p class="c-process__step">Réponse sous 24h</p>
+        </div>
+        <div class="c-process__connector" aria-hidden="true"></div>
+        <div class="c-process__item reveal reveal-delay-1" role="listitem">
+          <div class="c-process__node" aria-hidden="true">02</div>
+          <p class="c-process__step">Appel de 45 min</p>
+        </div>
+        <div class="c-process__connector" aria-hidden="true"></div>
+        <div class="c-process__item reveal reveal-delay-2" role="listitem">
+          <div class="c-process__node" aria-hidden="true">03</div>
+          <p class="c-process__step">Devis sous 48h</p>
+        </div>
+        <div class="c-process__connector" aria-hidden="true"></div>
+        <div class="c-process__item reveal reveal-delay-3" role="listitem">
+          <div class="c-process__node" aria-hidden="true">04</div>
+          <p class="c-process__step">Démarrage sous 7 jours</p>
+        </div>
       </div>
     </div>
   </section>
+
+  <!-- ══════════════════════════════════════
+       SECTION 3 — RÉASSURANCE
+       Trois éléments de confiance, minimalistes
+  ═══════════════════════════════════════ -->
+  <section class="c-trust">
+    <div class="container">
+      <ul class="c-trust__list">
+        <li class="c-trust__item reveal">
+          <span class="c-trust__mark" aria-hidden="true">—</span>
+          <div>
+            <strong class="c-trust__title">Réponse garantie sous 24h</strong>
+            <span class="c-trust__text">Jours ouvrés. Pas de réponse automatique.</span>
+          </div>
+        </li>
+        <li class="c-trust__item reveal reveal-delay-1">
+          <span class="c-trust__mark" aria-hidden="true">—</span>
+          <div>
+            <strong class="c-trust__title">Aucun engagement</strong>
+            <span class="c-trust__text">Le premier échange ne vous oblige à rien. Vous décidez.</span>
+          </div>
+        </li>
+        <li class="c-trust__item reveal reveal-delay-2">
+          <span class="c-trust__mark" aria-hidden="true">—</span>
+          <div>
+            <strong class="c-trust__title">Suivi personnel</strong>
+            <span class="c-trust__text">Vous échangez avec la même personne du premier appel à la livraison.</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
 </BaseLayout>
 
 <style>
-  .contact-page {
-    padding-top: calc(60px + var(--space-xl));
-    min-height: 100svh;
+/* ══════════════════════════════════════
+   SECTION HERO
+═══════════════════════════════════════ */
+
+.c-hero {
+  background: #06080E;
+  color: #E0E8FF;
+  padding-top: calc(60px + 5rem);
+  padding-bottom: 5rem;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+}
+
+.c-hero__grid {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  gap: 5rem;
+  align-items: start;
+}
+
+/* Ligne accent verticale — gauche de la colonne */
+.c-hero__left {
+  position: relative;
+  padding-left: 2rem;
+}
+
+.c-hero__accent-line {
+  position: absolute;
+  left: 0;
+  top: 0.25rem;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(
+    to bottom,
+    #3DFF7A 0%,
+    rgba(61, 255, 122, 0.3) 60%,
+    transparent 100%
+  );
+}
+
+/* Eyebrow */
+.c-hero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #3DFF7A;
+  margin-bottom: 1.5rem;
+}
+
+/* Titre dramatique : "Parlons" très grand, reste normal */
+.c-hero__h1 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  margin-bottom: 1.75rem;
+  color: #E0E8FF;
+}
+
+.c-hero__h1-big {
+  display: block;
+  font-size: clamp(4rem, 10vw, 7.5rem);
+  color: #3DFF7A;
+  line-height: 0.9;
+}
+
+.c-hero__h1-rest {
+  display: block;
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+  color: #E0E8FF;
+  margin-top: 0.35rem;
+  letter-spacing: -0.03em;
+}
+
+.c-hero__sub {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: #5B6FA3;
+  line-height: 1.75;
+  max-width: 42ch;
+  margin-bottom: 2.5rem;
+}
+
+/* Meta strip */
+.c-hero__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border-top: 1px solid #1C2A50;
+}
+
+.c-hero__meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid #1C2A50;
+}
+
+.c-hero__meta-divider {
+  display: none;
+}
+
+.c-hero__meta-label {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #2E3D60;
+}
+
+.c-hero__meta-val {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #E0E8FF;
+}
+
+.c-hero__meta-link {
+  color: #3DFF7A;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  text-decoration: none;
+  transition: opacity 150ms;
+}
+
+.c-hero__meta-link:hover { opacity: 0.75; }
+.c-hero__meta-link:focus-visible {
+  outline: 2px solid #3DFF7A;
+  outline-offset: 2px;
+}
+
+/* ══════════════════════════════════════
+   FORM CARD
+═══════════════════════════════════════ */
+
+.c-form-card {
+  background: #0C1220;
+  border: 1px solid #1C2A50;
+  padding: 2.75rem;
+  position: relative;
+}
+
+/* Trait vert top-left comme signature de carte */
+.c-form-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3rem;
+  height: 2px;
+  background: #3DFF7A;
+}
+
+/* ══════════════════════════════════════
+   FORMULAIRE — CHAMPS UNDERLINE ONLY
+═══════════════════════════════════════ */
+
+.c-form {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.c-form__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.c-form__field {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Label flottant */
+.c-form__label {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #5B6FA3;
+  margin-bottom: 0.6rem;
+  transition: color 200ms;
+}
+
+.c-form__field:focus-within .c-form__label {
+  color: #3DFF7A;
+}
+
+.c-form__required {
+  color: #3DFF7A;
+  font-size: 0.7rem;
+}
+
+.c-form__optional {
+  color: #2E3D60;
+  font-size: 0.55rem;
+  letter-spacing: 0.08em;
+}
+
+/* Input — aucune bordure latérale, uniquement la ligne du bas */
+.c-form__input {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #1C2A50;
+  color: #E0E8FF;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  padding: 0.5rem 0 0.65rem;
+  width: 100%;
+  outline: none;
+  resize: none;
+  transition: border-color 200ms;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.c-form__input::placeholder {
+  color: #2E3D60;
+}
+
+.c-form__input:focus {
+  border-bottom-color: #3DFF7A;
+}
+
+.c-form__input:invalid:not(:placeholder-shown):not(:focus) {
+  border-bottom-color: #FF6B6B;
+}
+
+/* Ligne animée sous l'input (scale depuis gauche au focus) */
+.c-form__line {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 1px;
+  width: 100%;
+  background: #3DFF7A;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 250ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.c-form__field:focus-within .c-form__line {
+  transform: scaleX(1);
+}
+
+/* Select */
+.c-form__select-wrap {
+  position: relative;
+}
+
+.c-form__select {
+  cursor: pointer;
+  padding-right: 2rem;
+}
+
+.c-form__select option {
+  background: #0C1220;
+  color: #E0E8FF;
+}
+
+.c-form__select-arrow {
+  position: absolute;
+  right: 0;
+  bottom: 0.65rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: #5B6FA3;
+  pointer-events: none;
+  transition: color 200ms;
+}
+
+.c-form__select-wrap:focus-within .c-form__select-arrow {
+  color: #3DFF7A;
+}
+
+/* Textarea */
+.c-form__textarea {
+  min-height: 110px;
+  line-height: 1.65;
+}
+
+/* RGPD */
+.c-form__rgpd {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: #2E3D60;
+  line-height: 1.7;
+  max-width: 100%;
+}
+
+.c-form__rgpd-link {
+  color: #5B6FA3;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color 150ms;
+}
+
+.c-form__rgpd-link:hover { color: #3DFF7A; }
+
+/* Bouton submit — pleine largeur, fond accent */
+.c-form__submit {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+  background: #3DFF7A;
+  color: #06080E;
+  border: none;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  padding: 1rem 1.5rem;
+  cursor: pointer;
+  transition:
+    opacity 150ms,
+    transform 150ms;
+  outline: none;
+}
+
+.c-form__submit:hover {
+  opacity: 0.88;
+}
+
+.c-form__submit:active {
+  transform: translateY(1px);
+}
+
+.c-form__submit:focus-visible {
+  outline: 2px solid #3DFF7A;
+  outline-offset: 3px;
+}
+
+.c-form__submit:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.c-form__submit-arrow {
+  font-size: 1.25rem;
+  transition: transform 200ms;
+}
+
+.c-form__submit:not(:disabled):hover .c-form__submit-arrow {
+  transform: translateX(4px);
+}
+
+/* ══════════════════════════════════════
+   ÉTAT SUCCÈS
+═══════════════════════════════════════ */
+
+.c-form__success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 4rem 2rem;
+  gap: 1rem;
+  min-height: 320px;
+}
+
+.c-form__success[hidden] {
+  display: none;
+}
+
+.c-form__success-check {
+  font-size: 3rem;
+  color: #3DFF7A;
+  font-family: var(--font-display);
+  font-weight: 700;
+  animation: check-pop 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes check-pop {
+  from { opacity: 0; transform: scale(0.5); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.c-form__success-title {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: #E0E8FF;
+  animation: fade-up 0.5s 0.15s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.c-form__success-sub {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: #5B6FA3;
+  line-height: 1.75;
+  max-width: 36ch;
+  animation: fade-up 0.5s 0.25s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ══════════════════════════════════════
+   SECTION PROCESS STRIP
+═══════════════════════════════════════ */
+
+.c-process {
+  background: #080C10;
+  color: #E8EAF0;
+  padding-block: 3.5rem;
+  border-top: 1px solid #1C2A50;
+  border-bottom: 1px solid #1C2A50;
+}
+
+.c-process__label {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #2E3D60;
+  margin-bottom: 2.5rem;
+  text-align: center;
+}
+
+.c-process__track {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+}
+
+.c-process__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  flex: 0 0 auto;
+  width: max(140px, 18%);
+}
+
+.c-process__node {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  border: 1px solid #1C2A50;
+  background: #06080E;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #3DFF7A;
+  letter-spacing: 0.04em;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+  transition: border-color 200ms, background 200ms;
+}
+
+.c-process__item:hover .c-process__node {
+  border-color: #3DFF7A;
+  background: rgba(61, 255, 122, 0.06);
+}
+
+.c-process__step {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  color: #5B6FA3;
+  text-align: center;
+  line-height: 1.4;
+  max-width: 120px;
+}
+
+/* Ligne de connexion entre les nœuds */
+.c-process__connector {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, #1C2A50, #1C2A50);
+  min-width: 2rem;
+  max-width: 5rem;
+  position: relative;
+  top: -1.25rem; /* aligné au centre des nœuds */
+}
+
+/* ══════════════════════════════════════
+   SECTION RÉASSURANCE
+═══════════════════════════════════════ */
+
+.c-trust {
+  background: #06080E;
+  padding-block: 3.5rem 5rem;
+}
+
+.c-trust__list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  border: 1px solid #1C2A50;
+}
+
+.c-trust__item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1.75rem 2rem;
+  border-right: 1px solid #1C2A50;
+}
+
+.c-trust__item:last-child {
+  border-right: none;
+}
+
+.c-trust__mark {
+  font-family: var(--font-mono);
+  color: #3DFF7A;
+  font-size: 1rem;
+  flex-shrink: 0;
+  line-height: 1.4;
+}
+
+.c-trust__title {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #E0E8FF;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.35rem;
+}
+
+.c-trust__text {
+  display: block;
+  font-size: 0.78rem;
+  color: #5B6FA3;
+  line-height: 1.55;
+}
+
+/* ══════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════ */
+
+@media (max-width: 900px) {
+  .c-hero__grid {
+    grid-template-columns: 1fr;
+    gap: 3rem;
   }
 
-  .contact-inner {
-    display: grid;
-    grid-template-columns: 0.9fr 1.1fr;
-    gap: 6rem;
-    align-items: start;
+  .c-hero {
+    padding-top: calc(60px + 3rem);
+    min-height: unset;
+    padding-bottom: 3rem;
   }
 
-  .contact-h1 {
-    font-size: clamp(2rem, 4vw, 3.2rem);
-    max-width: 22ch;
-    margin-bottom: 1rem;
-    margin-top: 0.5rem;
+  .c-hero__h1-big {
+    font-size: clamp(3rem, 14vw, 5.5rem);
   }
 
-  .contact-sub {
-    font-size: 1rem;
-    color: var(--c-text-muted);
-    max-width: 44ch;
-    line-height: 1.75;
-    margin-bottom: 2.5rem;
+  .c-form-card {
+    padding: 2rem;
   }
 
-  /* Details */
-  .contact-details {
-    display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
-    margin-bottom: 2.5rem;
+  .c-trust__list {
+    grid-template-columns: 1fr;
   }
 
-  .contact-detail {
-    display: flex;
-    gap: 1rem;
-    align-items: flex-start;
-    text-decoration: none;
+  .c-trust__item {
+    border-right: none;
+    border-bottom: 1px solid #1C2A50;
   }
 
-  .detail-icon {
-    font-size: 1rem;
-    color: var(--c-accent);
-    width: 2.25rem;
-    height: 2.25rem;
-    border: 1px solid var(--c-border);
-    display: flex;
-    align-items: center;
+  .c-trust__item:last-child {
+    border-bottom: none;
+  }
+
+  .c-process__track {
+    flex-wrap: wrap;
+    gap: 1.5rem;
     justify-content: center;
-    flex-shrink: 0;
-    font-family: var(--font-mono);
   }
 
-  .detail-label {
-    font-family: var(--font-mono);
-    font-size: 0.62rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--c-text-dim);
-    margin-bottom: 0.15rem;
+  .c-process__connector {
+    display: none;
   }
 
-  .detail-val {
-    font-size: 0.9rem;
-    color: var(--c-text);
-    font-weight: 500;
+  .c-process__item {
+    width: calc(50% - 0.75rem);
+  }
+}
+
+@media (max-width: 540px) {
+  .c-form__row {
+    grid-template-columns: 1fr;
+    gap: 2rem;
   }
 
-  a.contact-detail .detail-val {
-    color: var(--c-accent);
-    font-family: var(--font-mono);
-    font-size: 0.85rem;
-  }
-
-  /* Process */
-  .contact-process {
-    background: var(--c-surface);
-    border: 1px solid var(--c-border);
+  .c-form-card {
     padding: 1.5rem;
   }
 
-  .cp-title {
-    font-family: var(--font-mono);
-    font-size: 0.65rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--c-text-dim);
-    margin-bottom: 1rem;
-  }
-
-  .cp-steps {
-    display: flex;
-    flex-direction: column;
-    gap: 0.6rem;
+  .c-hero__left {
     padding-left: 1.25rem;
   }
 
-  .cp-steps li {
-    font-size: 0.82rem;
-    color: var(--c-text-muted);
-    line-height: 1.5;
-  }
-
-  .cp-steps li::marker {
-    color: var(--c-accent);
-    font-family: var(--font-mono);
-    font-weight: 700;
-  }
-
-  /* Form */
-  .contact-form-wrap {
-    background: var(--c-surface);
-    border: 1px solid var(--c-border);
-    padding: 2.5rem;
-  }
-
-  .contact-form {
-    display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
-  }
-
-  .form-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-  }
-
-  .form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
-  }
-
-  .form-label {
-    font-family: var(--font-mono);
-    font-size: 0.65rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--c-text-muted);
-  }
-
-  .form-input {
-    background: var(--c-bg);
-    border: 1px solid var(--c-border);
-    color: var(--c-text);
-    font-family: var(--font-body);
-    font-size: 0.9rem;
-    padding: 0.75rem 1rem;
+  .c-process__item {
     width: 100%;
-    transition: border-color var(--duration-fast);
-    outline: none;
-    resize: none;
+    max-width: 200px;
   }
+}
 
-  .form-input::placeholder {
-    color: var(--c-text-dim);
-  }
+/* ══════════════════════════════════════
+   LIGHT THEME OVERRIDES
+   Le hero reste dark par design (intentionnel)
+   Seul le process et trust s'adaptent légèrement
+═══════════════════════════════════════ */
 
-  .form-input:focus {
-    border-color: var(--c-accent);
-  }
+:global([data-theme="light"]) .c-process {
+  background: #0C1018;
+}
 
-  .form-input:invalid:not(:placeholder-shown) {
-    border-color: var(--c-danger);
-  }
+:global([data-theme="light"]) .c-trust {
+  background: #F4F3EF;
+}
 
-  .form-textarea {
-    min-height: 130px;
-  }
+:global([data-theme="light"]) .c-trust__list {
+  border-color: #E0DDD6;
+}
 
-  .form-rgpd {
-    font-family: var(--font-mono);
-    font-size: 0.65rem;
-    color: var(--c-text-dim);
-    line-height: 1.6;
-    max-width: 100%;
-  }
+:global([data-theme="light"]) .c-trust__item {
+  border-right-color: #E0DDD6;
+  border-bottom-color: #E0DDD6;
+}
 
-  .form-rgpd-link {
-    color: var(--c-text-muted);
-    text-decoration: underline;
-    text-underline-offset: 2px;
-  }
+:global([data-theme="light"]) .c-trust__title {
+  color: #0F0D0B;
+}
 
-  .form-submit {
-    align-self: flex-start;
-  }
+:global([data-theme="light"]) .c-trust__text {
+  color: #6B6460;
+}
 
-  .form-success {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-family: var(--font-mono);
-    font-size: 0.82rem;
-    color: var(--c-accent);
-    padding: 1rem;
-    border: 1px solid rgba(61, 255, 122, 0.3);
-    background: var(--c-accent-2);
-  }
-
-  .form-success[hidden] { display: none; }
-
-  @media (max-width: 900px) {
-    .contact-inner { grid-template-columns: 1fr; gap: 3rem; }
-    .contact-form-wrap { padding: 1.75rem; }
-  }
-
-  @media (max-width: 480px) {
-    .form-row { grid-template-columns: 1fr; }
-  }
+:global([data-theme="light"]) .c-trust__mark {
+  color: #007A34;
+}
 </style>
 
 <script>
   const form = document.getElementById('contact-form') as HTMLFormElement | null;
-  const btn = document.getElementById('submit-btn');
-  const success = document.getElementById('form-success');
+  const btn = document.getElementById('submit-btn') as HTMLButtonElement | null;
+  const successEl = document.getElementById('form-success');
 
   form?.addEventListener('submit', async (e) => {
     e.preventDefault();
+
     if (!form.checkValidity()) {
       form.reportValidity();
       return;
     }
 
     if (btn) {
-      btn.textContent = '…';
-      (btn as HTMLButtonElement).disabled = true;
+      btn.querySelector('.c-form__submit-text')!.textContent = 'Envoi en cours…';
+      btn.disabled = true;
     }
 
-    // Simulate send (replace with real endpoint)
-    await new Promise((r) => setTimeout(r, 1200));
+    // Simuler l'envoi — remplacer par le vrai endpoint
+    await new Promise<void>((resolve) => setTimeout(resolve, 1200));
 
-    form.style.display = 'none';
-    if (success) success.hidden = false;
+    // Transition : formulaire → succès
+    if (form && successEl) {
+      form.style.transition = 'opacity 350ms ease';
+      form.style.opacity = '0';
+      setTimeout(() => {
+        form.hidden = true;
+        form.style.opacity = '';
+        successEl.hidden = false;
+      }, 350);
+    }
   });
+
+  // Scroll reveal pour les éléments .reveal dans BaseLayout
+  // (déjà géré par BaseLayout — on s'assure que les reveal-left/right
+  //  sont aussi observés)
+  const motionOk = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (motionOk) {
+    const leftRight = document.querySelectorAll<HTMLElement>('.reveal-left, .reveal-right');
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            (e.target as HTMLElement).classList.add('visible');
+            obs.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.06, rootMargin: '0px 0px -30px 0px' }
+    );
+    leftRight.forEach((el) => obs.observe(el));
+  } else {
+    document.querySelectorAll<HTMLElement>('.reveal-left, .reveal-right').forEach((el) => {
+      el.classList.add('visible');
+    });
+  }
 </script>

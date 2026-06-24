@@ -1,151 +1,764 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import Services from '../../components/sections/Services.astro';
 import CTA from '../../components/sections/CTA.astro';
 import { useTranslations } from '../../i18n/utils';
 
 const lang = 'fr';
 const t = useTranslations(lang);
+
+const services = [
+  {
+    key: '1',
+    icon: '⚡',
+    metric: '< 0.9s',
+    metricLabel: 'temps de chargement moyen',
+    accentColor: '#FF2040',
+  },
+  {
+    key: '2',
+    icon: '◎',
+    metric: '#1',
+    metricLabel: 'sur Google en 30 jours en moyenne',
+    accentColor: '#2B52FF',
+  },
+  {
+    key: '3',
+    icon: '✦',
+    metric: '0',
+    metricLabel: 'templates utilisés — zéro',
+    accentColor: '#3DFF7A',
+  },
+  {
+    key: '4',
+    icon: '⊕',
+    metric: '30 min',
+    metricLabel: 'formation pour maîtriser votre CMS',
+    accentColor: '#7C9EFF',
+  },
+  {
+    key: '5',
+    icon: '⊙',
+    metric: '100 %',
+    metricLabel: 'conforme RGPD dès le premier jour',
+    accentColor: '#3DFF7A',
+  },
+  {
+    key: '6',
+    icon: '◷',
+    metric: '7 j',
+    metricLabel: 'délai minimum garanti contractuellement',
+    accentColor: '#FFB547',
+  },
+];
+
+const stack = [
+  { name: 'Astro 5',          version: 'v5.x',    icon: '🚀', desc: 'Zéro JS par défaut' },
+  { name: 'TypeScript',       version: '5.x',     icon: '🔷', desc: 'Typage strict' },
+  { name: 'Tailwind CSS 4',   version: 'v4.x',    icon: '🎨', desc: 'CSS-first' },
+  { name: 'Vercel Edge',      version: '100+ PoP', icon: '🌍', desc: 'CDN mondial' },
+  { name: 'Storyblok',        version: 'v2',      icon: '📝', desc: 'CMS headless visuel' },
+  { name: 'Plausible',        version: 'RGPD',    icon: '📊', desc: 'Analytics léger' },
+  { name: 'Space Grotesk',    version: 'Variable', icon: '𝗔',  desc: 'Auto-hébergé' },
+  { name: 'Inter Variable',   version: 'Variable', icon: '𝑨',  desc: 'Auto-hébergé' },
+  { name: 'WebP / AVIF',      version: 'Auto',    icon: '🖼️', desc: 'Images optimisées' },
+  { name: 'Schema.org',       version: 'JSON-LD', icon: '🔗', desc: 'SEO structuré' },
+];
+
+const steps = [
+  { num: '01', title: 'Cadrage',         detail: '45 min' },
+  { num: '02', title: 'Design',          detail: 'Figma' },
+  { num: '03', title: 'Développement',   detail: 'Astro' },
+  { num: '04', title: 'Mise en ligne',   detail: 'Vercel' },
+];
 ---
 
 <BaseLayout
   title={t('page.services.title')}
   description={t('page.services.desc')}
 >
-  <!-- Page hero -->
-  <section class="page-hero section-sm">
-    <div class="container">
-      <div class="eyebrow reveal">
-        <span class="eyebrow-dot" aria-hidden="true"></span>
-        {t('services.eyebrow')}
+
+  <!-- ══════════════════════════════════════════
+       SECTION 1 — HERO SPLIT
+       Left: typographic sculpture
+       Right: real Astro code, syntax-highlighted
+  ══════════════════════════════════════════ -->
+  <section class="svc-hero" aria-label="Introduction aux services Viteo">
+    <!-- Left: large title block -->
+    <div class="svc-hero__left">
+      <div class="svc-hero__label">L'Atelier en Détail</div>
+      <h1 class="svc-hero__title">
+        <span class="svc-hero__title-line">Ser&shy;</span>
+        <span class="svc-hero__title-line svc-hero__title-line--offset">vices.</span>
+      </h1>
+      <p class="svc-hero__sub">
+        Ce que nous construisons, comment nous le construisons, et pourquoi chaque décision technique a un impact mesurable sur votre chiffre d'affaires.
+      </p>
+      <div class="svc-hero__guarantee">
+        <span class="svc-hero__g-num">95–100</span>
+        <span class="svc-hero__g-label">Score Lighthouse<br>garanti contractuellement</span>
       </div>
-      <h1 class="page-h1 reveal">{t('page.services.h1')}</h1>
-      <p class="page-sub reveal">{t('page.services.sub')}</p>
+    </div>
+
+    <!-- Vertical separator -->
+    <div class="svc-hero__sep" aria-hidden="true"></div>
+
+    <!-- Right: code snippet -->
+    <div class="svc-hero__right" aria-label="Exemple de composant Astro">
+      <div class="svc-code-header">
+        <span class="svc-code-dot" style="background:#FF5F57" aria-hidden="true"></span>
+        <span class="svc-code-dot" style="background:#FEBC2E" aria-hidden="true"></span>
+        <span class="svc-code-dot" style="background:#28C840" aria-hidden="true"></span>
+        <span class="svc-code-filename">ServiceCard.astro</span>
+      </div>
+      <pre class="svc-code-block" aria-label="Composant Astro exemple"><code><span class="t-comment">---</span>
+<span class="t-kw">interface</span> <span class="t-type">Props</span> {
+  <span class="t-prop">title</span><span class="t-punct">:</span> <span class="t-type">string</span><span class="t-punct">;</span>
+  <span class="t-prop">score</span><span class="t-punct">:</span> <span class="t-type">number</span><span class="t-punct">;</span>
+  <span class="t-prop">lang</span><span class="t-punct">:</span> <span class="t-str">'fr'</span> <span class="t-punct">|</span> <span class="t-str">'en'</span><span class="t-punct">;</span>
+}
+
+<span class="t-kw">const</span> { <span class="t-prop">title</span><span class="t-punct">,</span> <span class="t-prop">score</span><span class="t-punct">,</span> <span class="t-prop">lang</span> } <span class="t-punct">=</span>
+  <span class="t-fn">Astro.props</span><span class="t-punct">;</span>
+<span class="t-comment">---</span>
+
+<span class="t-tag">&lt;article</span> <span class="t-attr">class</span><span class="t-punct">=</span><span class="t-str">"card"</span>
+         <span class="t-attr">lang</span><span class="t-punct">=</span><span class="t-expr">&#123;lang&#125;</span><span class="t-tag">&gt;</span>
+  <span class="t-tag">&lt;h3&gt;</span><span class="t-expr">&#123;title&#125;</span><span class="t-tag">&lt;/h3&gt;</span>
+
+  <span class="t-tag">&lt;meter</span>
+    <span class="t-attr">value</span><span class="t-punct">=</span><span class="t-expr">&#123;score&#125;</span>
+    <span class="t-attr">min</span><span class="t-punct">=</span><span class="t-str">"0"</span>
+    <span class="t-attr">max</span><span class="t-punct">=</span><span class="t-str">"100"</span>
+    <span class="t-attr">optimum</span><span class="t-punct">=</span><span class="t-str">"100"</span>
+  <span class="t-tag">/&gt;</span>
+
+  <span class="t-tag">&lt;p</span> <span class="t-attr">class</span><span class="t-punct">=</span><span class="t-str">"score"</span><span class="t-tag">&gt;</span>
+    <span class="t-expr">&#123;score&#125;</span><span class="t-tag">&lt;span&gt;</span><span class="t-plain"> / 100</span><span class="t-tag">&lt;/span&gt;</span>
+  <span class="t-tag">&lt;/p&gt;</span>
+<span class="t-tag">&lt;/article&gt;</span></code></pre>
     </div>
   </section>
 
-  <Services lang={lang} />
-
-  <!-- Stack detail -->
-  <section class="section stack-section">
-    <div class="container">
-      <div class="eyebrow reveal">
+  <!-- ══════════════════════════════════════════
+       SECTION 2 — SERVICES DETAIL
+       Full-width rows, alternating bg,
+       left=content right=metric
+  ══════════════════════════════════════════ -->
+  <section class="svc-detail" id="services" aria-label="Détail des services">
+    <div class="svc-detail__header reveal">
+      <div class="eyebrow">
         <span class="eyebrow-dot" aria-hidden="true"></span>
-        Stack technique
+        {t('services.eyebrow')}
       </div>
-      <h2 class="stack-h2 reveal">Astro 5 + Tailwind 4 + Vercel.</h2>
-      <div class="stack-grid">
-        <div class="stack-item reveal">
-          <div class="stack-icon" aria-hidden="true">◆</div>
-          <div class="stack-name">Astro 5</div>
-          <div class="stack-desc">Framework de génération statique avec islands architecture. Zéro JavaScript par défaut. Score Lighthouse 95-100 garanti.</div>
+      <h2 class="svc-detail__h2">{t('services.h2')}</h2>
+    </div>
+
+    <div class="svc-rows" role="list">
+      {services.map((svc, i) => (
+        <article
+          class={`svc-row svc-row--${i % 2 === 0 ? 'even' : 'odd'} reveal`}
+          style={`--row-accent: ${svc.accentColor}; transition-delay: ${i * 60}ms`}
+          role="listitem"
+        >
+          <div class="svc-row__left">
+            <div class="svc-row__icon" aria-hidden="true">{svc.icon}</div>
+            <div class="svc-row__content">
+              <h3 class="svc-row__title">
+                {t(`services.${svc.key}.title` as Parameters<typeof t>[0])}
+              </h3>
+              <p class="svc-row__text">
+                {t(`services.${svc.key}.text` as Parameters<typeof t>[0])}
+              </p>
+            </div>
+          </div>
+          <div class="svc-row__right" aria-label={`Métrique clé : ${svc.metric}`}>
+            <div class="svc-row__metric">{svc.metric}</div>
+            <div class="svc-row__metric-label">{svc.metricLabel}</div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       SECTION 3 — TECH STACK
+       Always dark, pill layout
+  ══════════════════════════════════════════ -->
+  <section class="svc-stack" aria-label="Stack technique">
+    <div class="container">
+      <div class="svc-stack__header reveal">
+        <div class="eyebrow" style="color:#3DFF7A">
+          <span class="eyebrow-dot" aria-hidden="true"></span>
+          Stack technique
         </div>
-        <div class="stack-item reveal reveal-delay-1">
-          <div class="stack-icon" aria-hidden="true">◆</div>
-          <div class="stack-name">Tailwind CSS 4</div>
-          <div class="stack-desc">CSS utilitaire nouvelle génération. CSS-first, aucun build step superflu, performance maximale du bundle.</div>
+        <h2 class="svc-stack__h2">Notre Stack Technique</h2>
+        <p class="svc-stack__sub">
+          Chaque outil choisi pour une raison précise. Aucune dépendance inutile.
+        </p>
+      </div>
+      <div class="svc-stack__grid" role="list">
+        {stack.map((tech, i) => (
+          <div
+            class="svc-pill reveal"
+            style={`transition-delay: ${i * 45}ms`}
+            role="listitem"
+          >
+            <span class="svc-pill__icon" aria-hidden="true">{tech.icon}</span>
+            <span class="svc-pill__name">{tech.name}</span>
+            <span class="svc-pill__version">{tech.version}</span>
+            <span class="svc-pill__desc">{tech.desc}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       SECTION 4 — PROCESS REMINDER
+       Minimal horizontal 4-step flow
+  ══════════════════════════════════════════ -->
+  <section class="svc-process" aria-label="Processus de livraison">
+    <div class="container">
+      <div class="svc-process__header reveal">
+        <div class="eyebrow">
+          <span class="eyebrow-dot" aria-hidden="true"></span>
+          {t('process.eyebrow')}
         </div>
-        <div class="stack-item reveal reveal-delay-2">
-          <div class="stack-icon" aria-hidden="true">◆</div>
-          <div class="stack-name">Vercel Edge</div>
-          <div class="stack-desc">Déploiement sur CDN mondial en 100+ régions. Temps de réponse &lt;100ms depuis n'importe où en Europe.</div>
-        </div>
-        <div class="stack-item reveal reveal-delay-3">
-          <div class="stack-icon" aria-hidden="true">◆</div>
-          <div class="stack-name">Storyblok CMS</div>
-          <div class="stack-desc">CMS headless visuel. Vos clients éditent leur contenu en autonomie totale, sans toucher au code.</div>
-        </div>
-        <div class="stack-item reveal reveal-delay-4">
-          <div class="stack-icon" aria-hidden="true">◆</div>
-          <div class="stack-name">Plausible Analytics</div>
-          <div class="stack-desc">Analytics 100 % RGPD-conforme, sans cookies tiers. Léger (moins d'1 Ko), ne ralentit pas votre site.</div>
-        </div>
-        <div class="stack-item reveal reveal-delay-5">
-          <div class="stack-icon" aria-hidden="true">◆</div>
-          <div class="stack-name">Space Grotesk + Inter</div>
-          <div class="stack-desc">Typographies variables auto-hébergées. Aucune requête externe, RGPD-conforme, chargement instantané.</div>
-        </div>
+        <h2 class="svc-process__h2">{t('process.h2')}</h2>
+      </div>
+
+      <div class="svc-steps" role="list" aria-label="Étapes du processus">
+        {steps.map((step, i) => (
+          <div class="svc-step reveal" style={`transition-delay: ${i * 80}ms`} role="listitem">
+            <div class="svc-step__num" aria-hidden="true">{step.num}</div>
+            <div class="svc-step__title">{step.title}</div>
+            <div class="svc-step__detail">{step.detail}</div>
+          </div>
+        ))}
       </div>
     </div>
   </section>
 
   <CTA lang={lang} />
+
 </BaseLayout>
 
 <style>
-  .page-hero {
-    background: var(--c-surface);
-    border-bottom: 1px solid var(--c-border);
-    padding-top: calc(60px + var(--space-xl));
+  /* ══════════════════════════════════════════
+     HERO SPLIT
+  ══════════════════════════════════════════ */
+
+  .svc-hero {
+    background: #08090F;
+    color: #E0E8FF;
+    display: grid;
+    grid-template-columns: 1fr 1px 1fr;
+    min-height: 100svh;
+    padding-top: 64px; /* nav height */
+    position: relative;
   }
 
-  .page-h1 {
-    font-size: clamp(2rem, 5vw, 3.8rem);
-    max-width: 22ch;
-    margin-bottom: 1.25rem;
+  .svc-hero__left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: clamp(3rem, 7vw, 6rem) clamp(1.5rem, 4vw, 4rem);
+    gap: 2rem;
+  }
+
+  .svc-hero__label {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #3DFF7A;
+  }
+
+  .svc-hero__title {
+    font-family: var(--font-display);
+    font-size: clamp(5rem, 13vw, 11rem);
+    font-weight: 900;
+    letter-spacing: -0.05em;
+    line-height: 0.88;
+    color: #E0E8FF;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .svc-hero__title-line--offset {
+    padding-left: 0.15em;
+    color: #3DFF7A;
+  }
+
+  .svc-hero__sub {
+    font-family: var(--font-body);
+    font-size: clamp(0.9rem, 1.4vw, 1.05rem);
+    color: #5B6FA3;
+    line-height: 1.75;
+    max-width: 42ch;
+    margin: 0;
+  }
+
+  .svc-hero__guarantee {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    border-left: 3px solid #3DFF7A;
+    padding-left: 1.25rem;
     margin-top: 0.5rem;
   }
 
-  .page-sub {
-    font-size: 1.05rem;
-    color: var(--c-text-muted);
-    max-width: 58ch;
-    line-height: 1.75;
-  }
-
-  .stack-section {
-    background: var(--c-bg);
-  }
-
-  .stack-h2 {
-    max-width: 28ch;
-    margin-bottom: 2.5rem;
-  }
-
-  .stack-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    background: var(--c-border);
-  }
-
-  .stack-item {
-    background: var(--c-surface);
-    padding: 1.75rem;
-    transition: background var(--duration-base);
-  }
-
-  .stack-item:hover {
-    background: var(--c-surface-2);
-  }
-
-  .stack-icon {
-    font-size: 1rem;
-    color: var(--c-accent);
-    margin-bottom: 0.75rem;
-    display: block;
-  }
-
-  .stack-name {
+  .svc-hero__g-num {
     font-family: var(--font-display);
-    font-size: 1rem;
+    font-size: clamp(2.2rem, 5vw, 3.6rem);
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    color: #3DFF7A;
+    line-height: 1;
+  }
+
+  .svc-hero__g-label {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #5B6FA3;
+    line-height: 1.5;
+  }
+
+  /* Vertical separator line */
+  .svc-hero__sep {
+    background: #3DFF7A;
+    opacity: 0.22;
+    width: 1px;
+    align-self: stretch;
+  }
+
+  /* Code panel */
+  .svc-hero__right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: clamp(2rem, 5vw, 5rem) clamp(1.5rem, 4vw, 3.5rem);
+    background: #060710;
+  }
+
+  .svc-code-header {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: #0C0E1A;
+    border: 1px solid #1C2A50;
+    border-bottom: none;
+    border-radius: 8px 8px 0 0;
+    padding: 0.6rem 1rem;
+  }
+
+  .svc-code-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+    flex-shrink: 0;
+  }
+
+  .svc-code-filename {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: #5B6FA3;
+    margin-left: 0.5rem;
+    letter-spacing: 0.04em;
+  }
+
+  .svc-code-block {
+    font-family: var(--font-mono);
+    font-size: clamp(0.72rem, 1.1vw, 0.82rem);
+    line-height: 1.7;
+    background: #0C0E1A;
+    border: 1px solid #1C2A50;
+    border-radius: 0 0 8px 8px;
+    padding: 1.5rem 1.75rem;
+    overflow-x: auto;
+    margin: 0;
+    white-space: pre;
+  }
+
+  /* Syntax highlight token classes */
+  .t-comment { color: #3D4E78; }
+  .t-kw      { color: #7C9EFF; }
+  .t-type    { color: #FFB547; }
+  .t-prop    { color: #E0E8FF; }
+  .t-punct   { color: #5B6FA3; }
+  .t-str     { color: #3DFF7A; }
+  .t-fn      { color: #7C9EFF; }
+  .t-tag     { color: #FF7CA8; }
+  .t-attr    { color: #FFB547; }
+  .t-expr    { color: #3DFF7A; }
+  .t-plain   { color: #E0E8FF; }
+
+  /* ══════════════════════════════════════════
+     SERVICES DETAIL ROWS
+  ══════════════════════════════════════════ */
+
+  .svc-detail {
+    background: var(--c-bg);
+    padding-block: clamp(4rem, 8vw, 7rem);
+  }
+
+  .svc-detail__header {
+    max-width: 1280px;
+    margin-inline: auto;
+    padding-inline: clamp(1.25rem, 4vw, 2.5rem);
+    margin-bottom: clamp(2.5rem, 5vw, 4rem);
+  }
+
+  .svc-detail__h2 {
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    letter-spacing: -0.03em;
+    max-width: 28ch;
+    margin-top: 0.5rem;
+  }
+
+  .svc-rows {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .svc-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 2rem;
+    max-width: 1280px;
+    margin-inline: auto;
+    width: 100%;
+    padding: clamp(2rem, 4vw, 3.25rem) clamp(1.25rem, 4vw, 2.5rem);
+    border-bottom: 1px solid var(--c-border);
+    transition: background 250ms ease;
+    cursor: default;
+  }
+
+  .svc-row:first-of-type {
+    border-top: 1px solid var(--c-border);
+  }
+
+  .svc-row:hover {
+    background: color-mix(in srgb, var(--row-accent) 4%, transparent);
+  }
+
+  .svc-row:hover .svc-row__title {
+    color: var(--row-accent);
+  }
+
+  .svc-row__left {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
+
+  .svc-row__icon {
+    font-size: 1.75rem;
+    line-height: 1;
+    flex-shrink: 0;
+    margin-top: 0.2rem;
+    filter: drop-shadow(0 0 10px color-mix(in srgb, var(--row-accent) 50%, transparent));
+  }
+
+  .svc-row__content {
+    flex: 1;
+  }
+
+  .svc-row__title {
+    font-family: var(--font-display);
+    font-size: clamp(1.1rem, 2vw, 1.5rem);
     font-weight: 700;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.025em;
     color: var(--c-text);
     margin-bottom: 0.5rem;
+    transition: color 200ms ease;
   }
 
-  .stack-desc {
-    font-size: 0.82rem;
+  .svc-row__text {
+    font-size: 0.9rem;
     color: var(--c-text-muted);
-    line-height: 1.65;
+    line-height: 1.75;
+    max-width: 58ch;
+    margin: 0;
   }
 
-  @media (max-width: 860px) {
-    .stack-grid { grid-template-columns: repeat(2, 1fr); }
+  .svc-row__right {
+    text-align: right;
+    flex-shrink: 0;
+    min-width: 160px;
+    padding-left: 2rem;
+    border-left: 1px solid var(--c-border);
+  }
+
+  .svc-row__metric {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    color: var(--row-accent);
+    line-height: 1;
+    text-shadow: 0 0 24px color-mix(in srgb, var(--row-accent) 30%, transparent);
+  }
+
+  .svc-row__metric-label {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--c-text-muted);
+    margin-top: 0.4rem;
+    line-height: 1.5;
+    max-width: 14ch;
+    margin-left: auto;
+  }
+
+  /* ══════════════════════════════════════════
+     TECH STACK — always dark
+  ══════════════════════════════════════════ */
+
+  .svc-stack {
+    background: #080C14;
+    color: #E0E8FF;
+    padding-block: clamp(4rem, 8vw, 7rem);
+  }
+
+  .svc-stack__header {
+    margin-bottom: clamp(2.5rem, 5vw, 4rem);
+  }
+
+  .svc-stack__h2 {
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    letter-spacing: -0.03em;
+    margin-top: 0.5rem;
+    color: #E0E8FF;
+  }
+
+  .svc-stack__sub {
+    font-size: 0.95rem;
+    color: #5B6FA3;
+    margin-top: 0.75rem;
+    max-width: 52ch;
+    line-height: 1.7;
+  }
+
+  .svc-stack__grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .svc-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: #0C1220;
+    border: 1px solid #1C2A50;
+    border-radius: 999px;
+    padding: 0.55rem 1.1rem 0.55rem 0.8rem;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: #E0E8FF;
+    cursor: default;
+    transition:
+      transform 200ms cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 200ms cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 200ms ease,
+      background 200ms ease;
+  }
+
+  .svc-pill:hover {
+    transform: translateY(-3px);
+    background: #111827;
+    border-color: #3DFF7A;
+    box-shadow: 0 6px 24px rgba(61, 255, 122, 0.15);
+  }
+
+  .svc-pill:focus-visible {
+    outline: 2px solid #3DFF7A;
+    outline-offset: 2px;
+  }
+
+  .svc-pill__icon {
+    font-size: 1rem;
+    line-height: 1;
+  }
+
+  .svc-pill__name {
+    font-weight: 600;
+    color: #E0E8FF;
+    letter-spacing: 0.01em;
+  }
+
+  .svc-pill__version {
+    font-size: 0.65rem;
+    color: #3DFF7A;
+    background: rgba(61, 255, 122, 0.08);
+    border: 1px solid rgba(61, 255, 122, 0.2);
+    border-radius: 4px;
+    padding: 0.1rem 0.35rem;
+    letter-spacing: 0.04em;
+  }
+
+  .svc-pill__desc {
+    font-size: 0.67rem;
+    color: #3D4E78;
+    letter-spacing: 0.03em;
+  }
+
+  /* ══════════════════════════════════════════
+     PROCESS — minimal horizontal flow
+  ══════════════════════════════════════════ */
+
+  .svc-process {
+    background: var(--c-bg);
+    padding-block: clamp(4rem, 8vw, 6rem);
+    border-top: 1px solid var(--c-border);
+  }
+
+  .svc-process__header {
+    margin-bottom: clamp(2.5rem, 5vw, 4rem);
+  }
+
+  .svc-process__h2 {
+    font-size: clamp(1.6rem, 3.5vw, 2.6rem);
+    letter-spacing: -0.03em;
+    max-width: 32ch;
+    margin-top: 0.5rem;
+  }
+
+  .svc-steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    position: relative;
+  }
+
+  /* dashed connector line between steps */
+  .svc-steps::before {
+    content: '';
+    position: absolute;
+    top: 1.6rem;
+    left: calc(25% / 2 + 1.25rem);
+    right: calc(25% / 2 + 1.25rem);
+    height: 1px;
+    border-top: 1px dashed var(--c-border);
+    pointer-events: none;
+  }
+
+  .svc-step {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0 1.25rem 0 0;
+    position: relative;
+  }
+
+  .svc-step__num {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    color: var(--c-accent);
+    background: var(--c-bg);
+    padding-right: 0.75rem;
+    position: relative;
+    z-index: 1;
+    margin-bottom: 1.25rem;
+  }
+
+  .svc-step__title {
+    font-family: var(--font-display);
+    font-size: clamp(1rem, 1.8vw, 1.3rem);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    color: var(--c-text);
+    line-height: 1.2;
+  }
+
+  .svc-step__detail {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    color: var(--c-text-muted);
+    margin-top: 0.35rem;
+  }
+
+  /* ══════════════════════════════════════════
+     RESPONSIVE
+  ══════════════════════════════════════════ */
+
+  @media (max-width: 900px) {
+    .svc-hero {
+      grid-template-columns: 1fr;
+      min-height: auto;
+    }
+
+    .svc-hero__sep {
+      display: none;
+    }
+
+    .svc-hero__right {
+      padding-top: 2rem;
+      padding-bottom: 3rem;
+    }
+
+    .svc-hero__title {
+      font-size: clamp(4.5rem, 15vw, 8rem);
+    }
+
+    .svc-row {
+      grid-template-columns: 1fr;
+    }
+
+    .svc-row__right {
+      text-align: left;
+      border-left: none;
+      border-top: 1px solid var(--c-border);
+      padding-left: 0;
+      padding-top: 1rem;
+      min-width: 0;
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+    }
+
+    .svc-row__metric-label {
+      margin-left: 0;
+      max-width: none;
+    }
+
+    .svc-steps {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+    }
+
+    .svc-steps::before {
+      display: none;
+    }
   }
 
   @media (max-width: 560px) {
-    .stack-grid { grid-template-columns: 1fr; }
+    .svc-hero__title {
+      font-size: clamp(3.5rem, 18vw, 6rem);
+    }
+
+    .svc-steps {
+      grid-template-columns: 1fr;
+    }
+
+    .svc-row__left {
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .svc-pill,
+    .svc-row {
+      transition: none;
+    }
   }
 </style>
