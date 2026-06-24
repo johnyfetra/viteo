@@ -160,7 +160,7 @@ export const ui = {
     'about.manifesto.line2': 'qu\'un site à 49€/mois.',
     'about.manifesto.line3': 'Elles méritent',
     'about.manifesto.line4': 'des résultats mesurables.',
-    'about.manifesto.sig':   '— Viteo Studio, Paris',
+    'about.manifesto.sig':   '— Viteo Studio, Antananarivo',
 
     // About — stack
     'about.stack.eyebrow':   'Notre outillage',
@@ -429,7 +429,7 @@ export const ui = {
     'about.manifesto.line2': 'than a €49/month template.',
     'about.manifesto.line3': 'They deserve',
     'about.manifesto.line4': 'measurable results.',
-    'about.manifesto.sig':   '— Viteo Studio, Paris',
+    'about.manifesto.sig':   '— Viteo Studio, Antananarivo',
 
     // About — stack
     'about.stack.eyebrow':   'Our tooling',
