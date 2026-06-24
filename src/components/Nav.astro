@@ -195,8 +195,8 @@ const links = [
   }
 
   :global([data-theme="light"]) .nav[data-scrolled="true"] {
-    background: rgba(244, 243, 239, 0.88);
-    border-color: rgba(224, 221, 214, 0.7);
+    background: rgba(244, 243, 239, 0.90);
+    border-color: rgba(15, 13, 11, 0.12);
   }
 
   /* On-light-section: nav text darkens */
@@ -688,6 +688,55 @@ const links = [
   .mobile-lang:hover {
     color: #E0E8FF;
     border-color: rgba(91, 111, 163, 0.6);
+  }
+
+  /* ─── Light theme: mobile overlay overrides ─── */
+  :global([data-theme="light"]) .mobile-overlay {
+    background: #F4F3EF;
+  }
+
+  :global([data-theme="light"]) .mobile-close {
+    border-color: rgba(15, 13, 11, 0.2);
+  }
+
+  :global([data-theme="light"]) .mobile-close:hover {
+    border-color: rgba(15, 13, 11, 0.4);
+  }
+
+  :global([data-theme="light"]) .mobile-close .bar {
+    background: #0F0D0B;
+  }
+
+  :global([data-theme="light"]) .mobile-link-label {
+    color: rgba(15, 13, 11, 0.35);
+  }
+
+  :global([data-theme="light"]) .mobile-link:hover .mobile-link-label {
+    color: #0F0D0B;
+    text-shadow: 0 0 60px rgba(0, 122, 52, 0.15);
+  }
+
+  :global([data-theme="light"]) .mobile-footer {
+    border-top-color: rgba(15, 13, 11, 0.12);
+  }
+
+  :global([data-theme="light"]) .mobile-lang {
+    color: #6B6460;
+    border-color: rgba(15, 13, 11, 0.2);
+  }
+
+  :global([data-theme="light"]) .mobile-lang:hover {
+    color: #0F0D0B;
+    border-color: rgba(15, 13, 11, 0.4);
+  }
+
+  :global([data-theme="light"]) .mobile-cta {
+    background: #007A34;
+    color: #F4F3EF;
+  }
+
+  :global([data-theme="light"]) .mobile-cta:hover {
+    background: #005C26;
   }
 
   /* ─── Responsive breakpoint ─────────────────── */

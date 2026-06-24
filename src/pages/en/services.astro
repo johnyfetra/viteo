@@ -831,4 +831,48 @@ const steps = [
       transition: none;
     }
   }
+
+  /* ══════════════════════════════════════
+     LIGHT THEME
+  ══════════════════════════════════════ */
+
+  /* Hero split */
+  :global([data-theme="light"]) .svc-hero { background: #F4F3EF; color: #0F0D0B; }
+  :global([data-theme="light"]) .svc-hero__label { color: #6B6460; }
+  :global([data-theme="light"]) .svc-hero__title-line { color: #0F0D0B; }
+  :global([data-theme="light"]) .svc-hero__title-line--offset { color: #007A34; }
+  :global([data-theme="light"]) .svc-hero__sub { color: #6B6460; }
+  :global([data-theme="light"]) .svc-hero__guarantee-num { color: #007A34; }
+  :global([data-theme="light"]) .svc-hero__guarantee-label { color: #6B6460; }
+  :global([data-theme="light"]) .svc-hero__sep { background: rgba(15,13,11,0.15); }
+
+  /* Code block */
+  :global([data-theme="light"]) .svc-code-header { background: #F0EEE8; border-color: rgba(15,13,11,0.12); }
+  :global([data-theme="light"]) .svc-code-filename { color: #6B6460; }
+  :global([data-theme="light"]) .svc-code-block { background: #F0EEE8; border-color: rgba(15,13,11,0.12); color: #0F0D0B; }
+  :global([data-theme="light"]) .t-comment { color: #A09890; }
+  :global([data-theme="light"]) .t-kw { color: #007A34; }
+  :global([data-theme="light"]) .t-type { color: #0F4A8A; }
+  :global([data-theme="light"]) .t-prop { color: #6B4500; }
+  :global([data-theme="light"]) .t-str { color: #007A34; }
+  :global([data-theme="light"]) .t-fn { color: #0F0D0B; }
+  :global([data-theme="light"]) .t-attr { color: #6B4500; }
+  :global([data-theme="light"]) .t-punct { color: #6B6460; }
+  :global([data-theme="light"]) .t-tag { color: #8B2252; }
+  :global([data-theme="light"]) .t-expr { color: #6B4500; }
+
+  /* Stack section */
+  :global([data-theme="light"]) .svc-stack { background: #F4F3EF; color: #0F0D0B; }
+  :global([data-theme="light"]) .svc-stack__eyebrow { color: #6B6460; }
+  :global([data-theme="light"]) .svc-stack__h2 { color: #0F0D0B; }
+  :global([data-theme="light"]) .svc-stack__sub { color: #6B6460; }
+
+  /* Stack pills */
+  :global([data-theme="light"]) .svc-pill { background: #FFFFFF; border-color: rgba(15,13,11,0.12); color: #0F0D0B; }
+  :global([data-theme="light"]) .svc-pill:hover { background: #F4F3EF; border-color: #007A34; box-shadow: 0 6px 24px rgba(0,122,52,0.12); }
+  :global([data-theme="light"]) .svc-pill__name { color: #0F0D0B; }
+  :global([data-theme="light"]) .svc-pill__version { color: #007A34; background: rgba(0,122,52,0.08); border-color: rgba(0,122,52,0.2); }
+  :global([data-theme="light"]) .svc-pill__desc { color: #A09890; }
+  :global([data-theme="light"]) .svc-pill__icon { color: rgba(15,13,11,0.4); }
+  :global([data-theme="light"]) .svc-pill:hover .svc-pill__icon { color: #007A34; }
 </style>

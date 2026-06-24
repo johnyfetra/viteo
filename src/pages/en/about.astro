@@ -31,6 +31,7 @@ const values = [
        Always dark, full-screen editorial
        ═══════════════════════════════════ -->
   <section class="s-manifesto" aria-label="Manifesto">
+    <h1 class="visually-hidden">{t('about.h1')}</h1>
     <div class="manifesto-inner">
       <p class="manifesto-line line-1 reveal-line">{t('about.manifesto.line1')}</p>
       <p class="manifesto-line line-2 reveal-line" style="animation-delay:0.12s">{t('about.manifesto.line2')}</p>
@@ -146,6 +147,18 @@ const values = [
 </BaseLayout>
 
 <style>
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+
 /* ════════════════════════════════════
    MANIFESTO HERO
    ════════════════════════════════════ */
@@ -626,4 +639,37 @@ const values = [
     transform: none;
   }
 }
+
+/* ══════════════════════════════════════
+   LIGHT THEME
+══════════════════════════════════════ */
+
+/* Manifesto */
+:global([data-theme="light"]) .s-manifesto { background: #F4F3EF; color: #0F0D0B; }
+:global([data-theme="light"]) .manifesto-eyebrow { color: #6B6460; }
+:global([data-theme="light"]) .manifesto-line { color: #0F0D0B; }
+:global([data-theme="light"]) .line-4 { color: #007A34; }
+:global([data-theme="light"]) .manifesto-rule { border-top-color: rgba(15,13,11,0.12); }
+:global([data-theme="light"]) .manifesto-sig { color: #6B6460; }
+
+/* Stack */
+:global([data-theme="light"]) .s-stack { background: #F4F3EF; color: #0F0D0B; }
+:global([data-theme="light"]) .stack-eyebrow { color: #6B6460; }
+:global([data-theme="light"]) .stack-h2 { color: #0F0D0B; }
+:global([data-theme="light"]) .stack-intro { color: #6B6460; }
+:global([data-theme="light"]) .stack-item { background: #FFFFFF; border-color: rgba(15,13,11,0.12); }
+:global([data-theme="light"]) .stack-item:hover { background: #F0EEE8; border-color: #007A34; }
+:global([data-theme="light"]) .stack-num { color: #007A34; }
+:global([data-theme="light"]) .stack-name { color: #0F0D0B; }
+:global([data-theme="light"]) .stack-why { color: #6B6460; }
+:global([data-theme="light"]) .stack-rule { background: rgba(15,13,11,0.08); }
+
+/* About CTA */
+:global([data-theme="light"]) .s-about-cta { background: #007A34; color: #F4F3EF; }
+:global([data-theme="light"]) .about-cta-eyebrow { color: rgba(244,243,239,0.65); }
+:global([data-theme="light"]) .about-cta-h2 { color: #F4F3EF; }
+:global([data-theme="light"]) .about-cta-sub { color: rgba(244,243,239,0.75); }
+:global([data-theme="light"]) .about-cta-btn--primary { background: #F4F3EF; color: #007A34; }
+:global([data-theme="light"]) .about-cta-btn--ghost { border-color: rgba(244,243,239,0.35); color: #F4F3EF; }
+:global([data-theme="light"]) .about-cta-btn--ghost:hover { background: rgba(244,243,239,0.1); }
 </style>

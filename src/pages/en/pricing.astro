@@ -800,6 +800,60 @@ const tiers = [
   .ct-th, .ct-td { padding: 0.75rem 0.75rem; }
   .faq-wrap, .ct-wrap, .gu-wrap { width: calc(100% - 2rem); }
 }
+
+/* ═══════════════════════════════════════════════════════════
+   LIGHT THEME OVERRIDES
+   ═══════════════════════════════════════════════════════════ */
+
+/* Page hero */
+:global([data-theme="light"]) .ph-section { background: #F4F3EF; color: #0F0D0B; }
+:global([data-theme="light"]) .ph-eyebrow { color: #007A34; }
+:global([data-theme="light"]) .ph-dot { background: #007A34; }
+:global([data-theme="light"]) .ph-h1 { color: #0F0D0B; }
+:global([data-theme="light"]) .ph-sub { color: #6B6460; }
+:global([data-theme="light"]) .ph-cards { border-color: rgba(15,13,11,0.08); }
+:global([data-theme="light"]) .ph-price-card { background: #FFFFFF; border-color: rgba(15,13,11,0.12); }
+:global([data-theme="light"]) .ph-price-card:hover { border-color: rgba(15,13,11,0.25); box-shadow: 0 8px 32px rgba(15,13,11,0.08); }
+:global([data-theme="light"]) .ph-price-card--performance { border-color: #007A34; }
+:global([data-theme="light"]) .ph-price-label { color: #6B6460; }
+:global([data-theme="light"]) .ph-price-num { color: #0F0D0B; }
+:global([data-theme="light"]) .ph-price-num--perf { color: #007A34; }
+:global([data-theme="light"]) .ph-price-suffix { color: #A09890; }
+:global([data-theme="light"]) .ph-price-days { color: #6B6460; border-top-color: rgba(15,13,11,0.08); }
+:global([data-theme="light"]) .ph-btn-primary { background: #007A34; color: #F4F3EF; }
+:global([data-theme="light"]) .ph-btn-ghost { color: #0F0D0B; border-color: rgba(15,13,11,0.2); }
+:global([data-theme="light"]) .ph-btn-ghost:hover { background: rgba(15,13,11,0.04); border-color: rgba(15,13,11,0.3); }
+
+/* Comparison table */
+:global([data-theme="light"]) .ct-section { background: #EAE7E0; color: #0F0D0B; }
+:global([data-theme="light"]) .ct-eyebrow { color: #6B6460; }
+:global([data-theme="light"]) .ct-h2 { color: #0F0D0B; }
+:global([data-theme="light"]) .ct-wrap { background: #FFFFFF; border-color: rgba(15,13,11,0.10); }
+:global([data-theme="light"]) .ct-table { border-color: rgba(15,13,11,0.08); }
+:global([data-theme="light"]) .ct-th { background: #F0EEE8; color: #6B6460; border-color: rgba(15,13,11,0.08); }
+:global([data-theme="light"]) .ct-th--feature { color: #0F0D0B; }
+:global([data-theme="light"]) .ct-td { color: #0F0D0B; border-color: rgba(15,13,11,0.06); }
+:global([data-theme="light"]) .ct-td--feature { color: #6B6460; }
+:global([data-theme="light"]) .ct-check { color: #007A34; }
+:global([data-theme="light"]) .ct-cross { color: #A09890; }
+:global([data-theme="light"]) .ct-tr:hover .ct-td { background: rgba(15,13,11,0.02); }
+
+/* FAQ */
+:global([data-theme="light"]) .faq-section { background: #F4F3EF; color: #0F0D0B; }
+:global([data-theme="light"]) .faq-eyebrow { color: #6B6460; }
+:global([data-theme="light"]) .faq-h2 { color: #0F0D0B; }
+:global([data-theme="light"]) .faq-item { border-bottom-color: rgba(15,13,11,0.10); }
+:global([data-theme="light"]) .faq-q { color: #0F0D0B; }
+:global([data-theme="light"]) .faq-q::after { color: #007A34; }
+:global([data-theme="light"]) .faq-q[aria-expanded="true"] { color: #007A34; }
+:global([data-theme="light"]) .faq-a { color: #6B6460; }
+
+/* Guarantee strip */
+:global([data-theme="light"]) .gu-section { background: #007A34; color: #F4F3EF; }
+:global([data-theme="light"]) .gu-num { color: #F4F3EF; }
+:global([data-theme="light"]) .gu-label { color: rgba(244,243,239,0.7); }
+:global([data-theme="light"]) .gu-sep { background: rgba(244,243,239,0.25); }
+:global([data-theme="light"]) .gu-text { color: rgba(244,243,239,0.85); }
 </style>
 
 <script>

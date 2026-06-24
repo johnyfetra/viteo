@@ -131,11 +131,32 @@ const steps = ['1', '2', '3', '4'] as const;
     color: #E8EAF0;
   }
 
-  /* Lock to dark regardless of theme */
+  /* ── Light theme ───────────────────────────────────────────── */
   :global([data-theme="light"]) .process-section {
-    background: #080C10;
-    color: #E8EAF0;
+    background: #F4F3EF;
+    color: #0F0D0B;
   }
+  :global([data-theme="light"]) .process-eyebrow { color: #007A34; }
+  :global([data-theme="light"]) .eyebrow-line { background: #007A34; }
+  :global([data-theme="light"]) .process-h2 { color: #0F0D0B; }
+  :global([data-theme="light"]) .timeline-dot {
+    background: rgba(15,13,11,0.15);
+    border-color: rgba(15,13,11,0.15);
+  }
+  :global([data-theme="light"]) .timeline-dot.is-active {
+    background: #007A34;
+    border-color: #007A34;
+    box-shadow: 0 0 6px rgba(0,122,52,0.55);
+  }
+  :global([data-theme="light"]) .pulse-dot { background: #007A34; }
+  :global([data-theme="light"]) .pulse-ring { border-color: #007A34; }
+  :global([data-theme="light"]) .cross-h,
+  :global([data-theme="light"]) .cross-v { background: #007A34; }
+  :global([data-theme="light"]) .bracket { color: #007A34; }
+  :global([data-theme="light"]) .icon-launch { color: #007A34; }
+  :global([data-theme="light"]) .step-num-label { color: #007A34; }
+  :global([data-theme="light"]) .step-title { color: #0F0D0B; }
+  :global([data-theme="light"]) .step-text { color: #6B6460; }
 
   .process-container {
     max-width: 1200px;

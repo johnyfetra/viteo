@@ -909,6 +909,201 @@ const t = useTranslations(lang);
 :global([data-theme="light"]) .c-trust__mark {
   color: #007A34;
 }
+
+/* ══════════════════════════════════════
+   LIGHT THEME — HERO + FORM (complet)
+═══════════════════════════════════════ */
+
+/* Hero section bg */
+:global([data-theme="light"]) .c-hero {
+  background: #F4F3EF;
+  color: #0F0D0B;
+}
+
+/* Eyebrow */
+:global([data-theme="light"]) .c-hero__eyebrow {
+  color: #007A34;
+}
+
+/* Titre : h1-big "Parlons" */
+:global([data-theme="light"]) .c-hero__h1-big {
+  color: #007A34;
+}
+
+/* Titre : reste "de votre projet." */
+:global([data-theme="light"]) .c-hero__h1-rest {
+  color: #0F0D0B;
+}
+
+/* H1 container couleur par défaut */
+:global([data-theme="light"]) .c-hero__h1 {
+  color: #0F0D0B;
+}
+
+/* Sous-titre */
+:global([data-theme="light"]) .c-hero__sub {
+  color: #6B6460;
+}
+
+/* Meta strip bordures */
+:global([data-theme="light"]) .c-hero__meta {
+  border-top-color: rgba(15, 13, 11, 0.12);
+}
+
+:global([data-theme="light"]) .c-hero__meta-item {
+  border-bottom-color: rgba(15, 13, 11, 0.12);
+}
+
+/* Meta labels */
+:global([data-theme="light"]) .c-hero__meta-label {
+  color: #A09890;
+}
+
+/* Meta valeurs */
+:global([data-theme="light"]) .c-hero__meta-val {
+  color: #0F0D0B;
+}
+
+/* Meta lien email */
+:global([data-theme="light"]) .c-hero__meta-link {
+  color: #007A34;
+}
+
+:global([data-theme="light"]) .c-hero__meta-link:focus-visible {
+  outline-color: #007A34;
+}
+
+/* Form card */
+:global([data-theme="light"]) .c-form-card {
+  background: #FFFFFF;
+  border-color: rgba(15, 13, 11, 0.12);
+}
+
+/* Trait vert top-left — reste #007A34 (déjà vert, mais on force) */
+:global([data-theme="light"]) .c-form-card::before {
+  background: #007A34;
+}
+
+/* Labels */
+:global([data-theme="light"]) .c-form__label {
+  color: #6B6460;
+}
+
+:global([data-theme="light"]) .c-form__field:focus-within .c-form__label {
+  color: #007A34;
+}
+
+/* Astérisque required */
+:global([data-theme="light"]) .c-form__required {
+  color: #007A34;
+}
+
+/* Mention optionnel */
+:global([data-theme="light"]) .c-form__optional {
+  color: #A09890;
+}
+
+/* Inputs */
+:global([data-theme="light"]) .c-form__input {
+  background: transparent;
+  color: #0F0D0B;
+  border-bottom-color: rgba(15, 13, 11, 0.15);
+}
+
+:global([data-theme="light"]) .c-form__input::placeholder {
+  color: #A09890;
+}
+
+:global([data-theme="light"]) .c-form__input:focus {
+  border-bottom-color: #007A34;
+}
+
+/* Ligne focus animée */
+:global([data-theme="light"]) .c-form__line {
+  background: #007A34;
+}
+
+/* Select */
+:global([data-theme="light"]) .c-form__select {
+  background: #F4F3EF;
+  color: #0F0D0B;
+}
+
+:global([data-theme="light"]) .c-form__select option {
+  background: #F4F3EF;
+  color: #0F0D0B;
+}
+
+:global([data-theme="light"]) .c-form__select-arrow {
+  color: #6B6460;
+}
+
+:global([data-theme="light"]) .c-form__select-wrap:focus-within .c-form__select-arrow {
+  color: #007A34;
+}
+
+/* RGPD */
+:global([data-theme="light"]) .c-form__rgpd {
+  color: #A09890;
+}
+
+:global([data-theme="light"]) .c-form__rgpd-link {
+  color: #6B6460;
+}
+
+:global([data-theme="light"]) .c-form__rgpd-link:hover {
+  color: #007A34;
+}
+
+/* Bouton submit */
+:global([data-theme="light"]) .c-form__submit {
+  background: #007A34;
+  color: #F4F3EF;
+}
+
+:global([data-theme="light"]) .c-form__submit:focus-visible {
+  outline-color: #007A34;
+}
+
+/* Succès */
+:global([data-theme="light"]) .c-form__success-title {
+  color: #0F0D0B;
+}
+
+:global([data-theme="light"]) .c-form__success-sub {
+  color: #6B6460;
+}
+
+/* Process strip — adapté light (amélioration vs existant) */
+:global([data-theme="light"]) .c-process {
+  background: #ECEAE4;
+  border-top-color: rgba(15, 13, 11, 0.10);
+  border-bottom-color: rgba(15, 13, 11, 0.10);
+  color: #0F0D0B;
+}
+
+:global([data-theme="light"]) .c-process__label {
+  color: #A09890;
+}
+
+:global([data-theme="light"]) .c-process__node {
+  background: #F4F3EF;
+  border-color: rgba(15, 13, 11, 0.15);
+  color: #007A34;
+}
+
+:global([data-theme="light"]) .c-process__item:hover .c-process__node {
+  border-color: #007A34;
+  background: rgba(0, 122, 52, 0.06);
+}
+
+:global([data-theme="light"]) .c-process__step {
+  color: #6B6460;
+}
+
+:global([data-theme="light"]) .c-process__connector {
+  background: rgba(15, 13, 11, 0.12);
+}
 </style>
 
 <script>

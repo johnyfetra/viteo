@@ -116,10 +116,40 @@ const scoreBadgeColors = [
     /* Override any theme-level light-mode surface changes */
   }
 
+  /* ── Light theme ───────────────────────────────────────────── */
   :global([data-theme="light"]) .testi-section {
-    background: #060A0E;
-    color: #D8DFF0;
+    background: #F4F3EF;
+    color: #0F0D0B;
   }
+  :global([data-theme="light"]) .testi-eyebrow { color: #6B6460; }
+  :global([data-theme="light"]) .testi-eyebrow-dot { background: #007A34; }
+  :global([data-theme="light"]) .testi-h2 { color: #0F0D0B; }
+  :global([data-theme="light"]) .testi-card {
+    background: #FFFFFF;
+    border-color: rgba(15,13,11,0.10);
+  }
+  :global([data-theme="light"]) .testi-card:hover {
+    border-color: rgba(0,122,52,0.22);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,122,52,0.06);
+  }
+  :global([data-theme="light"]) .testi-grid::before,
+  :global([data-theme="light"]) .testi-grid::after {
+    background: linear-gradient(to bottom, transparent, rgba(0,122,52,0.10) 30%, rgba(0,122,52,0.10) 70%, transparent);
+  }
+  :global([data-theme="light"]) .testi-quote-text { color: #6B6460; }
+  :global([data-theme="light"]) .testi-rule {
+    background: linear-gradient(to right, transparent, rgba(15,13,11,0.10) 20%, rgba(15,13,11,0.10) 80%, transparent);
+  }
+  :global([data-theme="light"]) .testi-author-name { color: #0F0D0B; }
+  :global([data-theme="light"]) .testi-author-role { color: #6B6460; }
+  :global([data-theme="light"]) .testi-score-num { color: #007A34; }
+  :global([data-theme="light"]) .testi-score-icon { color: #007A34; }
+  :global([data-theme="light"]) .testi-score-denom { color: #6B6460; }
+  :global([data-theme="light"]) .testi-score-badge {
+    background: rgba(0,122,52,0.07);
+    border-color: rgba(0,122,52,0.22);
+  }
+  :global([data-theme="light"]) .testi-bg-quote { color: #0F0D0B; }
 
   /* ─── Decorative background quotation mark ──────────────────────────── */
   .testi-bg-quote {

@@ -64,7 +64,7 @@ const t = useTranslations(lang);
       <div class="hero-portrait-inner" id="portrait-inner">
         <img
           src="/hero-portrait.png"
-          alt={lang === 'fr' ? 'Portrait — Viteo Studio' : 'Portrait — Viteo Studio'}
+          alt={lang === 'fr' ? 'Portrait du fondateur — Viteo Studio, studio web haute performance' : 'Founder portrait — Viteo Studio, high-performance web studio'}
           class="hero-portrait-img"
           width="900"
           height="1100"
@@ -379,6 +379,54 @@ const t = useTranslations(lang);
   @media (prefers-reduced-motion: reduce) {
     .score-badge { animation: none; }
     .scroll-line { animation: none; opacity: 0.4; }
+  }
+
+  /* ── Light theme ── */
+  :global([data-theme="light"]) .hero {
+    background-color: #F4F3EF;
+    color: #0F0D0B;
+  }
+  :global([data-theme="light"]) .grid-bg {
+    background-image:
+      linear-gradient(rgba(15,13,11,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(15,13,11,0.05) 1px, transparent 1px);
+  }
+  :global([data-theme="light"]) .hero-h1-line {
+    color: #0F0D0B;
+  }
+  :global([data-theme="light"]) .hero-h1-accent {
+    color: #007A34;
+  }
+  :global([data-theme="light"]) .hero-h1-score {
+    color: #007A34;
+  }
+  :global([data-theme="light"]) .score-slash {
+    color: rgba(15,13,11,0.2);
+  }
+  :global([data-theme="light"]) .hero-sub {
+    color: rgba(15,13,11,0.55);
+  }
+  :global([data-theme="light"]) .trust-item {
+    color: rgba(15,13,11,0.4);
+  }
+  :global([data-theme="light"]) .trust-check {
+    color: #007A34;
+  }
+  :global([data-theme="light"]) .portrait-overlay-green {
+    opacity: 0.3;
+  }
+  :global([data-theme="light"]) .portrait-glow {
+    opacity: 0.3;
+  }
+  :global([data-theme="light"]) .score-badge {
+    background: rgba(244,243,239,0.90);
+    border-color: rgba(0,122,52,0.25);
+  }
+  :global([data-theme="light"]) .score-badge-icon { color: #007A34; }
+  :global([data-theme="light"]) .score-badge-label { color: rgba(15,13,11,0.45); }
+  :global([data-theme="light"]) .score-badge-num { color: #007A34; }
+  :global([data-theme="light"]) .scroll-line {
+    background: linear-gradient(to bottom, #007A34, transparent);
   }
 </style>
 

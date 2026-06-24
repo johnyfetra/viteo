@@ -803,6 +803,237 @@ const tiers = [
   .ct-th, .ct-td { padding: 0.75rem 0.75rem; }
   .faq-wrap, .ct-wrap, .gu-wrap { width: calc(100% - 2rem); }
 }
+
+/* ═══════════════════════════════════════════════════════════
+   LIGHT THEME OVERRIDES
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── PAGE HERO ── */
+:global([data-theme="light"]) .ph-section {
+  background: #F4F3EF;
+  color: #0F0D0B;
+}
+
+:global([data-theme="light"]) .ph-eyebrow {
+  color: #007A34;
+}
+
+:global([data-theme="light"]) .ph-dot {
+  background: #007A34;
+}
+
+:global([data-theme="light"]) .ph-h1 {
+  color: #0F0D0B;
+}
+
+:global([data-theme="light"]) .ph-sub {
+  color: #6B6460;
+}
+
+:global([data-theme="light"]) .ph-btn-ghost {
+  border-color: rgba(15,13,11,0.2);
+  color: #0F0D0B;
+}
+:global([data-theme="light"]) .ph-btn-ghost:hover {
+  border-color: rgba(15,13,11,0.45);
+  color: #0F0D0B;
+}
+
+:global([data-theme="light"]) .ph-price-item {
+  border-bottom-color: rgba(15,13,11,0.1);
+}
+:global([data-theme="light"]) .ph-price-item:first-child {
+  border-top-color: rgba(15,13,11,0.1);
+}
+
+:global([data-theme="light"]) .ph-price--essential .ph-price-num {
+  color: #6B6460;
+}
+
+:global([data-theme="light"]) .ph-price--performance .ph-price-num {
+  color: #007A34;
+}
+
+:global([data-theme="light"]) .ph-price--signature .ph-price-num {
+  color: #A07840;
+}
+
+:global([data-theme="light"]) .ph-price--essential .ph-price-name {
+  color: #6B6460;
+}
+:global([data-theme="light"]) .ph-price--performance .ph-price-name {
+  color: #007A34;
+}
+:global([data-theme="light"]) .ph-price--signature .ph-price-name {
+  color: #A07840;
+}
+
+:global([data-theme="light"]) .ph-price--essential .ph-price-note {
+  color: rgba(15,13,11,0.35);
+}
+:global([data-theme="light"]) .ph-price--performance .ph-price-note {
+  color: rgba(0,122,52,0.45);
+}
+:global([data-theme="light"]) .ph-price--signature .ph-price-note {
+  color: rgba(160,120,64,0.55);
+}
+
+:global([data-theme="light"]) .ph-tax {
+  color: rgba(15,13,11,0.38);
+}
+
+/* ── COMPARISON TABLE ── */
+:global([data-theme="light"]) .ct-section {
+  background: #F4F3EF;
+  color: #0F0D0B;
+}
+
+:global([data-theme="light"]) .ct-h2 {
+  color: #0F0D0B;
+}
+
+:global([data-theme="light"]) .ct-table {
+  background: #FFFFFF;
+}
+
+:global([data-theme="light"]) .ct-header-row {
+  background: #F0EEE8;
+}
+
+:global([data-theme="light"]) .ct-th {
+  border-bottom-color: rgba(15,13,11,0.1);
+}
+
+:global([data-theme="light"]) .ct-th--feature {
+  color: #6B6460;
+}
+
+:global([data-theme="light"]) .ct-th--essential {
+  color: #6B6460;
+}
+:global([data-theme="light"]) .ct-th--performance {
+  color: #007A34;
+}
+:global([data-theme="light"]) .ct-th--signature {
+  color: #A07840;
+}
+
+:global([data-theme="light"]) .ct-td {
+  border-bottom-color: rgba(15,13,11,0.1);
+}
+
+:global([data-theme="light"]) .ct-td--feature {
+  color: #6B6460;
+}
+
+:global([data-theme="light"]) .ct-row--even {
+  background: rgba(15,13,11,0.03);
+}
+
+:global([data-theme="light"]) .ct-td--essential .ct-check,
+:global([data-theme="light"]) .ct-td--performance .ct-check {
+  background: rgba(0,122,52,0.08);
+  color: #007A34;
+}
+:global([data-theme="light"]) .ct-td--signature .ct-check {
+  background: rgba(160,120,64,0.10);
+  color: #A07840;
+}
+
+:global([data-theme="light"]) .ct-dash {
+  color: #A09890;
+}
+
+:global([data-theme="light"]) .ct-td--essential .ct-val-text {
+  color: #6B6460;
+}
+:global([data-theme="light"]) .ct-td--performance .ct-val-text {
+  color: #007A34;
+}
+:global([data-theme="light"]) .ct-td--signature .ct-val-text {
+  color: #A07840;
+}
+
+/* ── FAQ ── */
+:global([data-theme="light"]) .faq-section {
+  background: #F4F3EF;
+  color: #0F0D0B;
+  border-top-color: rgba(15,13,11,0.1);
+}
+
+:global([data-theme="light"]) .faq-h2 {
+  color: #0F0D0B;
+}
+
+:global([data-theme="light"]) .faq-item {
+  border-bottom-color: rgba(15,13,11,0.1);
+}
+:global([data-theme="light"]) .faq-item:first-of-type {
+  border-top-color: rgba(15,13,11,0.1);
+}
+
+:global([data-theme="light"]) .faq-q-text {
+  color: #0F0D0B;
+}
+:global([data-theme="light"]) .faq-item[open] .faq-q-text {
+  color: #0F0D0B;
+}
+
+:global([data-theme="light"]) .faq-icon {
+  background: rgba(15,13,11,0.06);
+  border-color: rgba(15,13,11,0.15);
+  color: #007A34;
+}
+:global([data-theme="light"]) .faq-item[open] .faq-icon {
+  background: rgba(0,122,52,0.08);
+  border-color: rgba(0,122,52,0.3);
+}
+
+:global([data-theme="light"]) .faq-a {
+  color: #6B6460;
+}
+
+/* ── GUARANTEE ── */
+:global([data-theme="light"]) .gu-section {
+  background: #F4F3EF;
+}
+
+:global([data-theme="light"]) .gu-inner {
+  border-color: rgba(0,122,52,0.2);
+  background: linear-gradient(135deg, rgba(0,122,52,0.04) 0%, transparent 60%);
+}
+
+:global([data-theme="light"]) .gu-score-badge {
+  border-color: #007A34;
+  background: rgba(0,122,52,0.06);
+}
+
+:global([data-theme="light"]) .gu-score-num {
+  color: #007A34;
+}
+
+:global([data-theme="light"]) .gu-score-label {
+  color: rgba(0,122,52,0.5);
+}
+
+:global([data-theme="light"]) .gu-eyebrow {
+  color: rgba(0,122,52,0.65);
+}
+
+:global([data-theme="light"]) .gu-h2 {
+  color: #0F0D0B;
+}
+
+:global([data-theme="light"]) .gu-text {
+  color: #6B6460;
+}
+
+:global([data-theme="light"]) .gu-cta {
+  color: #007A34;
+}
+:global([data-theme="light"]) .gu-cta:focus-visible {
+  outline-color: #007A34;
+}
 </style>
 
 <script>

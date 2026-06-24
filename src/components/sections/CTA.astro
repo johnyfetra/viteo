@@ -104,11 +104,49 @@ const ctaLine2 = splitIdx > 0
     isolation: isolate;
   }
 
-  /* Always dark — lock even in light mode */
+  /* ── Light theme ───────────────────────────────────────────── */
   :global([data-theme="light"]) .s-cta {
-    background: #030408;
-    color: #E0E8FF;
+    background: #F4F3EF;
+    color: #0F0D0B;
   }
+  :global([data-theme="light"]) .cta-grid {
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 59px, rgba(15,13,11,0.05) 59px, rgba(15,13,11,0.05) 60px),
+      repeating-linear-gradient(90deg, transparent, transparent 59px, rgba(15,13,11,0.05) 59px, rgba(15,13,11,0.05) 60px);
+  }
+  :global([data-theme="light"]) .cta-glow {
+    background: radial-gradient(ellipse 55% 60% at 50% 52%, rgba(0,122,52,0.06), transparent 70%);
+  }
+  :global([data-theme="light"]) .cta-eyebrow { color: #6B6460; }
+  :global([data-theme="light"]) .cta-eyebrow-dot { background: #007A34; }
+  :global([data-theme="light"]) .cta-line--accent { color: #007A34; }
+  :global([data-theme="light"]) .cta-sub { color: rgba(15,13,11,0.55); }
+  :global([data-theme="light"]) .cta-btn--primary {
+    background: #007A34;
+    color: #FFFFFF;
+    box-shadow: 0 0 0 0 rgba(0,122,52,0);
+  }
+  :global([data-theme="light"]) .cta-btn--primary:hover {
+    box-shadow: 0 0 28px rgba(0,122,52,0.25);
+  }
+  :global([data-theme="light"]) .cta-btn--ghost {
+    color: #6B6460;
+    border-color: rgba(15,13,11,0.2);
+  }
+  :global([data-theme="light"]) .cta-btn--ghost:hover {
+    border-color: #007A34;
+    color: #007A34;
+  }
+  :global([data-theme="light"]) .cta-btn:focus-visible { outline-color: #007A34; }
+  :global([data-theme="light"]) .cta-metrics {
+    border-color: rgba(15,13,11,0.12);
+    background: rgba(255,255,255,0.6);
+  }
+  :global([data-theme="light"]) .cta-metric-val { color: #0F0D0B; }
+  :global([data-theme="light"]) .cta-metric-sup { color: #007A34; }
+  :global([data-theme="light"]) .cta-metric-label { color: #6B6460; }
+  :global([data-theme="light"]) .cta-metric-divider { background: rgba(15,13,11,0.12); }
+  :global([data-theme="light"]) .cta-fine { color: #9B9490; }
 
   /* ── Fine grid ─────────────────────────────────────────────────────────── */
   .cta-grid {

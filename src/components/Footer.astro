@@ -134,10 +134,48 @@ const socials = [
   padding-right: clamp(1.5rem, 5vw, 4rem);
 }
 
-/* Always dark — lock even in light mode */
+/* ── Light theme ───────────────────────────────────────────── */
 :global([data-theme="light"]) .ft {
-  background-color: #030408;
-  color: #E0E8FF;
+  background-color: #F4F3EF;
+  color: #0F0D0B;
+}
+:global([data-theme="light"]) .ft-grid {
+  background-image:
+    repeating-linear-gradient(0deg, transparent, transparent 59px, rgba(15,13,11,0.06) 59px, rgba(15,13,11,0.06) 60px),
+    repeating-linear-gradient(90deg, transparent, transparent 59px, rgba(15,13,11,0.06) 59px, rgba(15,13,11,0.06) 60px);
+}
+:global([data-theme="light"]) .ft-watermark { color: #0F0D0B; }
+:global([data-theme="light"]) .ft-top-border {
+  background: linear-gradient(to right, transparent, rgba(15,13,11,0.12) 20%, rgba(0,122,52,0.35) 50%, rgba(15,13,11,0.12) 80%, transparent);
+}
+:global([data-theme="light"]) .ft-logo-dot { background-color: #007A34; }
+:global([data-theme="light"]) .ft-logo:hover .ft-logo-dot {
+  box-shadow: 0 0 10px rgba(0,122,52,0.4);
+}
+:global([data-theme="light"]) .ft-logo-name { color: #0F0D0B; }
+:global([data-theme="light"]) .ft-logo-studio { color: #6B6460; }
+:global([data-theme="light"]) .ft-logo:hover .ft-logo-name { color: #000000; }
+:global([data-theme="light"]) .ft-logo:hover .ft-logo-studio { color: #0F0D0B; }
+:global([data-theme="light"]) .ft-tagline { color: #6B6460; }
+:global([data-theme="light"]) .ft-social-link { color: #9B9490; }
+:global([data-theme="light"]) .ft-social-link:hover { color: #007A34; }
+:global([data-theme="light"]) .ft-col-label { color: #9B9490; }
+:global([data-theme="light"]) .ft-nav-link { color: #6B6460; }
+:global([data-theme="light"]) .ft-nav-link:hover { color: #0F0D0B; }
+:global([data-theme="light"]) .ft-email { color: #007A34; }
+:global([data-theme="light"]) .ft-contact-meta { color: #6B6460; }
+:global([data-theme="light"]) .ft-contact-icon { color: #9B9490; }
+:global([data-theme="light"]) .ft-divider { background-color: rgba(15,13,11,0.12); }
+:global([data-theme="light"]) .ft-copy { color: #9B9490; }
+:global([data-theme="light"]) .ft-bottom-sep { color: rgba(15,13,11,0.2); }
+:global([data-theme="light"]) .ft-bottom-link { color: #9B9490; }
+:global([data-theme="light"]) .ft-bottom-link:hover { color: #6B6460; }
+:global([data-theme="light"]) .ft-made { color: #9B9490; }
+:global([data-theme="light"]) .ft-social-link:focus-visible,
+:global([data-theme="light"]) .ft-nav-link:focus-visible,
+:global([data-theme="light"]) .ft-email:focus-visible,
+:global([data-theme="light"]) .ft-bottom-link:focus-visible {
+  outline-color: #007A34;
 }
 
 /* ── Fine grid ─────────────────────────────────────────────── */
