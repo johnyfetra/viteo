@@ -22,6 +22,13 @@ export function useTranslationArray(lang: Lang) {
   };
 }
 
+const SLUG_MAP: Record<string, Partial<Record<Lang, string>>> = {
+  'tarifs':   { en: 'pricing' },
+  'pricing':  { fr: 'tarifs' },
+  'a-propos': { en: 'about' },
+  'about':    { fr: 'a-propos' },
+};
+
 export function getAlternatePath(url: URL, targetLang: Lang): string {
   const segments = url.pathname.split('/').filter(Boolean);
   const langs = Object.keys(ui) as Lang[];
@@ -30,6 +37,10 @@ export function getAlternatePath(url: URL, targetLang: Lang): string {
     segments[0] = targetLang;
   } else {
     segments.unshift(targetLang);
+  }
+
+  if (segments[1] && SLUG_MAP[segments[1]]?.[targetLang]) {
+    segments[1] = SLUG_MAP[segments[1]][targetLang]!;
   }
 
   return '/' + segments.join('/');
